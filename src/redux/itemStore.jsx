@@ -1,7 +1,7 @@
 'use client'
 import { createSlice, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from '@api/dbConfig'
-import { set, get, ref, child } from 'firebase/database'
+import { set, get, ref, child, remove } from 'firebase/database'
 
 const initialState = {
   items: [],
@@ -51,7 +51,18 @@ const itemManagerSlice = createSlice({
     editPrice: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/price'), action.payload.price)
       alert('Price Edited Into DB');
+    },
+    deleteCategory: (state, action) => {
+      const dbRef = ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/');
+      remove(dbRef).then(() => {
+        console.log('Category Removed From DB');
+      })
+        .catch((error) => {
+          console.error('Error removing category: ', error);
+        });
+      alert('Category Removed From DB');
     }
+
   },
   extraReducers: (builder) => {
     builder.addCase(fetchItems.fulfilled, (state, action) => {

@@ -8,6 +8,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import { fetchCategories } from '@redux/itemStore';
 import { useDispatch } from "react-redux";
 import { ItemManagerActions } from "@redux/itemStore";
+import { useRouter } from "next/navigation";
 
 
 function ItemCategories(props = {}) {
@@ -15,7 +16,7 @@ function ItemCategories(props = {}) {
   const [editPrice, setEditPrice] = useState(false)
   const [name, setName] = useState(props.name)
   const [price, setPrice] = useState(props.pricePU)
-
+  const router = useRouter();
   const dispatch = useDispatch()
   function handleEditName(e) {
     setEditName(!editName)
@@ -42,7 +43,11 @@ function ItemCategories(props = {}) {
     setEditPrice(!editPrice)
   }
   function handleDeleteBtn(e){
-
+    dispatch(ItemManagerActions.deleteCategory({
+      item: props.item,
+      category : props.category
+    }))
+    router.push('/dashboard')
   }
   return (
     <section className='flex-all-center p-4 gap-24'>
