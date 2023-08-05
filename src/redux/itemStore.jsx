@@ -1,22 +1,26 @@
 'use client'
-import { createSlice, configureStore, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from '@api/dbConfig'
 import { set, get, ref, child, remove } from 'firebase/database'
 
 const initialState = {
-  items: [],
+  items: {},
   categories: {},
+  land: {},
+
   loading: false
 }
 export const fetchItems = createAsyncThunk('fetchItemsforDisplay',
   async () => {
     const dbRef = ref(db)
-    const arr = []
     const resp = await get(child(dbRef, 'Development/Items'))
-    Object.keys(resp.val()).forEach(element => {
-      arr.push(element)
-    })
-    return arr
+    return resp.val()
+  })
+export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/LandSize'))
+    return resp.val()
   })
 export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay',
   async () => {
@@ -28,7 +32,6 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
       resp2 = await get(child(dbRef, 'Development/Items/' + element))
       obj[element] = resp2.val();
     }
-    console.log(obj)
     return obj
   })
 const itemManagerSlice = createSlice({
@@ -38,6 +41,17 @@ const itemManagerSlice = createSlice({
     addItem: (state, action) => {
       state.items[0] = (action.payload)
       set(ref(db, 'Development/Items/' + state.items[0]), 'null')
+      get(child(ref(db), 'Development/LandSize')).then(
+        (resp)=> {
+          const data= resp.val()
+          for (const size of Object.keys(data)) {
+            set(ref(db, 'Development/LandSize/' + size + '/' + action.payload), 0)
+          }
+        })
+      alert('Added')
+    },
+    addLandSize: (state, action) => {
+      set(ref(db, 'Development/LandSize/' + action.payload.size), action.payload.value)
       alert('Added')
     },
     addCategory: (state, action) => {
@@ -52,15 +66,19 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/price'), action.payload.price)
       alert('Price Edited Into DB');
     },
+    editQuantity: (state, action) => {
+      set(ref(db, 'Development/LandSize/' + action.payload.land + '/' + action.payload.item), action.payload.quantity)
+      alert('Quantity Edited Into DB');
+    },
     deleteCategory: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/');
       remove(dbRef).then(() => {
-        console.log('Category Removed From DB');
+        alert('Category Removed From DB');
       })
         .catch((error) => {
-          console.error('Error removing category: ', error);
+          alert('Error removing category: ' + error.message);
         });
-      alert('Category Removed From DB');
+
     }
 
   },
@@ -74,6 +92,13 @@ const itemManagerSlice = createSlice({
       })
         .addCase(fetchCategories.fulfilled, (state, action) => {
           state.categories = action.payload;
+          state.loading = false;
+        }),
+      builder.addCase(fetchLandSize.pending, (state) => {
+        state.loading = true;
+      })
+        .addCase(fetchLandSize.fulfilled, (state, action) => {
+          state.land = action.payload;
           state.loading = false;
         })
   }

@@ -17,7 +17,7 @@ function ItemCategories(props = {}) {
   const [name, setName] = useState(props.name)
   const [price, setPrice] = useState(props.pricePU)
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   function handleEditName(e) {
     setEditName(!editName)
   }

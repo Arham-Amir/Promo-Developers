@@ -10,7 +10,8 @@ const AddItemPage = () => {
   const router = useRouter()
   function handleAddItem() {
     dispatch(ItemManagerActions.addItem(item))
-    router.push('/dashboard')
+    setItem('')
+    router.push('/addItem')
   }
 
   return (

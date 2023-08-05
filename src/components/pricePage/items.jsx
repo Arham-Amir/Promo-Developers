@@ -12,7 +12,7 @@ const Items = () => {
   }, [])
   return (
     <>
-      {items?.map((el, i) => (
+      {Object.keys(items).map((el, i) => (
         <Item key={i}>{el}</Item>
       ))}
 
