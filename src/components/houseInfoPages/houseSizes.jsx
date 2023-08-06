@@ -20,6 +20,7 @@ const HouseSizes = (props = {}) => {
       </button>
       {show && <>
         <hr />
+        <h1 className="p-4 text-2xl">Quanity</h1>
         {loading ? <p>Loadingg....</p> :
           Object.keys(props.item).map((el, i) => (
             <QuantityPerHouse key={i} item = {el} value = {props.item[el]} land= {props.children} />
