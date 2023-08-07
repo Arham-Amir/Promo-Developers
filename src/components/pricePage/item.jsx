@@ -11,12 +11,13 @@ import { ItemManagerActions, fetchCategories } from '@redux/itemStore';
 const Item = (props = {}) => {
   const [show, setShow] = useState(false)
   const { loading, categories } = useSelector(state => state.itemManager)
-  const [recommended, setRecommended] = useState('');
+  const recommendedCategory = categories[props.children]?.recomended || '';
+  const [recommended, setRecommended] = useState(recommendedCategory);
   const dispatch = useDispatch()
 
   const handleChange = (item, el) => {
     setRecommended(el);
-    dispatch(ItemManagerActions.setRecomendedItemCategory({'item' :item,'category':el}))
+    dispatch(ItemManagerActions.setRecomendedItemCategory({ 'item': item, 'category': el }))
     console.log(item, el)
   };
   useEffect(() => {
@@ -40,26 +41,30 @@ const Item = (props = {}) => {
         <p className='p-4'>Recomended</p>
         {loading ? <p>Loadingg....</p> :
           categories[props.children] != 'null' &&
-          Object.keys(categories[props.children]).map((el, i) => (
-            <section key={i}>
-              <label className='flex items-center' >
-                <input
-                  className='basis-1/8'
-                  type="radio"
-                  value={el}
-                  checked={recommended == el}
-                  onChange={() => handleChange(props.children, el)}
-                />
+          Object.keys(categories[props.children]).map((el, i) => {
+            if (el != 'recomended') {
+              el == categories[props.children]?.recomended && console.log('G')
+              return (
+                <section key={i}>
+                  <label className='flex items-center' >
+                    <input
+                      className='basis-1/8'
+                      type="radio"
+                      value={el}
+                      checked={recommended === el}
+                      onChange={() => handleChange(props.children, el)}
+                    />
 
-                <ItemCategories key={i} className="basis-7/8"
-                  item={props.children} category={el} name={categories[props.children][el]['name']}
-                  pricePU={categories[props.children][el]['price']}
-                  setRecommended={setRecommended}
-                  recommended={recommended}>
-                </ItemCategories>
-              </label>
-            </section>
-          ))
+                    <ItemCategories key={i} className="basis-7/8"
+                      item={props.children} category={el} name={categories[props.children][el]['name']}
+                      pricePU={categories[props.children][el]['price']}
+                      setRecommended={setRecommended}
+                      recommended={recommended}>
+                    </ItemCategories>
+                  </label>
+                </section>)
+            }
+          })
         }
         <InputItemCategories item={props.children} ></InputItemCategories>
       </>}

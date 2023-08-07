@@ -1,7 +1,7 @@
 'use client'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from '@api/dbConfig'
-import { set, get, ref, child, remove } from 'firebase/database'
+import { set, get, ref, child, remove, update } from 'firebase/database'
 
 export const fetchItems = createAsyncThunk('fetchItemsforDisplay',
   async () => {
@@ -29,7 +29,7 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
   })
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
-  initialState : {
+  initialState: {
     items: {},
     categories: {},
     land: {},
@@ -79,8 +79,8 @@ const itemManagerSlice = createSlice({
         });
 
     },
-    setRecomendedItemCategory: (state, action) =>{
-      set(ref(db, 'Development/Items/' + action.payload.item), action.payload.category)
+    setRecomendedItemCategory: (state, action) => {
+      update(ref(db, 'Development/Items/' + action.payload.item), { 'recomended': action.payload.category })
       alert(`Set Recomended ${action.payload.item}`);
     }
 
