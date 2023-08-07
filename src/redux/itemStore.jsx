@@ -3,13 +3,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { db } from '@api/dbConfig'
 import { set, get, ref, child, remove } from 'firebase/database'
 
-const initialState = {
-  items: {},
-  categories: {},
-  land: {},
-
-  loading: false
-}
 export const fetchItems = createAsyncThunk('fetchItemsforDisplay',
   async () => {
     const dbRef = ref(db)
@@ -36,7 +29,13 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
   })
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
-  initialState,
+  initialState : {
+    items: {},
+    categories: {},
+    land: {},
+
+    loading: false
+  },
   reducers: {
     addItem: (state, action) => {
       state.items[0] = (action.payload)
@@ -79,6 +78,10 @@ const itemManagerSlice = createSlice({
           alert('Error removing category: ' + error.message);
         });
 
+    },
+    setRecomendedItemCategory: (state, action) =>{
+      set(ref(db, 'Development/Items/' + action.payload.item), action.payload.category)
+      alert(`Set Recomended ${action.payload.item}`);
     }
 
   },

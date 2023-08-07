@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ItemCategories from '@components/pricePage/itemCategories';
 import InputItemCategories from '@components/pricePage/inputItemCategories';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from '@redux/itemStore';
+import { ItemManagerActions, fetchCategories } from '@redux/itemStore';
 
 
 
@@ -16,6 +16,7 @@ const Item = (props = {}) => {
 
   const handleChange = (item, el) => {
     setRecommended(el);
+    dispatch(ItemManagerActions.setRecomendedItemCategory({'item' :item,'category':el}))
     console.log(item, el)
   };
   useEffect(() => {
