@@ -6,14 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 const HouseInfo = () => {
   const { loading, land } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
-  useEffect(() => {
+  const fetchLandFunc = ()=>{
     dispatch(fetchLandSize())
+  }
+  useEffect(() => {
+    fetchLandFunc()
   }, [])
   return (
     <section>
-
       {Object.keys(land)?.map((el, i) => (
-        <HouseSizes key={i} item = {land[el]}>{el}</HouseSizes>
+        <HouseSizes key={i} item={land[el]} loading={loading} fetchLandFunc = {()=> fetchLandFunc()}>{el}</HouseSizes>
       ))}
     </section>
   );

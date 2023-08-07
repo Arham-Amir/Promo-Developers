@@ -42,8 +42,8 @@ const itemManagerSlice = createSlice({
       state.items[0] = (action.payload)
       set(ref(db, 'Development/Items/' + state.items[0]), 'null')
       get(child(ref(db), 'Development/LandSize')).then(
-        (resp)=> {
-          const data= resp.val()
+        (resp) => {
+          const data = resp.val()
           for (const size of Object.keys(data)) {
             set(ref(db, 'Development/LandSize/' + size + '/' + action.payload), 0)
           }

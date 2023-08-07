@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ItemCategories from '@components/pricePage/itemCategories';
 import InputItemCategories from '@components/pricePage/inputItemCategories';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,10 +7,17 @@ import { fetchCategories } from '@redux/itemStore';
 
 
 
+
 const Item = (props = {}) => {
   const [show, setShow] = useState(false)
   const { loading, categories } = useSelector(state => state.itemManager)
+  const [recommended, setRecommended] = useState('');
   const dispatch = useDispatch()
+
+  const handleChange = (item, el) => {
+    setRecommended(el);
+    console.log(item, el)
+  };
   useEffect(() => {
     if (loading == false) {
       dispatch(fetchCategories())
@@ -29,10 +36,28 @@ const Item = (props = {}) => {
       </button>
       {show && <>
         <hr />
+        <p className='p-4'>Recomended</p>
         {loading ? <p>Loadingg....</p> :
           categories[props.children] != 'null' &&
           Object.keys(categories[props.children]).map((el, i) => (
-            <ItemCategories key={i} item = {props.children} category={el} name={categories[props.children][el]['name']} pricePU={categories[props.children][el]['price']} />
+            <section key={i}>
+              <label className='flex items-center' >
+                <input
+                  className='basis-1/8'
+                  type="radio"
+                  value={el}
+                  checked={recommended == el}
+                  onChange={() => handleChange(props.children, el)}
+                />
+
+                <ItemCategories key={i} className="basis-7/8"
+                  item={props.children} category={el} name={categories[props.children][el]['name']}
+                  pricePU={categories[props.children][el]['price']}
+                  setRecommended={setRecommended}
+                  recommended={recommended}>
+                </ItemCategories>
+              </label>
+            </section>
           ))
         }
         <InputItemCategories item={props.children} ></InputItemCategories>

@@ -42,15 +42,15 @@ function ItemCategories(props = {}) {
     dispatch(fetchCategories)
     setEditPrice(!editPrice)
   }
-  function handleDeleteBtn(e){
+  function handleDeleteBtn(e) {
     dispatch(ItemManagerActions.deleteCategory({
       item: props.item,
-      category : props.category
+      category: props.category
     }))
     router.push('/dashboard')
   }
   return (
-    <section className='flex-all-center p-4 gap-24'>
+    <section className={`${props.className} flex-all-center p-4 gap-24`}>
       <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
         <h1>
           Category :
