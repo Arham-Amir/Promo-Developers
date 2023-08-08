@@ -9,16 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchItems } from '@redux/itemStore';
 
 const CenterBox = (props = {}) => {
-  const [option, setOption] = useState('female');
+  const [choice, setChoice] = useState('Recomended');
   const { loading, items } = useSelector(state => state.itemManager)
 
-  const handleChange = (event) => {
-    setOption(event.target.value);
+  const handleChoice = (event) => {
+    setChoice(event.target.value);
   };
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchItems())
   }, [])
+
   return (
     <section className={`${props.class} flex flex-col`}>
       <section className="flex-grow m-2">
@@ -27,8 +28,8 @@ const CenterBox = (props = {}) => {
             <RadioGroup
               aria-labelledby="radio-group-label"
               name="radio-buttons-group"
-              value={option}
-              onChange={handleChange}
+              value={choice}
+              onChange={handleChoice}
               className="flex flex-row gap-10"
             >
               <div>
@@ -42,7 +43,8 @@ const CenterBox = (props = {}) => {
         </section>
         <section className="text-slate-500 p-4">
           {Object.keys(items).map((el, i) => (
-            <CenterBoxItems key={i} item = {el} detail = {items[el]}></CenterBoxItems>
+            <CenterBoxItems key={i} item={el} detail={items[el]} choice={choice}
+              setChoice={setChoice}></CenterBoxItems>
           ))}
         </section>
       </section>
