@@ -18,18 +18,14 @@ function ItemCategories(props = {}) {
   const [price, setPrice] = useState(props.pricePU)
   const router = useRouter();
   const dispatch = useDispatch();
-  function handleEditNameValue(e) {
-    e.stopPropagation();
-    e.preventDefault();
+  function handleEditNameValue() {
     setEditNameValue(prev => !prev)
     console.log(editNameValue)
   }
-  function handleEditPrice(e) {
-    e.stopPropagation();
-    e.preventDefault();
+  function handleEditPrice() {
     setEditPrice(!editPrice)
   }
-  function handleNameSaveBtn(e) {
+  function handleNameSaveBtn() {
     dispatch(ItemManagerActions.editName({
       'item': props.item,
       'category': props.category,
@@ -38,7 +34,7 @@ function ItemCategories(props = {}) {
     dispatch(fetchCategories)
     setEditName(!editNameValue)
   }
-  function handlePriceSaveBtn(e) {
+  function handlePriceSaveBtn() {
     dispatch(ItemManagerActions.editPrice({
       'item': props.item,
       'category': props.category,
@@ -47,7 +43,7 @@ function ItemCategories(props = {}) {
     dispatch(fetchCategories)
     setEditPrice(!editPrice)
   }
-  function handleDeleteBtn(e) {
+  function handleDeleteBtn() {
     dispatch(ItemManagerActions.deleteCategory({
       item: props.item,
       category: props.category
@@ -72,7 +68,7 @@ function ItemCategories(props = {}) {
           {editNameValue == false ?
             <section className="flex items-center gap-2">
               <p className={`bg-indigo-800 py-2 px-6 rounded-full`}>{name}</p>
-              <button onClick={(e)=>handleEditNameValue(e)} ><FiEdit size={20}></FiEdit></button>
+              <button onClick={(e) => handleEditNameValue(e)} ><FiEdit size={20}></FiEdit></button>
             </section>
             :
             <section className="flex items-center gap-2">
@@ -81,7 +77,7 @@ function ItemCategories(props = {}) {
                 onChange={(e) => setName(e.target.value)}
                 type="text" />
               <button onClick={handleNameSaveBtn} ><BiSolidSave size={20}></BiSolidSave></button>
-              <button onClick={(e)=>handleEditNameValue(e)} ><GiCancel size={20}></GiCancel></button>
+              <button onClick={(e) => handleEditNameValue(e)} ><GiCancel size={20}></GiCancel></button>
             </section>
           }
         </section>
