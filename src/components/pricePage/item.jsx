@@ -38,32 +38,32 @@ const Item = (props = {}) => {
       {show && <>
         <hr />
         <p className='p-4'>Recomended</p>
-        {loading ? <p>Loadingg....</p> :
-          categories[props.children] != 'null' &&
-          Object.keys(categories[props.children]).map((el, i) => {
-            if (el != 'recomended') {
-              return (
-                <section key={i} className='flex items-center'>
-                  <section className='basis-1/8 text-center'>
-                    <input className=''
-                      type="radio"
-                      value={el}
-                      checked={recommended === el}
-                      onChange={() => handleChange(props.children, el)}
-                    />
-                  </section>
-                  <label className='basis-7/8 flex items-center' >
-                    <ItemCategories className = ""
-                      item={props.children} category={el} name={categories[props.children][el]['name']}
-                      pricePU={categories[props.children][el]['price']}
-                      setRecommended={setRecommended}
-                      recommended={recommended}>
-                    </ItemCategories>
-                  </label>
-                </section>)
-            }
-          })
-        }
+          {loading ? <p>Loadingg....</p> :
+            categories[props.children] != 'null' &&
+            Object.keys(categories[props.children]).map((el, i) => {
+              if (el != 'recomended') {
+                return (
+                  <section key={i} className='flex items-center'>
+                    <section className='basis-1/8 text-center'>
+                      <input className=''
+                        type="radio"
+                        value={el}
+                        checked={recommended === el}
+                        onChange={() => handleChange(props.children, el)}
+                      />
+                    </section>
+                    <label className='basis-7/8 flex items-center' >
+                      <ItemCategories className = ""
+                        item={props.children} category={el} name={categories[props.children][el]['name']}
+                        pricePU={categories[props.children][el]['price']}
+                        setRecommended={setRecommended}
+                        recommended={recommended}>
+                      </ItemCategories>
+                    </label>
+                  </section>)
+              }
+            })
+          }
         <InputItemCategories item={props.children} ></InputItemCategories>
       </>}
 
