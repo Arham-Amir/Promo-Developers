@@ -18,10 +18,11 @@ function ItemCategories(props = {}) {
   const [price, setPrice] = useState(props.pricePU)
   const router = useRouter();
   const dispatch = useDispatch();
-  function handleEditName(e) {
+  function handleEditName() {
     setEditName(!editName)
+    console.log(editName)
   }
-  function handleEditPrice(e) {
+  function handleEditPrice() {
     setEditPrice(!editPrice)
   }
   function handleNameSaveBtn(e) {
@@ -50,17 +51,19 @@ function ItemCategories(props = {}) {
     router.push('/dashboard')
   }
   return (
-    <section className={`${props.className} flex-all-center p-4 gap-24`}>
-      <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
+    <section className={`${props.className} w-full flex items-center justify-start p-4`}>
+      <section className="flex-1 flex justify-start items-center flex-row gap-4">
         <h1>
           Category :
         </h1>
         <p className='bg-indigo-800 py-2 px-6 rounded-full'>{props.category}</p>
       </section>
-      <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
-        <h1>
-          Name :
-        </h1>
+      <section className="flex-1 flex justify-start items-center flex-row gap-4">
+        <section>
+          <h1>
+            Name :
+          </h1>
+        </section>
         <section className="flex items-center gap-2">
           {editName == false ?
             <>
@@ -79,7 +82,7 @@ function ItemCategories(props = {}) {
           }
         </section>
       </section>
-      <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
+      <section className="flex-1 flex justify-start items-center flex-row gap-4">
         <h1>
           Price-Per-Unit :
         </h1>

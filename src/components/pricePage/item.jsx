@@ -18,7 +18,6 @@ const Item = (props = {}) => {
   const handleChange = (item, el) => {
     setRecommended(el);
     dispatch(ItemManagerActions.setRecomendedItemCategory({ 'item': item, 'category': el }))
-    console.log(item, el)
   };
   useEffect(() => {
     if (loading == false) {
@@ -43,19 +42,18 @@ const Item = (props = {}) => {
           categories[props.children] != 'null' &&
           Object.keys(categories[props.children]).map((el, i) => {
             if (el != 'recomended') {
-              el == categories[props.children]?.recomended && console.log('G')
               return (
-                <section key={i}>
-                  <label className='flex items-center' >
-                    <input
-                      className='basis-1/8'
+                <section key={i} className='flex items-center'>
+                  <section className='basis-1/8 text-center'>
+                    <input className=''
                       type="radio"
                       value={el}
                       checked={recommended === el}
                       onChange={() => handleChange(props.children, el)}
                     />
-
-                    <ItemCategories key={i} className="basis-7/8"
+                  </section>
+                  <label className='basis-7/8 flex items-center' >
+                    <ItemCategories className = ""
                       item={props.children} category={el} name={categories[props.children][el]['name']}
                       pricePU={categories[props.children][el]['price']}
                       setRecommended={setRecommended}

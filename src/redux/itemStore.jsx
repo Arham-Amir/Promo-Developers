@@ -27,13 +27,20 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
     }
     return obj
   })
+export const setSelectLand = createAsyncThunk('selectLandForCalculator',
+async({land})=>{
+  const resp = await get(child(ref(db), 'Development/LandSize/'+ land))
+  alert(land + ' Selected')
+  return resp.val()
+})
+
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
   initialState: {
     items: {},
     categories: {},
     land: {},
-
+    selectedLand : {},
     loading: false
   },
   reducers: {
@@ -82,7 +89,7 @@ const itemManagerSlice = createSlice({
     setRecomendedItemCategory: (state, action) => {
       update(ref(db, 'Development/Items/' + action.payload.item), { 'recomended': action.payload.category })
       alert(`Set Recomended ${action.payload.item}`);
-    }
+    },
 
   },
   extraReducers: (builder) => {
@@ -103,7 +110,10 @@ const itemManagerSlice = createSlice({
         .addCase(fetchLandSize.fulfilled, (state, action) => {
           state.land = action.payload;
           state.loading = false;
-        })
+        }),
+      builder.addCase(setSelectLand.fulfilled, (state, action)=>{
+        state.selectedLand = action.payload;
+      })
   }
 })
 
