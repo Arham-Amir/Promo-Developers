@@ -1,12 +1,10 @@
-// import nav_logo from 'next/image'
 const Nav_Logo = () => {
   return (
-    <div className="flex items-center gap-3 font-medium sm:text-lg lg:text-2xl 2xl:text-4xl">
-      <img src='/image/nav_logo.png' width={70} alt="Company Logo Image for Navbar" />
-      <p>
-        Promo Developers
-      </p>
-    </div>
+    <section className="flex gap-2 items-center">
+      <img src="/image/nav_logo.gif" alt="navbar_logo"
+        className="h-16 2xl:h-24 sm:block" />
+      <p className="md:text-lg xs:text-sm 2xl:text-2xl font-bold">Promo <span className="text-red-600">Developers</span></p>
+    </section>
   );
 }
 

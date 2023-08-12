@@ -17,6 +17,10 @@ module.exports = {
         '1/8': '8%',
         '7/8': '92%',
       },
+      screens:{
+        'xs':'0px',
+        'sm': '400px',
+      }
     },
   },
   plugins: [],

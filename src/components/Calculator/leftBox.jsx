@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLandSize } from "@redux/itemStore";
-import ShowLand from "@components/Home/showLand";
+import ShowLand from "@components/Calculator/showLand";
 
 const LeftBox = (props = {}) => {
   const { loading, land } = useSelector(state => state.itemManager)

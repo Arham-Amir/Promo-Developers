@@ -4,7 +4,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import CenterBoxItems from '@components/Home/centerBoxItems';
+import CenterBoxItems from '@components/Calculator/centerBoxItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItems } from '@redux/itemStore';
 

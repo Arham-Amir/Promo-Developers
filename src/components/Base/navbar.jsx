@@ -1,12 +1,30 @@
+'use client'
 import Nav_Logo from "@components/Base/nav_logo";
 import Nav_Links from "@components/Base/nav_links";
+import { useState } from "react";
 const Navbar = () => {
-  return (
-    <nav className="w-[92vw] mx-auto mb-5 rounded-b-2xl sticky top-0 z-10 bg-opacity-60 backdrop-blur-lg shadow-lg bg-zinc-100 h-20 2xl:h-24 text-blue-950 py-3 lg:pl-10 lg:pr-24 sm:px-10 xs:px-4 xl:text-xl
-    lg:text-md 2xl:text-3xl flex items-center justify-between font-sans">
+  const [showLinks, setShowLinks] = useState(false)
+  return (<>
+    <nav className="bg-black text-white sm:w-4/5 xs:w-[96%] sm:px-8 xs:px-3 rounded-3xl z-30
+     xs:h-16 2xl:h-24
+    flex justify-between items-center
+    fixed top-3 left-1/2 -translate-x-1/2">
       <Nav_Logo></Nav_Logo>
-      <Nav_Links></Nav_Links>
+      <Nav_Links className={"xs:hidden lg:flex items-center gap-7 text-lg 2xl:text-2xl font-medium"} showLinks={showLinks} show={() => setShowLinks(false)}></Nav_Links>
+      <section className="lg:hidden">
+        <button onClick={() => setShowLinks(!showLinks)}
+          className="xs:flex xs:items-end xs:flex-col">
+          <p className="w-5 border-t-2 border-white mb-1"></p>
+          <p className="w-5 border-t-2 border-white mb-1"></p>
+          <p className="w-5 border-t-2 border-white mb-1"></p>
+        </button>
+      </section>
     </nav>
+    <Nav_Links showLinks={showLinks} show={() => setShowLinks(false)}
+      className={`xs:fixed xs:z-10 xs:bg-black xs:p-4
+    ${showLinks ? 'xs:bottom-0 xs:top-14' : 'xs:bottom-[100%]'}
+    xs:pt-8 rounded-3xl xs:bg-opacity-50 sm:w-4/5 xs:w-[96%] left-1/2 -translate-x-1/2 xs:h-auto xs:backdrop-blur-lg xs:text-xl  xs:flex xs:flex-col xs:items-center xs:gap-10 xs:transition-all xs:duration-200 xs:ease-in-out xs:text-white xs:font-bold lg:hidden`}></Nav_Links >
+  </>
   );
 }
 

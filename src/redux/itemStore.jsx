@@ -28,11 +28,11 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
     return obj
   })
 export const setSelectLand = createAsyncThunk('selectLandForCalculator',
-async({land})=>{
-  const resp = await get(child(ref(db), 'Development/LandSize/'+ land))
-  alert(land + ' Selected')
-  return resp.val()
-})
+  async ({ land }) => {
+    const resp = await get(child(ref(db), 'Development/LandSize/' + land))
+    alert(land + ' Selected')
+    return resp.val()
+  })
 
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
@@ -40,7 +40,7 @@ const itemManagerSlice = createSlice({
     items: {},
     categories: {},
     land: {},
-    selectedLand : {},
+    selectedLand: {},
     loading: false
   },
   reducers: {
@@ -96,24 +96,24 @@ const itemManagerSlice = createSlice({
     builder.addCase(fetchItems.fulfilled, (state, action) => {
       state.items = action.payload;
     })
-      ,
-      builder.addCase(fetchCategories.pending, (state) => {
-        state.loading = true;
+
+    builder.addCase(fetchCategories.pending, (state) => {
+      state.loading = true;
+    })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
+        state.loading = false;
       })
-        .addCase(fetchCategories.fulfilled, (state, action) => {
-          state.categories = action.payload;
-          state.loading = false;
-        }),
-      builder.addCase(fetchLandSize.pending, (state) => {
-        state.loading = true;
+    builder.addCase(fetchLandSize.pending, (state) => {
+      state.loading = true;
+    })
+      .addCase(fetchLandSize.fulfilled, (state, action) => {
+        state.land = action.payload;
+        state.loading = false;
       })
-        .addCase(fetchLandSize.fulfilled, (state, action) => {
-          state.land = action.payload;
-          state.loading = false;
-        }),
-      builder.addCase(setSelectLand.fulfilled, (state, action)=>{
-        state.selectedLand = action.payload;
-      })
+    builder.addCase(setSelectLand.fulfilled, (state, action) => {
+      state.selectedLand = action.payload;
+    })
   }
 })
 
