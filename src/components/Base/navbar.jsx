@@ -5,7 +5,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false)
   return (<>
-    <nav className="bg-black text-white sm:w-4/5 xs:w-[96%] sm:px-8 xs:px-3 rounded-3xl z-30
+    <nav className="bg-indigo-950 text-white sm:w-4/5 xs:w-[96%] sm:px-8 xs:px-3 rounded-3xl z-30
      xs:h-16 2xl:h-24
     flex justify-between items-center
     fixed top-3 left-1/2 -translate-x-1/2">

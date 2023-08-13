@@ -15,7 +15,10 @@
   }
 }
 @layer base{
+  html{
+    scroll-behavior: smooth;
+  }
   body{
-    @apply bg-zinc-200
+    /* @apply bg-zinc-200 */
   }
 }
