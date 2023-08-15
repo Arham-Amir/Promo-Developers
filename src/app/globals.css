@@ -2,23 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities{
-  .flex-all-center{
+@layer utilities {
+  .flex-all-center {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .bg-house-img{
+
+  .bg-house-img {
     background-image: url('/image/treeHouse.png');
     background-size: 100%;
     background-repeat: no-repeat;
   }
 }
-@layer base{
-  html{
+
+@layer base {
+  html {
     scroll-behavior: smooth;
   }
-  body{
+
+  body {
     /* @apply bg-zinc-200 */
   }
 }
