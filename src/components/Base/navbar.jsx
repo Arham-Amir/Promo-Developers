@@ -22,8 +22,8 @@ const Navbar = () => {
     </nav>
     <Nav_Links showLinks={showLinks} show={() => setShowLinks(false)}
       className={`xs:fixed xs:z-10 xs:bg-black xs:p-4
-    ${showLinks ? 'xs:bottom-0 xs:top-14' : 'xs:bottom-[100%]'}
-    xs:pt-8 rounded-3xl xs:bg-opacity-50 sm:w-4/5 xs:w-[96%] left-1/2 -translate-x-1/2 xs:h-auto xs:backdrop-blur-lg xs:text-xl  xs:flex xs:flex-col xs:items-center xs:gap-10 xs:transition-all xs:duration-200 xs:ease-in-out xs:text-white xs:font-bold lg:hidden`}></Nav_Links >
+    ${showLinks ? 'xs:bottom-0 xs:top-16' : 'xs:bottom-[100%]'}
+    xs:pt-8 xs:bg-opacity-50 sm:w-4/5 xs:w-full left-1/2 -translate-x-1/2 xs:h-auto xs:backdrop-blur-lg xs:text-xl  xs:flex xs:flex-col xs:items-center xs:gap-10 xs:transition-all xs:duration-200 xs:ease-in-out xs:text-white xs:font-bold lg:hidden`}></Nav_Links >
   </>
   );
 }
