@@ -2,13 +2,15 @@
 import Nav_Logo from "@components/Base/nav_logo";
 import Nav_Links from "@components/Base/nav_links";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 const Navbar = () => {
   const [showLinks, setShowLinks] = useState(false)
+  const pathname = usePathname()
   return (<>
-    <nav className="bg-indigo-950 text-white sm:w-4/5 xs:w-[96%] sm:px-8 xs:px-3 rounded-3xl z-30
+    <nav className={`bg-indigo-950 text-white sm:w-4/5 xs:w-[96%] sm:px-8 xs:px-3 rounded-3xl z-30
      xs:h-16 2xl:h-24
     flex justify-between items-center
-    fixed top-3 left-1/2 -translate-x-1/2">
+    ${pathname == '/calculator' ? 'sticky top-3 m-auto' : 'fixed top-3 left-1/2 -translate-x-1/2'}`}>
       <Nav_Logo></Nav_Logo>
       <Nav_Links className={"xs:hidden lg:flex items-center gap-7 text-lg 2xl:text-2xl font-medium"} showLinks={showLinks} show={() => setShowLinks(false)}></Nav_Links>
       <section className="lg:hidden">

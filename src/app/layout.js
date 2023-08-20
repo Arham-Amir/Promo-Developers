@@ -2,6 +2,8 @@ import './globals.css'
 import { Nunito_Sans } from 'next/font/google'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -19,6 +21,7 @@ export default function RootLayout({ children }) {
       <body className={`${nunito.variable} font-sans`}>
         <Provider>
           <Navbar />
+          <ToastContainer />
           {children}
         </Provider>
       </body>
