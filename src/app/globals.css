@@ -14,6 +14,32 @@
     background-size: 100%;
     background-repeat: no-repeat;
   }
+  /* Animation on Hover */
+  .ul{
+    @apply relative flex flex-col gap-4;
+  }
+  .ul .li{
+    @apply relative list-none;
+  }
+  .ul .li .a{
+    @apply relative text-3xl uppercase text-transparent;
+    -webkit-text-stroke: 1px gainsboro;
+  }
+  .ul .li .a::before{
+    content: attr(data-text);
+    position: absolute;
+    color: var(--clr);
+    width: 0;
+    overflow: hidden;
+    transition: 1s;
+    border-right: 6px solid var(--clr);
+    -webkit-text-stroke: 1px var(--clr);
+  }
+  .ul .li .a:hover::before{
+    width: 100%;
+    filter: drop-shadow(0 0 25px var(--clr));
+  }
+
 }
 
 @layer base {

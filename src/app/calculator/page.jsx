@@ -1,13 +1,11 @@
-import LeftBox from "@components/Calculator/leftBox"
-import RightBox from "@components/Calculator/rightBox"
-import CenterBox from "@components/Calculator/centerBox"
+import Step1 from "@components/Calculator/step1";
+
 
 const Page = () => {
   return (
-    <section className='flex mt-7 text-white'>
-      <LeftBox class="basis-1/7  min-h-[70vh]"></LeftBox>
-      <CenterBox class="basis-4/7 "></CenterBox>
-      <RightBox class="w-[25%] min-h-[70vh]"></RightBox>
+    <section className="bg-[url('/image/calcBg.png')] backdrop-blur-[1px] h-screen
+    flex text-white justify-center items-center">
+      <Step1 />
     </section>
   );
 }
