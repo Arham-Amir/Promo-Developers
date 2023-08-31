@@ -11,7 +11,7 @@ import ContactInfo from "@components/Home/contactInfo";
 const ContactUs = () => {
   return (
     <section id='contactus' className='h-auto py-10 bg-slate-200'>
-      <h1 className='text-4xl font-bold text-indigo-950 flex-all-center'>Contact Us</h1>
+      <h1 className='text-5xl font-bold text-indigo-950 flex-all-center mb-4'>Contact Us</h1>
       <section className='w-5/6 mx-auto py-5
       flex md:flex-row xs:flex-col xs:gap-4 md:gap-0'>
         <ContactLeft className='md:basis-3/5' />

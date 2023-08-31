@@ -18,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${nunito.variable} font-sans`}>
+      <body className={`${nunito.variable} font-sans bg-bg-dark`}>
         <Provider>
           <Navbar />
           <ToastContainer />

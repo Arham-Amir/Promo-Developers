@@ -9,7 +9,7 @@ const ProjectInfoRight = (props) => {
           className="h-full w-auto object-cover md:mt-14" />
       </section>
       <section className="sm:w-2/3 md:w-3/4 h-3/4 flex md:mt-12">
-        <section className="sm:w-[96%] md:w-3/4 h-full md:mt-14 md:pt-2 sm:pl-10 xs:pl-3 text-indigo-950">
+        <section className="sm:w-[96%] md:w-3/4 h-full md:mt-14 md:pt-2 sm:pl-10 xs:pl-3 text-bg-dark">
           <p className="flex items-center gap-2 text-sm"><AiOutlineLine size={30}/> What we offer</p>
           <section className="pl-9 flex flex-col gap-3">
             <h1 className="text-3xl font-bold lg:w-3/4">Creating Wonderful Living Spaces</h1>

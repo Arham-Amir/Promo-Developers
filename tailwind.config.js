@@ -24,8 +24,14 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-roboto)']
+      },
+      colors: {
+        'bg-dark' : '#333C4B',
+        'themeFont': '#D4A056',
+        'bg-light': '#4A4C5C',
+        'lightFont': '#FFFFFF'
       }
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
