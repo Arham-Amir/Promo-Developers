@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchLandSize } from "@redux/itemStore";
+import Link from "next/link";
 
 const Step1 = (props = {}) => {
   const { land } = useSelector(state => state.itemManager)
@@ -23,9 +24,9 @@ const Step1 = (props = {}) => {
 const Li = ({ data, color, link }) => {
   return (
     <li style={{ '--clr': color }} className="li">
-      <a style={{ whiteSpace: 'nowrap' }} className="a" data-text={`${"\u00A0"}${data}${"\u00A0"}`} href={link}>
+      <Link style={{ whiteSpace: 'nowrap' }} className="a" data-text={`${"\u00A0"}${data}${"\u00A0"}`} href={link}>
         {"\u00A0"}{data}{"\u00A0"}
-      </a>
+      </Link>
     </li>
   )
 }
