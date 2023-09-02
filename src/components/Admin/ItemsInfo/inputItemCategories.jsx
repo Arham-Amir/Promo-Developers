@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { ItemManagerActions } from '@redux/itemStore';
 import { fetchCategories } from '@redux/itemStore';
+import { toast } from 'react-toastify';
 
 
 function InputItemCategories(props = {}) {
@@ -22,11 +23,12 @@ function InputItemCategories(props = {}) {
   }
   function handleSaveBtn() {
     if (category == '' || name == '' || price == 0) {
-      alert('Invalid Data, Try Again')
+      toast('Invalid Data, Try Again')
     }
     else {
       dispatch(ItemManagerActions.addCategory(
         {
+          'head': props.head,
           'item': props.item,
           category,
           'data': { name, price }
@@ -92,7 +94,7 @@ function InputItemCategories(props = {}) {
       {
         add == true &&
         <section className='flex justify-end items-center'>
-          <button onClick={handleAddBtn} className='bg-indigo-800 py-2 px-6 rounded-full'>ADD</button>
+          <button onClick={handleAddBtn} className='bg-bg-light font-semibold py-2 px-6 rounded-full'>ADD</button>
         </section >
       }
     </>

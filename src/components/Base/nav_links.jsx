@@ -12,12 +12,21 @@ const Nav_Links = (props = {}) => {
   }
 
   return (
-    <section className={`${props.className}`}>
+    <>
+    <section className={`${props.className} ${pathname.includes("/admin") ? 'hidden' : 'xs:hidden lg:flex'}`}>
       {/* <button onClick={(e) => { handleClick(e, '/calculator') }}>Calculator</button> */}
-      <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont': 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
+      <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont' : 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
       <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '#aboutus') }}>About</button>
       <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '#contactus') }}>ContactUs</button>
+      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Admin</button>
     </section>
+    <section className={`${props.className} ${pathname.includes("/admin") ? 'xs:hidden lg:flex' : 'hidden'}`}>
+      {/* <button onClick={(e) => { handleClick(e, '/calculator') }}>Calculator</button> */}
+      <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont' : 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
+      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Items</button>
+      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/landSize') }}>LandSizes</button>
+    </section>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import './globals.css'
-import { Nunito_Sans } from 'next/font/google'
+import { Nunito_Sans, Fira_Mono } from 'next/font/google'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
 import { ToastContainer } from 'react-toastify';
@@ -9,6 +9,11 @@ const nunito = Nunito_Sans({
   subsets: ['latin'],
   variable: '--font-roboto'
 })
+const fira = Fira_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-fira'
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -17,8 +22,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${nunito.variable} font-sans bg-bg-dark`}>
+    <html lang="en" className='bg-bg-dark'>
+      <body className={`${nunito.variable} ${fira.variable} font-sans`}>
         <Provider>
           <Navbar />
           <ToastContainer />

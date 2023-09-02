@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react';
 import { BiExpandHorizontal } from 'react-icons/bi'
-import CenterBox from '@components/Calculator/centerBox';
+import Box from '@components/Calculator/box';
 import { Suspense } from 'react';
 
-const Constructed = () => {
+const Constructed = (props = {}) => {
   const [show, setShow] = useState(false)
   return (
     <section>
@@ -15,12 +15,11 @@ const Constructed = () => {
           <BiExpandHorizontal size={25} fill='white' />
         </button>
         <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'xs:right-0' : 'xs:right-[-100%]'}
-    h-screen w-[95%] bg-gradient-to-r from-[#00aeef] to-[#ed1c24]`}>
-
+        h-screen w-[95%] bg-bg-dark`}>
         </section>
       </section>
       <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
-        <CenterBox />
+        <Box landsize={props.landsize} />
       </Suspense>
     </section>
   );

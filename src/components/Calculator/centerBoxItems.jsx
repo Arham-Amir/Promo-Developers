@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 export default function CenterBoxItems(props = {}) {
   const { selectedLand } = useSelector(state => state.itemManager)
   const [category, setCategory] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     if (props.choice === 'Recomended') {
       setCategory(props.detail['recomended']);
@@ -17,17 +18,22 @@ export default function CenterBoxItems(props = {}) {
       props.setChoice('Custom');
     }
     setCategory(cat);
-    console.log(cat)
   };
   return (
-    <section className='mb-3 shadow-2xl '>
-      <div className="collapse collapse-arrow bg-bg-dark">
-        <input type="radio" name="my-accordion-2" />
+    <section className='shadow-2xl'>
+      <div className={`collapse collapse-arrow bg-bg-dark rounded-none border-b
+       border-b-bg-dark`}>
+        <input type="radio"
+          name={`my-accordion-${props.index}`}
+          checked={isOpen}
+          onChange={()=>{}}
+          onClick={() => setIsOpen(!isOpen)}
+        />
         <div className="collapse-title text-2xl font-bold bg-bg-light">
           {props.item}
         </div>
-        <div className="collapse-content bg-bg-dark py-2">
-          <section className='flex font-bold'>
+        <div className="collapse-content bg-bg-dark ">
+          <section className='flex font-bold pt-3'>
             <h3 className='flex-1'>Select</h3>
             <h3 className='flex-1'>Category</h3>
             <h3 className='flex-1'>Name</h3>

@@ -6,6 +6,7 @@ import { BiSolidSave } from 'react-icons/bi'
 import { GiCancel } from 'react-icons/gi'
 import { useDispatch, useSelector } from "react-redux";
 import { ItemManagerActions } from "@redux/itemStore";
+
 const QuantityPerHouse = (props = {}) => {
   const [quantity, setQuantity] = useState(props.value)
   const [editValue, setEditValue] = useState(false)
@@ -28,14 +29,14 @@ const QuantityPerHouse = (props = {}) => {
     setQuantity(land[props.land][props.item])
   },[land])
   return (
-    <section className="flex justify-center items-center flex-row gap-4 p-4">
-      <h1>
+    <section className="flex items-center flex-row gap-4 p-4 xs:text-xs sm:text-base w-fit">
+      <h1 className="w-max">
         {props.item} :
       </h1>
       <section className="flex items-center gap-2">
         {editValue == false ?
           <>
-            <p className={`bg-indigo-800 py-2 px-6 rounded-full`}>{quantity}</p>
+            <p className={`bg-bg-light py-2 px-6 rounded-full`}>{quantity}</p>
             <button onClick={handleEditValue} ><FiEdit size={20}></FiEdit></button>
           </>
           :

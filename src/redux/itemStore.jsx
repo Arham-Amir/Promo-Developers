@@ -8,6 +8,29 @@ export const fetchItems = createAsyncThunk('fetchItemsforDisplay',
   async () => {
     const dbRef = ref(db)
     const resp = await get(child(dbRef, 'Development/Items'))
+    return await resp.val()
+    // const data = await resp.val()
+    // let temp = {}
+    // let resp2 = ''
+    // for (const head of Object.keys(data)) {
+    //   resp2 = await get(ref(db, 'Development/Items/' + head))
+    //   temp = {...temp, ...resp2.val() }
+    // }
+    // return temp
+  })
+export const shiftItems = createAsyncThunk('shiftItemsDisplay',
+  async ({ item, head }) => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/Items/' + item))
+    console.log(resp.val())
+    update(ref(db, 'Development/Items/' + head), { [item]: resp.val() })
+    console.log(db + 'Development/Items/' + head)
+    return true
+  })
+export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/Items'))
     return resp.val()
   })
 export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
@@ -19,14 +42,16 @@ export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
 export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay',
   async () => {
     const dbRef = ref(db)
-    let obj = {}
     const resp = await get(child(dbRef, 'Development/Items'))
-    let resp2 = null;
-    for (const element of Object.keys(resp.val())) {
-      resp2 = await get(child(dbRef, 'Development/Items/' + element))
-      obj[element] = resp2.val();
-    }
-    return obj
+    return await resp.val()
+    // const data = await resp.val()
+    // let temp = {}
+    // let resp2 = ''
+    // for (const head of Object.keys(data)) {
+    //   resp2 = await get(ref(db, 'Development/Items/' + head))
+    //   temp = {...temp, ...resp2.val() }
+    // }
+    // return temp
   })
 export const setSelectLand = createAsyncThunk('selectLandForCalculator',
   async ({ land }) => {
@@ -40,30 +65,37 @@ const itemManagerSlice = createSlice({
   initialState: {
     items: {},
     categories: {},
+    headings: {},
     land: {},
     selectedLand: {},
-    loading: false
+    loading: false,
+    catloading: false,
   },
   reducers: {
     addItem: (state, action) => {
-      state.items[0] = (action.payload)
-      set(ref(db, 'Development/Items/' + state.items[0]), 'null')
+      state.items[0] = (action.payload['item'])
+      set(ref(db, 'Development/Items/' + action.payload['itemHead'] + '/' + action.payload['item']), 'null')
       get(child(ref(db), 'Development/LandSize')).then(
         (resp) => {
           const data = resp.val()
           for (const size of Object.keys(data)) {
-            set(ref(db, 'Development/LandSize/' + size + '/' + action.payload), 0)
+            set(ref(db, 'Development/LandSize/' + size + '/' + action.payload['item']), 0)
           }
         })
-      toast('Added')
+      toast('Add Item in DataBase')
+    },
+    addItemsHeading: (state, action) => {
+      console.log('hi', action.payload)
+      update(ref(db, 'Development/Items/'), { [action.payload]: 'null' })
+      toast('Add Items Category')
     },
     addLandSize: (state, action) => {
       set(ref(db, 'Development/LandSize/' + action.payload.size), action.payload.value)
       toast('Added')
     },
     addCategory: (state, action) => {
-      set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
-      toast('added into database');
+      set(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
+      toast('Category added into database');
     },
     editName: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/name'), action.payload.name)
@@ -91,31 +123,34 @@ const itemManagerSlice = createSlice({
       update(ref(db, 'Development/Items/' + action.payload.item), { 'recomended': action.payload.category })
       toast(`Set Recomended ${action.payload.item}`);
     },
-
+    setLoading: (state) => {
+      state.loading = true;
+    }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchItems.pending, (state, action) => {
+    builder.addCase(fetchItems.pending, (state) => {
       state.loading = true;
     }).addCase(fetchItems.fulfilled, (state, action) => {
       state.items = action.payload;
       state.loading = false;
-    })
-
-    builder.addCase(fetchCategories.pending, (state) => {
+    }).addCase(fetchItemsHeadings.pending, (state) => {
       state.loading = true;
+    }).addCase(fetchItemsHeadings.fulfilled, (state, action) => {
+      state.headings = action.payload;
+      state.loading = false;
+    }).addCase(fetchCategories.pending, (state) => {
+      state.loading = true;
+      state.catloading = true;
     }).addCase(fetchCategories.fulfilled, (state, action) => {
-        state.categories = action.payload;
-        state.loading = false;
-      })
-
-    builder.addCase(fetchLandSize.pending, (state) => {
+      state.categories = action.payload;
+      state.loading = false;
+      state.catloading = false;
+    }).addCase(fetchLandSize.pending, (state) => {
       state.loading = true;
     }).addCase(fetchLandSize.fulfilled, (state, action) => {
-        state.land = action.payload;
-        state.loading = false;
-      })
-
-    builder.addCase(setSelectLand.pending, (state, action) => {
+      state.land = action.payload;
+      state.loading = false;
+    }).addCase(setSelectLand.pending, (state) => {
       state.loading = true;
     }).addCase(setSelectLand.fulfilled, (state, action) => {
       state.selectedLand = action.payload;

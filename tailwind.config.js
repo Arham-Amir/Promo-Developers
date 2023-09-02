@@ -23,7 +23,8 @@ module.exports = {
         'lg': '1000px',
       },
       fontFamily: {
-        sans: ['var(--font-roboto)']
+        sans: ['var(--font-roboto)'],
+        'themeFont': ['var(--font-fira)']
       },
       colors: {
         'bg-dark' : '#333C4B',
