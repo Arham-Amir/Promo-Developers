@@ -9,22 +9,27 @@ export function LeftBox(props = {}) {
   const [data, setData] = useState([["Task", "Hours per Day"],
   ["Work", 11],
   ["Eat", 2],
-  ["Commute", 2],
+  ["Commute", 3],
   ["Watch TV", 2]]);
 
   const updateData = () => {
     const newData = [
       ["Task", "Hours per Day"]
     ];
-    for (let i = 0; i < Object.keys(props.items).length; i++) {
-      newData.push([Object.keys(props.items)[i], 2])
-    }
+    {Object.keys(props.items).forEach((key) => {
+      if(props.cost[key]){
+      newData.push([key, props.cost[key]]);
+    } else{
+        newData.push([key, 2]);
+      }
+    });}
+    console.log(props.cost)
     setData(newData);
   };
 
   useEffect(() => {
     updateData()
-  }, [props.items]);
+  }, [props.cost]);
   useEffect(() => {
     updateData()
   }, []);

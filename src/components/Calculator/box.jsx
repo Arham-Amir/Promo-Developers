@@ -30,7 +30,7 @@ const Box = (props = {}) => {
     <section className='flex flex-row'>
       {loading ? <p>loading ...</p> : <>
         <section className='w-[25%] bg-bg-light h-screen sticky left-0 top-0'>
-          <LeftBox items={items} />
+          <LeftBox items={items} cost={cost} />
         </section>
         <article className={`${props.class} w-[75%] flex flex-col`}>
           <RightTopBox cost={cost} landsize={props.landsize} />
@@ -51,7 +51,7 @@ const Box = (props = {}) => {
                   <h1 className='py-3 border-b border-bg-dark text-3xl text-center text-themeFont font-bold'>{head}</h1>
                   {Object.keys(items[head]).map((el, j) => {
                     return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
-                      <CenterBoxItems setCost={setCost} head={'head'} index={j} item={el} detail={items[head][el]} choice={choice}
+                      <CenterBoxItems setCost={setCost} head={head} index={j} item={el} detail={items[head][el]} choice={choice}
                         setChoice={setChoice}></CenterBoxItems>
                     </Suspense>
                   })}
