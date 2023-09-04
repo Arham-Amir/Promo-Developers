@@ -11,6 +11,7 @@ const AddItemPage = () => {
   const [itemHead, setItemHead] = useState('')
   const [show, setShow] = useState(false)
   const router = useRouter()
+
   function handleAddItem() {
     dispatch(ItemManagerActions.addItem({item, itemHead}))
     setItem('')

@@ -5,11 +5,9 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchItems } from '@redux/itemStore';
 import { fetchCategories } from '@redux/itemStore'
-import { useState } from 'react';
 
 const ItemsInfoPage = () => {
   const { loading, items, catloading } = useSelector(state => state.itemManager)
-  const [pageload, setpageload] = useState(true);
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchItems())
@@ -27,7 +25,6 @@ const ItemsInfoPage = () => {
         : <>
           {Object.keys(items).map((el) => {
             return Object.keys(items[el]).map((ite, i) => {
-              // console.log(el, ite)
               return <ItemInfo head={el} key={i}>{ite}</ItemInfo>
             })
           })}

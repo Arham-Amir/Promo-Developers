@@ -44,14 +44,12 @@ export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay'
     const dbRef = ref(db)
     const resp = await get(child(dbRef, 'Development/Items'))
     return await resp.val()
-    // const data = await resp.val()
-    // let temp = {}
-    // let resp2 = ''
-    // for (const head of Object.keys(data)) {
-    //   resp2 = await get(ref(db, 'Development/Items/' + head))
-    //   temp = {...temp, ...resp2.val() }
-    // }
-    // return temp
+  })
+export const fetchAreas = createAsyncThunk('fetchAreasforDisplay',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/Areas'))
+    return await resp.val()
   })
 export const setSelectLand = createAsyncThunk('selectLandForCalculator',
   async ({ land }) => {
@@ -60,6 +58,7 @@ export const setSelectLand = createAsyncThunk('selectLandForCalculator',
     return resp.val()
   })
 
+
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
   initialState: {
@@ -67,20 +66,24 @@ const itemManagerSlice = createSlice({
     categories: {},
     headings: {},
     land: {},
+    areas: {},
     selectedLand: {},
     loading: false,
     catloading: false,
+    arealoading: false,
   },
   reducers: {
     addItem: (state, action) => {
       state.items[0] = (action.payload['item'])
       set(ref(db, 'Development/Items/' + action.payload['itemHead'] + '/' + action.payload['item']), 'null')
-      get(child(ref(db), 'Development/LandSize')).then(
+      get(child(ref(db), 'Development/Areas')).then(
         (resp) => {
           const data = resp.val()
-          for (const size of Object.keys(data)) {
-            set(ref(db, 'Development/LandSize/' + size + '/' + action.payload['item']), 0)
-          }
+          Object.keys(data).forEach(area => {
+            Object.keys(data[area]).forEach(land => {
+              set(ref(db, 'Development/Areas/' + area + '/' + land + '/' + action.payload['item']), 0)
+            });
+          });
         })
       toast('Add Item in DataBase')
     },
@@ -90,7 +93,11 @@ const itemManagerSlice = createSlice({
       toast('Add Items Category')
     },
     addLandSize: (state, action) => {
-      set(ref(db, 'Development/LandSize/' + action.payload.size), action.payload.value)
+      set(ref(db, 'Development/Areas/' + action.payload.areaName + '/' + action.payload.size), action.payload.value)
+      toast('Add ' + action.payload.size + ' Land Size in ' + action.payload.areaName)
+    },
+    addAreaName: (state, action) => {
+      set(ref(db, 'Development/Areas/' + action.payload.area), action.payload.value)
       toast('Added')
     },
     addCategory: (state, action) => {
@@ -145,6 +152,13 @@ const itemManagerSlice = createSlice({
       state.categories = action.payload;
       state.loading = false;
       state.catloading = false;
+    }).addCase(fetchAreas.pending, (state) => {
+      state.loading = true;
+      state.arealoading = true;
+    }).addCase(fetchAreas.fulfilled, (state, action) => {
+      state.areas = action.payload;
+      state.loading = false;
+      state.arealoading = false;
     }).addCase(fetchLandSize.pending, (state) => {
       state.loading = true;
     }).addCase(fetchLandSize.fulfilled, (state, action) => {
