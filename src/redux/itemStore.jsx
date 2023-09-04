@@ -113,7 +113,7 @@ const itemManagerSlice = createSlice({
       toast('Price Edited Into DB');
     },
     editQuantity: (state, action) => {
-      set(ref(db, 'Development/LandSize/' + action.payload.land + '/' + action.payload.item), action.payload.quantity)
+      set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/' + action.payload.item), action.payload.quantity)
       toast('Quantity Edited Into DB');
     },
     deleteCategory: (state, action) => {

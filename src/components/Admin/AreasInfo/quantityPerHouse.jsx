@@ -1,33 +1,29 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit } from 'react-icons/fi'
 import { BiSolidSave } from 'react-icons/bi'
 import { GiCancel } from 'react-icons/gi'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ItemManagerActions } from "@redux/itemStore";
 
 const QuantityPerHouse = (props = {}) => {
   const [quantity, setQuantity] = useState(props.value)
   const [editValue, setEditValue] = useState(false)
-  const { land } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
   function handleEditValue(e) {
     setEditValue(!editValue)
   }
   function handleSaveBtn(e) {
-    console.log(props)
     dispatch(ItemManagerActions.editQuantity({
+      'area' : props.area,
       'item': props.item,
       'land': props.land,
       quantity
     }))
-    props.fetchLandFunc()
     setEditValue(!editValue)
   }
-  useEffect(()=>{
-    setQuantity(land[props.land][props.item])
-  },[land])
+
   return (
     <section className="flex items-center flex-row gap-4 p-4 xs:text-xs sm:text-base w-fit">
       <h1 className="w-max">

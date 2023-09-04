@@ -1,9 +1,9 @@
-import AddAreasInfo from "@components/Admin/AreasInfo/addAreasInfo";
+import AreasInfoPage from "@components/Admin/AreasInfo/areasInfoPage";
 
 const Page = (props = {}) => {
   return (
     <section>
-      <AddAreasInfo />
+      <AreasInfoPage />
     </section>
   );
 }
