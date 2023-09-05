@@ -8,13 +8,13 @@ const Step1 = (props = {}) => {
   const { land } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchLandSize())
+    dispatch(fetchLandSize(props.area.split("%20").join(' ')))
   }, [])
   return (
     <section className={`${props.className} py-5 pr-5 flex justify-start items-center`}>
       <ul className="ul bg-bg-dark py-10 pl-16 pr-36 shadow-2xl absolute -left-10">
-        {Object.keys(land)?.map((el, i) => (
-          <Li key={i} link={'/calculator/' + el.split(" ").join("")} data={el} color={`#D4A056`} />
+        {land != "null" && Object.keys(land)?.map((el, i) => (
+          <Li key={i} link={'/calculator/' + props.area + '/' + el} data={el} color={`#D4A056`} />
         ))}
       </ul>
     </section>

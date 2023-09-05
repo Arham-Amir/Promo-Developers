@@ -19,7 +19,7 @@ const Constructed = (props = {}) => {
         </section>
       </section>
       <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
-        <Box landsize={props.landsize} />
+        <Box landsize={props.landsize} area = {props.area} />
       </Suspense>
     </section>
   );

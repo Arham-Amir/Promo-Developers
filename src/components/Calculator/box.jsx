@@ -28,12 +28,12 @@ const Box = (props = {}) => {
 
   return (
     <section className='flex flex-row'>
-      {loading ? <p>loading ...</p> : <>
+      {loading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
         <section className='w-[25%] bg-bg-light h-screen sticky left-0 top-0'>
           <LeftBox items={items} cost={cost} />
         </section>
         <article className={`${props.class} w-[75%] flex flex-col`}>
-          <RightTopBox cost={cost} landsize={props.landsize} />
+          <RightTopBox cost={cost} area = {props.area} landsize={props.landsize} />
           <section className="flex-grow mx-2 my-4">
             <section className="bg-bg-light w-fit mx-auto rounded-2xl text-themeFont p-4 flex-all-center gap-7">
               <section className='flex gap-2 items-center'>
@@ -81,7 +81,7 @@ const RightTopBox = (props = {}) => {
 
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg-light text-lightFont z-20 shadow-2xl flex flex-col gap-4'>
-      <h1 className='text-2xl font-bold border-b border-double w-fit'>{props.landsize} Construction Cost in Lahore</h1>
+      <h1 className='text-2xl font-bold border-b border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
 
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-dark border-bg-light">

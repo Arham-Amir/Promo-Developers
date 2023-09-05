@@ -10,7 +10,7 @@ const AddAreasInfo = () => {
 
   function handleAddAreaName() {
     dispatch(ItemManagerActions.addAreaName({ area, value: 'null' }));
-    dispatch(fetchAreas)
+    dispatch(fetchAreas())
     setArea('');
   }
 

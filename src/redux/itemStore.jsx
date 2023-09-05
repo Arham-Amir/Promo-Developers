@@ -34,9 +34,9 @@ export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay
     return resp.val()
   })
 export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
-  async () => {
+  async (are) => {
     const dbRef = ref(db)
-    const resp = await get(child(dbRef, 'Development/LandSize'))
+    const resp = await get(child(dbRef, 'Development/Areas/'+are))
     return resp.val()
   })
 export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay',
@@ -127,7 +127,8 @@ const itemManagerSlice = createSlice({
 
     },
     setRecomendedItemCategory: (state, action) => {
-      update(ref(db, 'Development/Items/' + action.payload.item), { 'recomended': action.payload.category })
+      console.log('Development/Items/' + action.payload.head +'/'+ action.payload.item)
+      update(ref(db, 'Development/Items/' + action.payload.head +'/'+ action.payload.item), { 'recomended': action.payload.category })
       toast(`Set Recomended ${action.payload.item}`);
     },
     setLoading: (state) => {

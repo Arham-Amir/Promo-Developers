@@ -13,7 +13,7 @@ const ItemInfo = (props = {}) => {
   const dispatch = useDispatch()
   const handleChange = (item, el) => {
     setRecommended(el);
-    dispatch(ItemManagerActions.setRecomendedItemCategory({ 'item': item, 'category': el }))
+    dispatch(ItemManagerActions.setRecomendedItemCategory({'head':props.head, 'item': item, 'category': el }))
   };
 
   function handleShowBtn() {

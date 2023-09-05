@@ -23,7 +23,6 @@ export function LeftBox(props = {}) {
         newData.push([key, 2]);
       }
     });}
-    console.log(props.cost)
     setData(newData);
   };
 
