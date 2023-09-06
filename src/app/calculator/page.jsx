@@ -1,8 +1,8 @@
-import Step0 from "@components/Calculator/step0";
+import CalculatorInfoPage from "@components/Calculator/calculatorInfoPage";
 
 const Page = () => {
   return (
-    <Step0 />
+    <CalculatorInfoPage />
   );
 }
 

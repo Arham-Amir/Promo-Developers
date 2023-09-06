@@ -7,12 +7,18 @@ import Link from "next/link";
 const Step1 = (props = {}) => {
   const { land } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(fetchLandSize(props.area.split("%20").join(' ')))
+    dispatch(fetchLandSize(props.area))
   }, [])
+
+  useEffect(() => {
+    dispatch(fetchLandSize(props.area))
+  }, [props.area])
+
   return (
-    <section className={`${props.className} py-5 pr-5 flex justify-start items-center`}>
-      <ul className="ul bg-bg-dark py-10 pl-16 pr-36 shadow-2xl absolute -left-10">
+    <section className={`${props.className} py-5 pr-5 flex justify-center items-center`}>
+      <ul className="ul py-10 pl-16 pr-36 shadow-2xl backdrop-blur-[1px]">
         {land != "null" && Object.keys(land)?.map((el, i) => (
           <Li key={i} link={'/calculator/' + props.area + '/' + el} data={el} color={`#D4A056`} />
         ))}

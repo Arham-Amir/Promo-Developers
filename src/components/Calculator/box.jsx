@@ -7,7 +7,7 @@ import { LeftBox } from '@components/Calculator/leftBox'
 import { useImmer } from "use-immer";
 
 const Box = (props = {}) => {
-  const [choice, setChoice] = useState('');
+  const [choice, setChoice] = useState('Recomended');
   const [cost, setCost] = useImmer({});
   const { loading, items } = useSelector(state => state.itemManager)
 
@@ -57,7 +57,6 @@ const Box = (props = {}) => {
                   })}
                 </section>
               })}
-
             </section>
           </section>
         </article>
@@ -82,7 +81,6 @@ const RightTopBox = (props = {}) => {
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg-light text-lightFont z-20 shadow-2xl flex flex-col gap-4'>
       <h1 className='text-2xl font-bold border-b border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
-
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-dark border-bg-light">
           <div className="stat-title text-lightFont">Total Cost</div>
@@ -90,13 +88,8 @@ const RightTopBox = (props = {}) => {
             {total}
           </div>
         </div>
-
         <div className="stat place-items-center bg-bg-dark border-bg-light">
-          <div className="stat-title text-lightFont">Grey Structure Cost</div>
-          <div className="stat-value">4,200</div>
-        </div>
-        <div className="stat place-items-center bg-bg-dark border-bg-light">
-          <div className="stat-title text-lightFont">Labour Cost</div>
+          <div className="stat-title text-lightFont">{props.landsize} /Sq Ft</div>
           <div className="stat-value">4,200</div>
         </div>
 
