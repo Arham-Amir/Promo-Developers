@@ -15,36 +15,11 @@ const Step0 = (props = {}) => {
   }, [])
 
   return (
-    <section className="text-lightFont flex flex-col gap-10 custom-scrollbar box-border py-10">
+    <section className="text-lightFont flex flex-col gap-10 h-[88vh] custom-scrollbar box-border py-10">
       {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" />
         : <>
-          <SearchArea areas={areas} setQueryData = {(q)=> props.setQueryData(q)} />
+          <SearchArea areas={areas} setArea = {(q)=> props.setArea(q)} setLand = {(q)=> props.setLand(q)} />
         </>}
-      <style jsx>
-        {`
-          .custom-scrollbar {
-            overflow-y: scroll;
-            height: 88vh
-          }
-
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-          }
-
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: #4A4C5C;
-          }
-
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #D4A056;
-            border-radius: 4px;
-          }
-
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #bdc3c7;
-          }
-        `}
-      </style>
     </section>
   );
 }

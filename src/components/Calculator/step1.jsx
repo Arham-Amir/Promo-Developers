@@ -17,8 +17,10 @@ const Step1 = (props = {}) => {
   }, [props.area])
 
   return (
-    <section className={`${props.className} py-5 pr-5 flex justify-center items-center`}>
-      <ul className="ul py-10 pl-16 pr-36 shadow-2xl backdrop-blur-[1px]">
+    <section className={`${props.className} shadow-2xl backdrop-blur-[1px]
+     py-5 pr-5 flex flex-col justify-center items-start`}>
+      <h1 className="text-lightFont z-30 text-2xl px-5">{props.area} Selected</h1>
+      <ul className="ul py-10 pl-16 pr-36 ">
         {land != "null" && Object.keys(land)?.map((el, i) => (
           <Li key={i} link={'/calculator/' + props.area + '/' + el} data={el} color={`#D4A056`} />
         ))}

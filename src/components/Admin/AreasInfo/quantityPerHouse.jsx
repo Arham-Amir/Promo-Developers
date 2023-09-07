@@ -14,7 +14,7 @@ const QuantityPerHouse = (props = {}) => {
   function handleEditValue(e) {
     setEditValue(!editValue)
   }
-  function handleSaveBtn(e) {
+  function handleSaveBtn() {
     dispatch(ItemManagerActions.editQuantity({
       'area' : props.area,
       'item': props.item,

@@ -25,6 +25,7 @@ const Nav_Links = (props = {}) => {
       <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont' : 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
       <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Items</button>
       <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/landSize') }}>LandSizes</button>
+      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/areas') }}>Areas</button>
     </section>
     </>
   );

@@ -1,17 +1,20 @@
 'use client'
 import Step0 from "@components/Calculator/step0";
 import Step1 from "@components/Calculator/step1";
+import Step1_1 from "@components/Calculator/step1_1";
 import { Suspense, useState, useEffect } from "react";
 
 const CalculatorInfoPage = () => {
-  const [query, setQuery] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
+  const [selectedLand, setSelectedLand] = useState('');
+
   useEffect(() => {
-    console.log(query)
-  }, [query])
+  }, [selectedArea])
   return (
     <section className="flex">
       <section className="w-[40%]">
-        <Step0 setQueryData={(q) => setQuery(q)} />
+        <Step0 setArea={(q) => setSelectedArea(q)}
+        setLand={(q) => setSelectedLand(q)} />
       </section>
       <section className="w-[60%] h-[88vh] flex justify-center items-center relative">
         <section
@@ -20,7 +23,12 @@ const CalculatorInfoPage = () => {
             backgroundImage: `url('/image/calcBg.png')`,
           }}
         ></section>
-        {query && <Step1 area={query} className="w-1/2" />}
+        {selectedArea != '' &&
+          <Step1 area={selectedArea} />
+        }
+        {selectedLand != '' &&
+          <Step1_1 land={selectedLand} />
+        }
       </section>
     </section>
   );

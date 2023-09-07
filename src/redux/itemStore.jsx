@@ -22,9 +22,7 @@ export const shiftItems = createAsyncThunk('shiftItemsDisplay',
   async ({ item, head }) => {
     const dbRef = ref(db)
     const resp = await get(child(dbRef, 'Development/Items/' + item))
-    console.log(resp.val())
     update(ref(db, 'Development/Items/' + head), { [item]: resp.val() })
-    console.log(db + 'Development/Items/' + head)
     return true
   })
 export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay',
@@ -88,7 +86,6 @@ const itemManagerSlice = createSlice({
       toast('Add Item in DataBase')
     },
     addItemsHeading: (state, action) => {
-      console.log('hi', action.payload)
       update(ref(db, 'Development/Items/'), { [action.payload]: 'null' })
       toast('Add Items Category')
     },
@@ -116,6 +113,10 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/' + action.payload.item), action.payload.quantity)
       toast('Quantity Edited Into DB');
     },
+    editSqFeet: (state, action) => {
+      set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/squareFeet'), action.payload.squareFeet)
+      toast('Square Feet Edited Into DB');
+    },
     deleteCategory: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/');
       remove(dbRef).then(() => {
@@ -127,7 +128,6 @@ const itemManagerSlice = createSlice({
 
     },
     setRecomendedItemCategory: (state, action) => {
-      console.log('Development/Items/' + action.payload.head +'/'+ action.payload.item)
       update(ref(db, 'Development/Items/' + action.payload.head +'/'+ action.payload.item), { 'recomended': action.payload.category })
       toast(`Set Recomended ${action.payload.item}`);
     },
