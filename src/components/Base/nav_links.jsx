@@ -1,34 +1,52 @@
 'use client'
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-const Nav_Links = (props = {}) => {
+const NavLinks = (props = {}) => {
   const router = useRouter();
-  const pathname = usePathname()
-  function handleClick(e, url) {
+  const pathname = usePathname();
+
+  function handleClick(url) {
     if (props.showLinks) {
-      props.show()
+      props.show();
     }
-    router.push(url)
+    router.push(url);
   }
 
   return (
-    <>
-    <section className={`${props.className} ${pathname.includes("/admin") ? 'hidden' : 'xs:hidden lg:flex'}`}>
-      {/* <button onClick={(e) => { handleClick(e, '/calculator') }}>Calculator</button> */}
-      <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont' : 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '#aboutus') }}>About</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '#contactus') }}>ContactUs</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Admin</button>
+    <section className={`${props.className}`}>
+      <button
+        className={`${pathname === "/" ? "lg:border-t-2 lg:border-t-themeFont" : "bg-transparent lg:hover:border-t-2 lg:hover:border-t-themeFont"
+          } p-2 text-xl`}
+        onClick={() => handleClick("/")}
+      >
+        Home
+      </button>
+      <button
+        className={`text-xl lg:hover:border-t-2 lg:hover:border-t-themeFont p-2`}
+        onClick={() => handleClick("#aboutus")}
+      >
+        About
+      </button>
+      <button
+        className={`text-xl lg:hover:border-t-2 lg:hover:border-t-themeFont p-2`}
+        onClick={() => handleClick("#contactus")}
+      >
+        ContactUs
+      </button>
+      <button
+        className={`text-xl lg:hover:border-t-2 lg:hover:border-t-themeFont p-2`}
+        onClick={() => handleClick("/admin/items")}
+      >
+        Admin
+      </button>
+      <section className="bg-themeFont ml-2 rounded-md w-fit">
+        <section className="border-themeFont nav_bg border -translate-x-[2px] -translate-y-[2px] px-5 py-2 rounded-md hover:-translate-x-1 hover:-translate-y-1 ease-in-out transition duration-300 text-xl">
+          <Link href="/calculator">Calculator</Link>
+        </section>
+      </section>
     </section>
-    <section className={`${props.className} ${pathname.includes("/admin") ? 'xs:hidden lg:flex' : 'hidden'}`}>
-      {/* <button onClick={(e) => { handleClick(e, '/calculator') }}>Calculator</button> */}
-      <button className={`${pathname == '/' ? 'border-t-2 border-t-themeFont' : 'bg-transparent hover:border-t-2 hover:border-t-themeFont'}  p-2 text-lg font-bold`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Items</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/landSize') }}>LandSizes</button>
-      <button className={`text-lg font-bold hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/areas') }}>Areas</button>
-    </section>
-    </>
   );
-}
+};
 
-export default Nav_Links;
+export default NavLinks;

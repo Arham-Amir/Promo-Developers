@@ -4,8 +4,12 @@
 
 @layer utilities {
 
-  /* scrollbar start  */
+  .nav_bg {
+    background: rgb(38,44,55);
+    background: linear-gradient(270deg, rgba(38,44,55,1) 0%, rgba(51,60,75,1) 45%, rgba(51,60,75,1) 100%);
+  }
 
+  /* scrollbar start  */
   .custom-scrollbar {
     overflow-y: scroll;
   }

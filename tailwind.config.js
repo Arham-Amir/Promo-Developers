@@ -24,7 +24,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-roboto)'],
-        'themeFont': ['var(--font-fira)']
+        'themeFont': ['var(--font-myFont)']
       },
       colors: {
         'bg-dark' : '#333C4B',
