@@ -24,13 +24,15 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-roboto)'],
-        'themeFont': ['var(--font-myFont)']
+        'themeFont': ['var(--font-myFont)'],
+        'heading': ['var(--font-heading)'],
       },
       colors: {
         'bg-dark' : '#333C4B',
-        'themeFont': '#D4A056',
+        'themeFont': '#c48c3b',
         'bg-light': '#4A4C5C',
-        'lightFont': '#FFFFFF'
+        'lightFont': '#FFFFFF',
+        'bg': '#F4F4F4',
       }
     },
   },

@@ -34,7 +34,7 @@ const Box = (props = {}) => {
         </section>
         <article className={`${props.class} w-[75%] flex flex-col`}>
           <RightTopBox cost={cost} area = {props.area} landsize={props.landsize} />
-          <section className="flex-grow mx-2 my-4">
+          <section className="flex-grow px-2 py-4 bg-bg-dark">
             <section className="bg-bg-light w-fit mx-auto rounded-2xl text-themeFont p-4 flex-all-center gap-7">
               <section className='flex gap-2 items-center'>
                 <input type="radio" value={"Recomended"} checked={choice === "Recomended"} onChange={handleOptionChange} name="radio-0" id='r1' className="radio radio-warning" />

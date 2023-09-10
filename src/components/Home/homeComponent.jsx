@@ -1,15 +1,19 @@
 import VideoComp from '@components/Home/videoComp'
-import ProjectsInfo from '@components/Home/projectsInfo'
+import Services from '@components/Home/services'
 import ContactUs from '@components/Home/contactUs';
-import AboutUs from '@components/Home/aboutUs';
+import SideBySide from '@components/Home/sideBySide';
+import Intro from '@components/Home/intro';
 import Fotter from '@components/Base/fotter';
 
 const HomeComponent = () => {
   return (
     <section>
       <VideoComp />
-      <ProjectsInfo />
-      <AboutUs />
+      {/* <ProjectsInfo /> */}
+      <SideBySide />
+      <Intro />
+      <Services />
+      {/* <AboutUs /> */}
       <ContactUs />
       <Fotter />
     </section>

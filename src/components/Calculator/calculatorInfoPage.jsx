@@ -11,12 +11,12 @@ const CalculatorInfoPage = () => {
   useEffect(() => {
   }, [selectedArea])
   return (
-    <section className="flex">
-      <section className="w-[40%]">
+    <section className="flex h-[86vh]">
+      <section className="w-[40%] bg-bg-dark">
         <Step0 setArea={(q) => setSelectedArea(q)}
         setLand={(q) => setSelectedLand(q)} />
       </section>
-      <section className="w-[60%] h-[88vh] flex justify-center items-center relative">
+      <section className="w-[60%] h-full flex justify-center items-center relative">
         <section
           className="absolute inset-0 bg-[url('/image/calcBg.png')] opacity-80"
           style={{

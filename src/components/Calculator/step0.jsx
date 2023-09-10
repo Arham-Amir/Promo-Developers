@@ -15,7 +15,7 @@ const Step0 = (props = {}) => {
   }, [])
 
   return (
-    <section className="text-lightFont flex flex-col gap-10 h-[88vh] custom-scrollbar box-border py-10">
+    <section className="text-lightFont flex flex-col gap-10 h-full custom-scrollbar box-border py-10">
       {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" />
         : <>
           <SearchArea areas={areas} setArea = {(q)=> props.setArea(q)} setLand = {(q)=> props.setLand(q)} />

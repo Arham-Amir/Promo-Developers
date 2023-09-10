@@ -4,9 +4,38 @@
 
 @layer utilities {
 
+  /* Intro Section Start */
+  .glow-section:hover {
+    box-shadow: 0 0 10px 5px #c48c3b; /* Adjust the shadow properties as needed */
+  }
+  .intro_text {
+    @apply relative uppercase text-transparent;
+    -webkit-text-stroke: 5px white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro_text::before {
+    content: attr(data-text);
+    position: absolute;
+    color: #D4A056;
+    width: 0;
+    overflow: hidden;
+    transition: 0.8s;
+    -webkit-text-stroke: 3px #D4A056;
+  }
+
+  .intro_text.visible::before {
+    width: 100%;
+  }
+
+
+  /* Intro Section End */
+
+
   .nav_bg {
-    background: rgb(38,44,55);
-    background: linear-gradient(270deg, rgba(38,44,55,1) 0%, rgba(51,60,75,1) 45%, rgba(51,60,75,1) 100%);
+    background: rgb(38, 44, 55);
+    background: linear-gradient(270deg, rgba(38, 44, 55, 1) 0%, rgba(51, 60, 75, 1) 45%, rgba(51, 60, 75, 1) 100%);
   }
 
   /* scrollbar start  */
@@ -61,17 +90,17 @@
   .ul .li .a::before {
     content: attr(data-text);
     position: absolute;
-    color: var(--clr);
+    color: #D4A056;
     width: 0;
     overflow: hidden;
     transition: 1s;
-    border-right: 6px solid var(--clr);
-    -webkit-text-stroke: 1px var(--clr);
+    border-right: 6px solid #D4A056;
+    -webkit-text-stroke: 1px #D4A056;
   }
 
   .ul .li .a:hover::before {
     width: 100%;
-    filter: drop-shadow(0 0 25px var(--clr));
+    filter: drop-shadow(0 0 25px #D4A056);
   }
 
 }

@@ -21,6 +21,11 @@ const myFont = localFont({
   display: 'swap',
   variable: '--font-myFont'
 })
+const heading = localFont({
+  src: './GoudyStM-webfont.woff',
+  display: 'swap',
+  variable: '--font-heading'
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -29,8 +34,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className='bg-bg-dark'>
-      <body className={`${nunito.variable} ${myFont.variable} font-sans`}>
+    <html lang="en" className='bg-white'>
+      <body className={`${nunito.variable} ${myFont.variable} ${heading.variable} font-sans max-w-screen overflow-x-hidden`}>
         <Provider>
           <Navbar />
           <ToastContainer />
