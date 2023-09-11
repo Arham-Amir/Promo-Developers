@@ -11,25 +11,17 @@ const CalculatorInfoPage = () => {
   useEffect(() => {
   }, [selectedArea])
   return (
-    <section className="flex h-[86vh]">
-      <section className="w-[40%] bg-bg-dark">
+    <section className="flex flex-col">
+      <section className="h-[50vh] w-full bg-[url('/image/calc.png')] bg-cover">
         <Step0 setArea={(q) => setSelectedArea(q)}
-        setLand={(q) => setSelectedLand(q)} />
+          setLand={(q) => setSelectedLand(q)} />
       </section>
-      <section className="w-[60%] h-full flex justify-center items-center relative">
-        <section
-          className="absolute inset-0 bg-[url('/image/calcBg.png')] opacity-80"
-          style={{
-            backgroundImage: `url('/image/calcBg.png')`,
-          }}
-        ></section>
-        {selectedArea != '' &&
-          <Step1 area={selectedArea} />
-        }
-        {selectedLand != '' &&
-          <Step1_1 land={selectedLand} />
-        }
-      </section>
+      {selectedArea != '' &&
+        <Step1 area={selectedArea} />
+      }
+      {selectedLand != '' &&
+        <Step1_1 land={selectedLand} />
+      }
     </section>
   );
 }

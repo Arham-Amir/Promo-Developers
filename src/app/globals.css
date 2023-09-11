@@ -73,35 +73,6 @@
     background-repeat: no-repeat;
   }
 
-  /* Animation on Hover */
-  .ul {
-    @apply relative flex flex-col gap-4;
-  }
-
-  .ul .li {
-    @apply relative list-none;
-  }
-
-  .ul .li .a {
-    @apply relative text-3xl uppercase text-transparent;
-    -webkit-text-stroke: 1px gainsboro;
-  }
-
-  .ul .li .a::before {
-    content: attr(data-text);
-    position: absolute;
-    color: #D4A056;
-    width: 0;
-    overflow: hidden;
-    transition: 1s;
-    border-right: 6px solid #D4A056;
-    -webkit-text-stroke: 1px #D4A056;
-  }
-
-  .ul .li .a:hover::before {
-    width: 100%;
-    filter: drop-shadow(0 0 25px #D4A056);
-  }
 
 }
 
