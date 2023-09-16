@@ -3,14 +3,14 @@ import ItemInfo from '@components/Admin/ItemsInfo/itemsInfo';
 import AddItemPage from '@components/Admin/ItemsInfo/addItemPage';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchItems } from '@redux/itemStore';
+import { fetchItemsHeadings } from '@redux/itemStore';
 import { fetchCategories } from '@redux/itemStore'
 
 const ItemsInfoPage = () => {
-  const { loading, items, catloading } = useSelector(state => state.itemManager)
+  const { loading, headings, catloading } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchItems())
+    dispatch(fetchItemsHeadings())
   }, [])
   useEffect(() => {
     dispatch(fetchCategories())
@@ -23,8 +23,8 @@ const ItemsInfoPage = () => {
       <AddItemPage />
       {loading || catloading ? <span className="flex justify-center items-center min-h-screen min-w-full loading loading-dots loading-lg text-themeFont" />
         : <>
-          {Object.keys(items).map((el) => {
-            return Object.keys(items[el]).map((ite, i) => {
+          {Object.keys(headings).map((el) => {
+            return Object.keys(headings[el]).map((ite, i) => {
               return <ItemInfo head={el} key={i}>{ite}</ItemInfo>
             })
           })}

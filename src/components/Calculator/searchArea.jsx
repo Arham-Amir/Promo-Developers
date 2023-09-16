@@ -74,7 +74,7 @@ export default function SearchArea(props = {}) {
             placeholder="Search Area"
           />
           {areaSuggestions.length > 0 && (
-            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 h-[37vh] custom-scrollbar'>
+            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
               {areaSuggestions.map((suggestion) => (
                 <button className='w-full text-start border-b border-gray-400'
                   key={suggestion}
@@ -96,7 +96,7 @@ export default function SearchArea(props = {}) {
             placeholder="Search Land"
           />
           {landSuggestions.length > 0 && (
-            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 h-[37vh] custom-scrollbar'>
+            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
               {landSuggestions.map((suggestion) => (
                 <button className='w-full text-start border-b border-gray-400'
                   key={suggestion}

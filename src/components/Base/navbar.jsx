@@ -10,8 +10,8 @@ const Navbar = () => {
   const pathname = usePathname()
 
   return (
-    <section className="sticky w-full top-0 z-30">
-      <nav className={`bg-white/80 backdrop-blur-sm  text-bg-dark w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[14vh] flex justify-between items-center text-lg font-themeFont relative`}>
+    <section className="w-full z-30">
+      <nav className={`bg-white/80 backdrop-blur-sm  text-black w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[14vh] flex justify-between items-center text-lg font-themeFont relative`}>
         <Nav_Logo></Nav_Logo>
         {pathname.includes("/admin")
           ? <AdminNav_Links

@@ -2,24 +2,26 @@
 import { Suspense, useEffect, useState } from 'react';
 import CenterBoxItems from '@components/Calculator/centerBoxItems';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems } from '@redux/itemStore';
+import { fetchItemsHeadings, fetchAreas } from '@redux/itemStore';
 import { LeftBox } from '@components/Calculator/leftBox'
 import { useImmer } from "use-immer";
 
 const Box = (props = {}) => {
   const [choice, setChoice] = useState('Recomended');
   const [cost, setCost] = useImmer({});
-  const { loading, items } = useSelector(state => state.itemManager)
+  const { loading, headings, areas, arealoading } = useSelector(state => state.itemManager)
+  const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
 
   const handleOptionChange = (event) => {
     setChoice(event.target.value);
   };
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(fetchItems())
+    dispatch(fetchItemsHeadings())
+    dispatch(fetchAreas())
   }, [])
   useEffect(() => {
-    Object.keys(items).forEach(el => {
+    Object.keys(headings).forEach(el => {
       setCost((draft) => {
         draft[el] = 0
       })
@@ -28,14 +30,14 @@ const Box = (props = {}) => {
 
   return (
     <section className='flex flex-row'>
-      {loading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
-        <section className='w-[25%] bg-bg-light h-screen sticky left-0 top-0'>
-          <LeftBox items={items} cost={cost} />
+      {loading || arealoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
+        <section className='w-[25%] bg-white h-screen sticky left-0 top-0'>
+          <LeftBox items={headings} cost={cost} />
         </section>
-        <article className={`${props.class} w-[75%] flex flex-col`}>
-          <RightTopBox cost={cost} area = {props.area} landsize={props.landsize} />
-          <section className="flex-grow px-2 py-4 bg-bg-dark">
-            <section className="bg-bg-light w-fit mx-auto rounded-2xl text-themeFont p-4 flex-all-center gap-7">
+        <article className={`${props.class} w-[75%] flex flex-col bg-white`}>
+          <RightTopBox cost={cost} area={props.area} landsize={props.landsize} />
+          <section className="flex-grow px-2 py-4 bg-white">
+            <section className="bg-bg w-fit mx-auto rounded-2xl text-black p-4 flex-all-center gap-7">
               <section className='flex gap-2 items-center'>
                 <input type="radio" value={"Recomended"} checked={choice === "Recomended"} onChange={handleOptionChange} name="radio-0" id='r1' className="radio radio-warning" />
                 <label htmlFor="r1">Recomended</label>
@@ -45,23 +47,29 @@ const Box = (props = {}) => {
                 <label htmlFor="r2">Build Your Own House</label>
               </section>
             </section>
-            <section className="text-themeFont p-4">
-              {Object.keys(items).map((head, i) => {
-                return <section key={i} className='my-4 bg-bg-light'>
-                  <h1 className='py-3 border-b border-bg-dark text-3xl text-center text-themeFont font-bold'>{head}</h1>
-                  {Object.keys(items[head]).map((el, j) => {
-                    return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
-                      <CenterBoxItems setCost={setCost} head={head} index={j} item={el} detail={items[head][el]} choice={choice}
-                        setChoice={setChoice}></CenterBoxItems>
-                    </Suspense>
+            <section className="text-black p-4">
+              {sortedHeadings.map((head, i) => {
+                return <section key={i} className='my-4'>
+                  <section className='p-5 bg-gray-300 border-b border-white text-3xl font-heading text-black font-bold flex items-center justify-between'>
+                    <h1 className='' > {head}</h1>
+                    <h1 className='' > {cost[head]}</h1>
+                  </section>
+                  {Object.keys(headings[head]).map((el, j) => {
+                    if (el != 'order') {
+                      return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
+                        <CenterBoxItems setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas = {areas} area={props.area} landsize={props.landsize}
+                          setChoice={setChoice}></CenterBoxItems>
+                      </Suspense>
+                    }
                   })}
                 </section>
               })}
+
             </section>
           </section>
         </article>
       </>}
-    </section>
+    </section >
   );
 };
 
@@ -79,22 +87,22 @@ const RightTopBox = (props = {}) => {
   }, [props.cost]);
 
   return (
-    <section className='h-auto p-4 sticky top-0 w-full bg-bg-light text-lightFont z-20 shadow-2xl flex flex-col gap-4'>
+    <section className='h-auto p-4 sticky top-0 w-full bg-white text-black z-20 shadow-2xl flex flex-col gap-4'>
       <h1 className='text-2xl font-bold border-b border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
       <div className="stats shadow text-themeFont">
-        <div className="stat place-items-center bg-bg-dark border-bg-light">
-          <div className="stat-title text-lightFont">Total Cost</div>
+        <div className="stat place-items-center bg-bg border-bg-light">
+          <div className="stat-title text-black">Total Cost</div>
           <div className="stat-value">
             {total}
           </div>
         </div>
-        <div className="stat place-items-center bg-bg-dark border-bg-light">
-          <div className="stat-title text-lightFont">{props.landsize} /Sq Ft</div>
+        <div className="stat place-items-center bg-bg border-bg-light">
+          <div className="stat-title text-black">{props.landsize} /Sq Ft</div>
           <div className="stat-value">4,200</div>
         </div>
 
-        <div className="stat place-items-center bg-bg-dark border-bg-light">
-          <div className="stat-title text-lightFont">Price Per Sq Ft</div>
+        <div className="stat place-items-center bg-bg border-bg-light">
+          <div className="stat-title text-black">Price Per Sq Ft</div>
           <div className="stat-value">1,200</div>
         </div>
       </div>

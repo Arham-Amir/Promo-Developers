@@ -6,8 +6,11 @@
 
   /* Intro Section Start */
   .glow-section:hover {
-    box-shadow: 0 0 10px 5px #c48c3b; /* Adjust the shadow properties as needed */
+
+    box-shadow: 0 0 10px 5px #ffb923;
+    /* Adjust the shadow properties as needed */
   }
+
   .intro_text {
     @apply relative uppercase text-transparent;
     -webkit-text-stroke: 5px white;
@@ -18,11 +21,11 @@
   .intro_text::before {
     content: attr(data-text);
     position: absolute;
-    color: #D4A056;
+    color: #ffb923;
     width: 0;
     overflow: hidden;
     transition: 0.8s;
-    -webkit-text-stroke: 3px #D4A056;
+    -webkit-text-stroke: 3px #ffb923;
   }
 
   .intro_text.visible::before {
@@ -52,7 +55,7 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #D4A056;
+    background: #ffb923;
     border-radius: 4px;
   }
 
@@ -73,6 +76,11 @@
     background-repeat: no-repeat;
   }
 
+  .sliderImg {
+    @apply absolute w-full h-full;
+    clip-path: var(--path);
+    transition: clip-path 0.3s ease-in-out;
+  }
 
 }
 

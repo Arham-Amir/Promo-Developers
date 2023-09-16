@@ -29,10 +29,11 @@ module.exports = {
       },
       colors: {
         'bg-dark' : '#333C4B',
-        'themeFont': '#c48c3b',
+        'themeFont': '#FFA900',
         'bg-light': '#4A4C5C',
         'lightFont': '#FFFFFF',
         'bg': '#F4F4F4',
+        'bg-card-light': '#fafafa',
       }
     },
   },

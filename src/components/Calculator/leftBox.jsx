@@ -11,18 +11,23 @@ export function LeftBox(props = {}) {
   ["Eat", 2],
   ["Commute", 3],
   ["Watch TV", 2]]);
+  const sortedHeadings = Object.keys(props.items).sort((a, b) => props.items[a].order - props.items[b].order);
 
+  const colors = ["#E83A3A", "#39395f", "#FFA900", "#0793EA"]
+  // "#07938E"
   const updateData = () => {
     const newData = [
       ["Task", "Hours per Day"]
     ];
-    {Object.keys(props.items).forEach((key) => {
-      if(props.cost[key]){
-      newData.push([key, props.cost[key]]);
-    } else{
-        newData.push([key, 2]);
-      }
-    });}
+    {
+      sortedHeadings.forEach((key) => {
+        if (props.cost[key]) {
+          newData.push([key, props.cost[key]]);
+        } else {
+          newData.push([key, 2]);
+        }
+      });
+    }
     setData(newData);
   };
 
@@ -36,15 +41,13 @@ export function LeftBox(props = {}) {
   const options = {
     title: "",
     pieHole: 0.5,
-    is3D: true,
+    // is3D: true,
     legend: 'none',
     slices: {
-      0: { color: "blue" },
-      1: { color: "red" },
-      2: { color: "green" },
-      3: { color: "orange" },
-      4: { color: "purple" },
-      5: { color: "gray" },
+      0: { color: colors[0] },
+      1: { color: colors[1] },
+      2: { color: colors[2] },
+      3: { color: colors[3] },
     },
     chartArea: {
       left: "10%",
@@ -59,7 +62,7 @@ export function LeftBox(props = {}) {
 
   return (
     <section className="flex flex-col items-center justify-center gap-10 py-16">
-      <h1 className="text-2xl text-lightFont font-bold text-center">Construction Cost</h1>
+      <h1 className="text-2xl font-heading text-black font-bold text-center">Construction Cost</h1>
       <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
         <Chart
           chartType="PieChart"
@@ -69,13 +72,13 @@ export function LeftBox(props = {}) {
           options={options}
         />
       </Suspense>
-      <section className="flex flex-col text-lightFont">
+      <section className="flex flex-col text-black">
         {data.map((el, i) => {
           if (i == 0) {
             return;
           }
           return <section key={i} className="flex gap-8 items-center">
-            <BsFillCircleFill size={12} fill="blue" />
+            <BsFillCircleFill size={12} fill={colors[i-1]} />
             <p>{el[0]}</p>
           </section>
         })}

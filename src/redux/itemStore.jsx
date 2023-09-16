@@ -4,20 +4,6 @@ import { db } from '@api/dbConfig'
 import { set, get, ref, child, remove, update } from 'firebase/database'
 import { toast } from 'react-toastify';
 
-export const fetchItems = createAsyncThunk('fetchItemsforDisplay',
-  async () => {
-    const dbRef = ref(db)
-    const resp = await get(child(dbRef, 'Development/Items'))
-    return await resp.val()
-    // const data = await resp.val()
-    // let temp = {}
-    // let resp2 = ''
-    // for (const head of Object.keys(data)) {
-    //   resp2 = await get(ref(db, 'Development/Items/' + head))
-    //   temp = {...temp, ...resp2.val() }
-    // }
-    // return temp
-  })
 export const shiftItems = createAsyncThunk('shiftItemsDisplay',
   async ({ item, head }) => {
     const dbRef = ref(db)
@@ -136,15 +122,14 @@ const itemManagerSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchItems.pending, (state) => {
-      state.loading = true;
-    }).addCase(fetchItems.fulfilled, (state, action) => {
-      state.items = action.payload;
-      state.loading = false;
-    }).addCase(fetchItemsHeadings.pending, (state) => {
+    builder.addCase(fetchItemsHeadings.pending, (state) => {
       state.loading = true;
     }).addCase(fetchItemsHeadings.fulfilled, (state, action) => {
       state.headings = action.payload;
+      console.log(Object.fromEntries(
+        Object.entries(action.payload)
+          .sort(([, a], [, b]) => a.order - b.order)
+      ));
       state.loading = false;
     }).addCase(fetchCategories.pending, (state) => {
       state.loading = true;
