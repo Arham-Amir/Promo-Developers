@@ -7,7 +7,7 @@
   /* Intro Section Start */
   .glow-section:hover {
 
-    box-shadow: 0 0 10px 5px #ffb923;
+    box-shadow: 0 0 10px 5px #291334;
     /* Adjust the shadow properties as needed */
   }
 
@@ -21,11 +21,11 @@
   .intro_text::before {
     content: attr(data-text);
     position: absolute;
-    color: #ffb923;
+    color: #291334;
     width: 0;
     overflow: hidden;
     transition: 0.8s;
-    -webkit-text-stroke: 3px #ffb923;
+    -webkit-text-stroke: 3px #291334;
   }
 
   .intro_text.visible::before {

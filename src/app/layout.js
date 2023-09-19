@@ -1,19 +1,15 @@
 import './globals.css'
-import { Nunito_Sans, Fira_Mono } from 'next/font/google'
+import { Nunito_Sans, Lato} from 'next/font/google'
 import localFont from 'next/font/local'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const nunito = Nunito_Sans({
+const nunito = Lato({
   subsets: ['latin'],
+  weight :['100', '300', '400', '700', '900'],
   variable: '--font-roboto'
-})
-const fira = Fira_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-fira'
 })
 
 const myFont = localFont({

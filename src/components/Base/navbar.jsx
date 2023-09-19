@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <section className="w-full z-30">
-      <nav className={`bg-navBg backdrop-blur-sm  text-navTxt w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[12vh] flex justify-between items-center text-lg font-themeFont relative`}>
+      <nav className={`bg-navBg backdrop-blur-sm  text-navTxt w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[12vh] flex justify-between items-center text-lg  relative`}>
         <Nav_Logo></Nav_Logo>
         {pathname.includes("/admin")
           ? <AdminNav_Links

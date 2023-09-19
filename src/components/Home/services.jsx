@@ -1,6 +1,6 @@
 const Services = () => {
   return (
-    <section className="my-8 py-8 bg-bg w-screen flex items-center justify-center">
+    <section className="my-8 py-8 bg-white w-screen flex items-center justify-center">
       <section className="p-5 w-[90%] text-black flex flex-col gap-10">
         <section className="flex gap-5 items-center">
           <h1 className="text-3xl font-bold pl-1 font-heading">Services</h1>
