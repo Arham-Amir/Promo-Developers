@@ -31,26 +31,26 @@ const Box = (props = {}) => {
   return (
     <section className='flex flex-row'>
       {loading || arealoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
-        <section className='w-[25%] bg-white h-screen sticky left-0 top-0'>
+        <section className='w-[25%] bg-bg h-screen sticky left-0 top-0'>
           <LeftBox items={headings} cost={cost} />
         </section>
-        <article className={`${props.class} w-[75%] flex flex-col bg-white`}>
+        <article className={`${props.class} w-[75%] flex flex-col bg-bg`}>
           <RightTopBox cost={cost} area={props.area} landsize={props.landsize} />
-          <section className="flex-grow px-2 py-4 bg-white">
-            <section className="bg-bg w-fit mx-auto rounded-2xl text-black p-4 flex-all-center gap-7">
+          <section className="flex-grow px-2 py-4 bg-bg">
+            <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black p-4 flex-all-center gap-7">
               <section className='flex gap-2 items-center'>
-                <input type="radio" value={"Recomended"} checked={choice === "Recomended"} onChange={handleOptionChange} name="radio-0" id='r1' className="radio radio-warning" />
+                <input type="radio" value={"Recomended"} checked={choice === "Recomended"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
                 <label htmlFor="r1">Recomended</label>
               </section>
               <section className='flex gap-2 items-center'>
-                <input type="radio" value={"Custom"} checked={choice === "Custom"} onChange={handleOptionChange} name="radio-0" id='r2' className="radio radio-warning" />
+                <input type="radio" value={"Custom"} checked={choice === "Custom"} onChange={handleOptionChange} name="radio-0" id='r2' className={`radio border-themeFont ${choice == 'Custom' && '!bg-themeFont'}`} />
                 <label htmlFor="r2">Build Your Own House</label>
               </section>
             </section>
             <section className="text-black p-4">
               {sortedHeadings.map((head, i) => {
                 return <section key={i} className='my-4'>
-                  <section className='p-5 bg-gray-300 border-b border-white text-3xl font-heading text-black font-bold flex items-center justify-between'>
+                  <section className='p-5 bg-heading border-b border-white text-3xl font-heading text-heading-txt font-bold flex items-center justify-between'>
                     <h1 className='' > {head}</h1>
                     <h1 className='' > {cost[head]}</h1>
                   </section>
@@ -87,21 +87,21 @@ const RightTopBox = (props = {}) => {
   }, [props.cost]);
 
   return (
-    <section className='h-auto p-4 sticky top-0 w-full bg-white text-black z-20 shadow-2xl flex flex-col gap-4'>
-      <h1 className='text-2xl font-bold border-b border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
+    <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black z-20 shadow-2xl flex flex-col gap-4'>
+      <h1 className='text-2xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
       <div className="stats shadow text-themeFont">
-        <div className="stat place-items-center bg-bg border-bg-light">
+        <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black">Total Cost</div>
           <div className="stat-value">
             {total}
           </div>
         </div>
-        <div className="stat place-items-center bg-bg border-bg-light">
+        <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black">{props.landsize} /Sq Ft</div>
           <div className="stat-value">4,200</div>
         </div>
 
-        <div className="stat place-items-center bg-bg border-bg-light">
+        <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black">Price Per Sq Ft</div>
           <div className="stat-value">1,200</div>
         </div>

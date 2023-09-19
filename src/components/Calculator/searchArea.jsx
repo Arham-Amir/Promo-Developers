@@ -63,10 +63,10 @@ export default function SearchArea(props = {}) {
 
   return (
     <section className=''>
-      <section className="text-white flex gap-5 justify-center">
+      <section className="text-black flex gap-3 justify-center bg-black/50 p-5">
         <section className='w-[40%] relative'>
           <input
-            className='focus:outline-none w-full bg-bg-dark py-5 px-6 rounded-sm'
+            className='focus:outline-none w-full bg-bg py-5 px-6 '
             onChange={hadnleAreaChange}
             onClick={hadnleAreaClick}
             type="text"
@@ -74,7 +74,7 @@ export default function SearchArea(props = {}) {
             placeholder="Search Area"
           />
           {areaSuggestions.length > 0 && (
-            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
+            <section className='absolute top-full bg-gray-200/90 w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
               {areaSuggestions.map((suggestion) => (
                 <button className='w-full text-start border-b border-gray-400'
                   key={suggestion}
@@ -86,9 +86,9 @@ export default function SearchArea(props = {}) {
             </section>
           )}
         </section>
-        <section className='w-[40%] relative'>
+        <section className='w-fit relative '>
           <input
-            className='focus:outline-none w-full bg-bg-dark py-5 px-6 rounded-sm'
+            className='focus:outline-none w-full bg-bg py-5 px-6 '
             onChange={hadnleLandChange}
             onClick={hadnleLandClick}
             type="text"
@@ -96,7 +96,7 @@ export default function SearchArea(props = {}) {
             placeholder="Search Land"
           />
           {landSuggestions.length > 0 && (
-            <section className='absolute top-full bg-bg-light w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
+            <section className='absolute top-full bg-gray-200/90 w-full flex flex-col items-start gap-3 p-5 max-h-[37vh] custom-scrollbar'>
               {landSuggestions.map((suggestion) => (
                 <button className='w-full text-start border-b border-gray-400'
                   key={suggestion}

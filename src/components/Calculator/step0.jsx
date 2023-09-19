@@ -15,7 +15,7 @@ const Step0 = (props = {}) => {
   }, [])
 
   return (
-    <section className="text-lightFont flex flex-col gap-10 h-full  box-border py-8">
+    <section className="text-lightFont flex flex-col gap-10 h-full  box-border py-[2%]">
       {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" />
         : <>
           <SearchArea areas={areas} setArea = {(q)=> props.setArea(q)} setLand = {(q)=> props.setLand(q)} />

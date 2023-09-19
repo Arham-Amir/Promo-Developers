@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
     <section className="w-full z-30">
-      <nav className={`bg-white/80 backdrop-blur-sm  text-black w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[14vh] flex justify-between items-center text-lg font-themeFont relative`}>
+      <nav className={`bg-navBg backdrop-blur-sm  text-navTxt w-full lg:px-14 sm:px-10 xs:px-5 z-30 h-[12vh] flex justify-between items-center text-lg font-themeFont relative`}>
         <Nav_Logo></Nav_Logo>
         {pathname.includes("/admin")
           ? <AdminNav_Links
@@ -19,7 +19,8 @@ const Navbar = () => {
           </AdminNav_Links>
           : <Nav_Links
             className={"items-center gap-7 text-lg 2xl:text-2xl font-medium xs:hidden lg:flex flex-row"} showLinks={showLinks} show={() => setShowLinks(false)}>
-          </Nav_Links>}
+          </Nav_Links>
+        }
 
         <section onClick={() => { setShowLinks(!showLinks) }} className="z-30 lg:hidden xs:flex flex-col items-end gap-2" >
           <p className={`${showLinks ? 'w-8 rotate-[495deg]' : 'w-9'}  transition-all duration-500 p-[1px] bg-lightFont`}></p>

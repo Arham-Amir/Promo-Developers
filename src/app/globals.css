@@ -51,12 +51,11 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: #4A4C5C;
+    @apply bg-bg-light;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #ffb923;
-    border-radius: 4px;
+    @apply bg-bg-dark;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
