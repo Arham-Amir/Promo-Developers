@@ -126,10 +126,6 @@ const itemManagerSlice = createSlice({
       state.loading = true;
     }).addCase(fetchItemsHeadings.fulfilled, (state, action) => {
       state.headings = action.payload;
-      console.log(Object.fromEntries(
-        Object.entries(action.payload)
-          .sort(([, a], [, b]) => a.order - b.order)
-      ));
       state.loading = false;
     }).addCase(fetchCategories.pending, (state) => {
       state.loading = true;

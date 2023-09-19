@@ -6,8 +6,19 @@ import { fetchItemsHeadings, fetchAreas } from '@redux/itemStore';
 import { LeftBox } from '@components/Calculator/leftBox'
 import { useImmer } from "use-immer";
 
+function formatNumberWithCommas(number) {
+  if (number >= 1000000) {
+    return (number / 1000000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'M';
+  } else if (number >= 1000) {
+    return (number / 1000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'K';
+  } else {
+    return number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+}
+
 const Box = (props = {}) => {
   const [choice, setChoice] = useState('Recomended');
+  const [cLoading, setCLoading] = useState(true);
   const [cost, setCost] = useImmer({});
   const { loading, headings, areas, arealoading } = useSelector(state => state.itemManager)
   const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
@@ -25,17 +36,20 @@ const Box = (props = {}) => {
       setCost((draft) => {
         draft[el] = 0
       })
-    });
+    })
+    setCLoading(false);
   }, [])
 
   return (
     <section className='flex flex-row'>
-      {loading || arealoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
+      {cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
         <section className='w-[25%] bg-bg h-screen sticky left-0 top-0'>
-          <LeftBox items={headings} cost={cost} />
+          <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
+            <LeftBox items={headings} cost={cost} />
+          </Suspense>
         </section>
         <article className={`${props.class} w-[75%] flex flex-col bg-bg`}>
-          <RightTopBox cost={cost} area={props.area} landsize={props.landsize} />
+          <RightTopBox areas = {areas} cost={cost} area={props.area} landsize={props.landsize} />
           <section className="flex-grow px-2 py-4 bg-bg">
             <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
               <section className='flex gap-2 items-center'>
@@ -52,12 +66,12 @@ const Box = (props = {}) => {
                 return <section key={i} className='my-4'>
                   <section className='p-5 bg-heading border-b border-white text-3xl font-heading text-heading-txt font-bold flex items-center justify-between'>
                     <h1 className='' > {head}</h1>
-                    <h1 className='' > {cost[head]}</h1>
+                    <h1 className='font-sans' > {formatNumberWithCommas(cost[head])}</h1>
                   </section>
                   {Object.keys(headings[head]).map((el, j) => {
                     if (el != 'order') {
                       return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
-                        <CenterBoxItems setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas = {areas} area={props.area} landsize={props.landsize}
+                        <CenterBoxItems formatNumberWithCommas = {(num)=> formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas = {areas} area={props.area} landsize={props.landsize}
                           setChoice={setChoice}></CenterBoxItems>
                       </Suspense>
                     }
@@ -93,16 +107,16 @@ const RightTopBox = (props = {}) => {
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Total Cost</div>
           <div className="stat-value text-3xl">
-            {total}
+            {formatNumberWithCommas(total)}
           </div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
-          <div className="stat-value text-3xl">4,200</div>
+          <div className="stat-value text-3xl">{formatNumberWithCommas(props.areas[props.area][props.landsize]['squareFeet'] || 0)}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-3xl">1,200</div>
+          <div className="stat-value text-3xl">{formatNumberWithCommas(total/props.areas[props.area][props.landsize]['squareFeet'] || 1)}</div>
         </div>
       </div>
     </section>
