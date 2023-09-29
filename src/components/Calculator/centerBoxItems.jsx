@@ -11,6 +11,11 @@ export default function CenterBoxItems(props = {}) {
       setCategory(props.detail['recomended']);
     }
   }, [props.choice])
+  useEffect(() => {
+    props.setSelectedItems((draft) => {
+      draft[props.item] = props.detail[category]?.['price'] * props.areas[props.area][props.landsize][props.item]
+    })
+  }, [category])
   function updatePrice(cat) {
     props.setCost((draft) => {
       if (category) {
@@ -46,7 +51,7 @@ export default function CenterBoxItems(props = {}) {
           onChange={() => { }}
           onClick={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title flex items-center justify-between text-xl font-bold bg-bg-card">
+        <div className="collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
           <p>{props.item}</p>
           <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity)}</p>
         </div>

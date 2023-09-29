@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { AiFillStar } from 'react-icons/ai'
 
 const NavLinks = (props = {}) => {
   const router = useRouter();
@@ -35,10 +36,10 @@ const NavLinks = (props = {}) => {
         ContactUs
       </button>
       <button
-        className={`text-xl lg:hover:border-t-2 lg:hover:border-t-themeFont p-2`}
-        onClick={() => handleClick("/admin/items")}
+        className={`flex items-center gap-1 text-xl lg:hover:border-t-2 lg:hover:border-t-themeFont p-2`}
+        onClick={() => handleClick("/member")}
       >
-        Admin
+        Become a member <AiFillStar className="text-yellow-400" />
       </button>
       <section className="bg-themeFont ml-2 rounded-md w-fit">
         <section className="border-themeFont bg-navBg border -translate-x-[2px] -translate-y-[2px] px-5 py-2 rounded-md hover:-translate-x-1 hover:-translate-y-1 ease-in-out transition duration-300 text-xl">
