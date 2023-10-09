@@ -18,8 +18,8 @@ const Step1 = (props = {}) => {
 
   return (
     <section className={`${props.className} py-5 pr-5 flex flex-col justify-center items-center bg-bg`}>
-      <h1 className="text-bg-dark z-30 text-3xl font-bold px-5 font-heading">{props.area}</h1>
-      <section className="p-10 w-full text-bg-dark grid grid-cols-3 gap-5">
+      <h1 className="text-themeFont z-30 text-3xl font-bold px-5 font-heading">{props.area}</h1>
+      <section className="p-10 w-full text-themeFont grid grid-cols-3 gap-5">
         {land != "null" && Object.keys(land)?.map((el, i) => (
           <Link key={i} href={'/calculator/' + props.area + '/' + el}
             className="border border-bg-light p-3 rounded-lg text-lg font-semibold shadow-md shadow-black">
