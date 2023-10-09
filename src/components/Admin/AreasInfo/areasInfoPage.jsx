@@ -16,7 +16,7 @@ const AreasInfoPage = () => {
   }, [areas])
 
   return (
-    <section className="md:w-4/5 xs:w-11/12 mx-auto  py-10">
+    <section className="md:w-4/5 xs:w-11/12 mx-auto py-10">
       {loading ? <span className="flex justify-center items-center min-h-screen min-w-full loading loading-dots loading-lg text-themeFont" />
         : <>
           <AddAreasInfo />

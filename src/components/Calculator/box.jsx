@@ -38,7 +38,6 @@ const Box = (props = {}) => {
     return ()=>{setCLoading(true);}
   }, [])
   useEffect(() => {
-    console.log('hi')
     Object.keys(headings).forEach(el => {
       setCost((draft) => {
         draft[el] = 0
@@ -47,9 +46,9 @@ const Box = (props = {}) => {
     setCLoading(false);
     return ()=>{setCLoading(true);}
   }, [])
-  useEffect(()=>{
-    console.log(selectedItems)
-  }, [selectedItems])
+  // useEffect(()=>{
+  //   console.log(selectedItems)
+  // }, [selectedItems])
   return (
     <section className=''>
       <section>
@@ -59,12 +58,12 @@ const Box = (props = {}) => {
         </button>
         <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'xs:right-0' : 'xs:right-[-100%]'}
         min-h-screen w-[95%] bg-bg-1 flex p-8`}>
-          <section className={`w-1/2`}>a</section>
+          <section className={`w-1/2`}>By Laws Data</section>
           <div className="divider lg:divider-horizontal">||</div>
           <section className={`w-1/2 h-auto`}>
             <section className='flex flex-col gap-3 mx-2 '>
               {Object.keys(selectedItems).map((el, i)=>{
-                return <section className='flex justify-between w-full border-b border-gray-300'><p key={i}>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
+                return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
               })}
               <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
             </section>
@@ -102,7 +101,7 @@ const Box = (props = {}) => {
                     {Object.keys(headings[head]).map((el, j) => {
                       if (el != 'order') {
                         return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
-                          <CenterBoxItems setSelectedItems = {setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
+                          <CenterBoxItems key={j} setSelectedItems = {setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
                             setChoice={setChoice}></CenterBoxItems>
                         </Suspense>
                       }
