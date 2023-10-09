@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { ItemManagerActions } from '@redux/itemStore';
-import { fetchCategories } from '@redux/itemStore';
+import { fetchItemsHeadings } from '@redux/itemStore';
 import { toast } from 'react-toastify';
 
 
@@ -33,7 +33,7 @@ function InputItemCategories(props = {}) {
           category,
           'data': { name, price }
         }))
-      dispatch(fetchCategories())
+      dispatch(fetchItemsHeadings())
       setCancel(false);
       setSave(false)
       setAdd(true);
@@ -61,7 +61,7 @@ function InputItemCategories(props = {}) {
               <h1>
                 Category :
               </h1>
-              <input className='focus:outline-none w-[40%] bg-slate-600 py-2 px-6 rounded-full'
+              <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 type="text" />
@@ -70,7 +70,7 @@ function InputItemCategories(props = {}) {
               <h1>
                 Name :
               </h1>
-              <input className='focus:outline-none w-[40%] bg-slate-600 py-2 px-6 rounded-full'
+              <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text" />
@@ -79,7 +79,7 @@ function InputItemCategories(props = {}) {
               <h1>
                 Price-Per-Unit :
               </h1>
-              <input className='focus:outline-none w-[40%] bg-slate-600 py-2 px-6 rounded-full'
+              <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 type="text" />
@@ -94,7 +94,7 @@ function InputItemCategories(props = {}) {
       {
         add == true &&
         <section className='flex justify-end items-center'>
-          <button onClick={handleAddBtn} className='bg-bg-light font-semibold py-2 px-6 rounded-full'>ADD</button>
+          <button onClick={handleAddBtn} className='bg-themeFont text-white font-semibold py-2 px-6 rounded-full'>ADD</button>
         </section >
       }
     </>

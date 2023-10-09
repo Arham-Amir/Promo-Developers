@@ -74,7 +74,7 @@ const Box = (props = {}) => {
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
           <section className='w-[25%] bg-bg h-screen sticky left-0 top-0'>
             <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
-              <LeftBox items={headings} cost={cost} />
+              <LeftBox setShow = {()=>setShow(!show)} items={headings} cost={cost} />
             </Suspense>
           </section>
           <article className={`${props.class} w-[75%] flex flex-col bg-bg`}>
@@ -133,21 +133,21 @@ const RightTopBox = (props = {}) => {
 
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
-      <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Construction Cost in {props.area}</h1>
+      <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1>
       <div className="stats shadow text-themeFont">
+        <div className="stat place-items-center bg-bg-1 border-bg-light">
+          <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
+          <div className="stat-value text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] || 0}</div>
+        </div>
+        <div className="stat place-items-center bg-bg-1 border-bg-light">
+          <div className="stat-title text-black text-sm">Price Per Sq Ft</div>
+          <div className="stat-value text-2xl">{formatNumberWithCommas(total / props.areas[props.area][props.landsize]['squareFeet'] || 1)}</div>
+        </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Total Cost</div>
           <div className="stat-value text-2xl">
             {formatNumberWithCommas(total)}
           </div>
-        </div>
-        <div className="stat place-items-center bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
-          <div className="stat-value text-2xl">{formatNumberWithCommas(props.areas[props.area][props.landsize]['squareFeet'] || 0)}</div>
-        </div>
-        <div className="stat place-items-center bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-2xl">{formatNumberWithCommas(total / props.areas[props.area][props.landsize]['squareFeet'] || 1)}</div>
         </div>
       </div>
     </section>

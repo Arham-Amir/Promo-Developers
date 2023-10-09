@@ -20,7 +20,7 @@ export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay
 export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
   async (are) => {
     const dbRef = ref(db)
-    const resp = await get(child(dbRef, 'Development/Areas/'+are))
+    const resp = await get(child(dbRef, 'Development/Areas/' + are))
     return resp.val()
   })
 export const fetchCategories = createAsyncThunk('fetchItemsCategoriesforDisplay',
@@ -58,7 +58,7 @@ const itemManagerSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-      state.items[0] = (action.payload['item'])
+      // state.items[0] = (action.payload['item'])
       set(ref(db, 'Development/Items/' + action.payload['itemHead'] + '/' + action.payload['item']), 'null')
       get(child(ref(db), 'Development/Areas')).then(
         (resp) => {
@@ -88,11 +88,11 @@ const itemManagerSlice = createSlice({
       toast('Category added into database');
     },
     editName: (state, action) => {
-      set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/name'), action.payload.name)
+      set(ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/name'), action.payload.name)
       toast('Name Edited Into Database');
     },
     editPrice: (state, action) => {
-      set(ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/price'), action.payload.price)
+      set(ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/price'), action.payload.price)
       toast('Price Edited Into DB');
     },
     editQuantity: (state, action) => {
@@ -103,8 +103,27 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/squareFeet'), action.payload.squareFeet)
       toast('Square Feet Edited Into DB');
     },
+    deleteItem: (state, action) => {
+      const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item']);
+      remove(dbRef).then(() => {
+        get(child(ref(db), 'Development/Areas')).then(
+          (resp) => {
+            const data = resp.val()
+            Object.keys(data).forEach(area => {
+              Object.keys(data[area]).forEach(land => {
+                remove(ref(db, 'Development/Areas/' + area + '/' + land + '/' + action.payload['item']))
+              });
+            });
+            toast('Item Removed From DB');
+          })
+      })
+        .catch((error) => {
+          toast('Error removing category: ' + error.message);
+        });
+
+    },
     deleteCategory: (state, action) => {
-      const dbRef = ref(db, 'Development/Items/' + action.payload.item + '/' + action.payload.category + '/');
+      const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/');
       remove(dbRef).then(() => {
         toast('Category Removed From DB');
       })
@@ -113,8 +132,18 @@ const itemManagerSlice = createSlice({
         });
 
     },
+    deleteLandSize: (state, action) => {
+      const dbRef = ref(db, 'Development/Areas/' + action.payload['area'] + '/' + action.payload['land'] + '/');
+      remove(dbRef).then(() => {
+        toast('Land Removed From DB');
+      })
+        .catch((error) => {
+          toast('Error removing category: ' + error.message);
+        });
+
+    },
     setRecomendedItemCategory: (state, action) => {
-      update(ref(db, 'Development/Items/' + action.payload.head +'/'+ action.payload.item), { 'recomended': action.payload.category })
+      update(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item), { 'recomended': action.payload.category })
       toast(`Set Recomended ${action.payload.item}`);
     },
     setLoading: (state) => {

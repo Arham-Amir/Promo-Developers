@@ -10,20 +10,20 @@ const AddAreasInfo = () => {
 
   function handleAddAreaName() {
     dispatch(ItemManagerActions.addAreaName({ area, value: 'null' }));
-    dispatch(fetchAreas())
+    dispatch(fetchAreas());
     setArea('');
   }
 
   return (
-    <section className="text-white flex gap-5 justify-center">
+    <section className="text-themeFont flex gap-5 justify-center">
       <input
-        className='focus:outline-none w-[40%] bg-slate-600 py-2 px-6 rounded-sm'
+        className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={area}
         onChange={(e) => setArea(e.target.value)}
         type="text"
         placeholder="Add Area Name"
       />
-      <button onClick={handleAddAreaName} className='text-themeFont font-semibold bg-bg-light py-2 px-6 rounded-sm'>ADD</button>
+      <button onClick={handleAddAreaName} className='text-white font-semibold bg-themeFont py-2 px-6 rounded-sm'>ADD</button>
     </section>
   );
 }

@@ -13,21 +13,21 @@ export default function CenterBoxItems(props = {}) {
   }, [props.choice])
   useEffect(() => {
     props.setSelectedItems((draft) => {
-      draft[props.item] = props.detail[category]?.['price'] * props.areas[props.area][props.landsize][props.item]
+      draft[props.item] = (props.detail[category]?.['price'] || 0) * props.areas[props.area][props.landsize][props.item]
     })
   }, [category])
   function updatePrice(cat) {
     props.setCost((draft) => {
       if (category) {
-        draft[props.head] -= Number(props.detail[category]['price']*quantity)
-        draft[props.head] += Number(props.detail[cat]['price']*quantity)
+        draft[props.head] -= Number(props.detail[category]?.['price']*quantity)
+        draft[props.head] += Number(props.detail[cat]?.['price']*quantity)
       }
       else if (cat) {
         if (draft[props.head]) {
-          draft[props.head] += Number(props.detail[cat]['price']*quantity)
+          draft[props.head] += Number(props.detail[cat]?.['price']*quantity)
         }
         else {
-          draft[props.head] = Number(props.detail[cat]['price']*quantity)
+          draft[props.head] = Number(props.detail[cat]?.['price']*quantity)
         }
       }
     })
@@ -53,7 +53,7 @@ export default function CenterBoxItems(props = {}) {
         />
         <div  className="transition-all !duration-500 collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
           <p>{props.item}</p>
-          <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity)}</p>
+          <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity  || 0)}</p>
         </div>
         <div  className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
           <section className='flex gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
@@ -74,7 +74,7 @@ export default function CenterBoxItems(props = {}) {
                     <button onClick={() => handleCategoryChange(el)}
                       className={`text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
                     <h3 className='flex-1 py-[1px]'>{props.detail[el]['name']}</h3>
-                    <h3 className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]['price'])}</h3>
+                    <h3 className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</h3>
                   </section>
                 </section>
               )

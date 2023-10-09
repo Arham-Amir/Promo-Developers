@@ -32,12 +32,12 @@ const QuantityPerHouse = (props = {}) => {
       <section className="flex items-center gap-2">
         {editValue == false ?
           <>
-            <p className={`bg-bg-light py-2 px-6 rounded-full`}>{quantity}</p>
+            <p className={`bg-bg-1 py-2 px-6 rounded-full`}>{quantity}</p>
             <button onClick={handleEditValue} ><FiEdit size={20}></FiEdit></button>
           </>
           :
           <>
-            <input className='focus:outline-none w-[40%] bg-slate-600 py-2 px-6 rounded-full'
+            <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               type="text" />
