@@ -28,7 +28,7 @@ const SideBySide = () => {
   }, []);
 
   return (
-    <section className='h-[86vh] w-screen flex'>
+    <section className='h-[86vh] w-screen flex text-themeFont'>
       <section className='w-1/2 h-full bg-bg-dark'>
         <section className='mx-auto w-4/5 h-full flex flex-col justify-center items-center gap-10 text-lightFont text-center'>
           <h1 data-text={`Promo Developers`} style={{ whiteSpace: 'nowrap', letterSpacing: '4px', wordSpacing: '8px' }}

@@ -41,7 +41,7 @@ export default function CenterBoxItems(props = {}) {
   };
   return (
     <section className='shadow-lg border border-gray-300'>
-      <div className={`collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
+      <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
       >
@@ -51,11 +51,11 @@ export default function CenterBoxItems(props = {}) {
           onChange={() => { }}
           onClick={() => setIsOpen(!isOpen)}
         />
-        <div className="collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
+        <div  className="transition-all !duration-500 collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
           <p>{props.item}</p>
           <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity)}</p>
         </div>
-        <div className="collapse-content bg-bg-card/20 flex flex-col gap-2">
+        <div  className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
           <section className='flex gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
             <h1>Quantity : </h1>
             <p>{props.areas[props.area][props.landsize][props.item]}</p>

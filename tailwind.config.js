@@ -28,11 +28,11 @@ module.exports = {
         'heading': ['var(--font-heading)'],
       },
       colors: {
-        'bg-dark' : '#FAF7F5',
+        'bg-dark' : '#333C4B',
         // 'themeFont': '#f85606',
         // 'themeFont': '#FFA900',
         'themeFont': '#291334',
-        'bg-light': '#E7E2DF',
+        'bg-light': '#4A4C5C',
         'lightFont': '#FFFFFF',
         // 'bg': '#F4F4F4',
         'bg': '#FAF7F5',
