@@ -1,7 +1,8 @@
 'use client'
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { db } from '@api/dbConfig'
+import { db, storage } from '@api/dbConfig'
 import { set, get, ref, child, remove, update } from 'firebase/database'
+import { ref as sref, uploadBytesResumable, getDownloadURL, listAll, deleteObject } from 'firebase/storage'
 import { toast } from 'react-toastify';
 
 export const shiftItems = createAsyncThunk('shiftItemsDisplay',
@@ -17,6 +18,37 @@ export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay
     const resp = await get(child(dbRef, 'Development/Items'))
     return resp.val()
   })
+export const checkLandAvailaibility = createAsyncThunk('checkLandAvailaibilityForUpdate',
+  async (land) => {
+    const dbRef = ref(db);
+    const landSizeRef = child(dbRef, 'Development/LandSize');
+    try {
+      const landSizeSnapshot = await get(landSizeRef);
+      if (!landSizeSnapshot.exists()) {
+        await set(landSizeRef, {});
+      }
+      const landRef = child(landSizeRef, land);
+      const landSnapshot = await get(landRef);
+      if (!landSnapshot.exists()) {
+        await set(landRef, { 'images': "null" });
+      }
+      return 'Land availability checked successfully';
+    } catch (error) {
+      console.error('Error checking land availability:', error);
+    }
+  }
+)
+export const fetchLandInfo = createAsyncThunk('fetchLandInfoForDisplay',
+  async () => {
+    try {
+      const dbRef = ref(db)
+      const resp = await get(child(dbRef, 'Development/LandSize/'))
+      return resp.val()
+    } catch (error) {
+      return []
+    }
+  }
+)
 export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
   async (are) => {
     const dbRef = ref(db)
@@ -35,12 +67,54 @@ export const fetchAreas = createAsyncThunk('fetchAreasforDisplay',
     const resp = await get(child(dbRef, 'Development/Areas'))
     return await resp.val()
   })
-export const setSelectLand = createAsyncThunk('selectLandForCalculator',
-  async ({ land }) => {
-    const resp = await get(child(ref(db), 'Development/LandSize/' + land))
-    toast(land + ' Selected')
-    return resp.val()
+export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
+  async ({ land, images }) => {
+    const downloadURLs = [];
+    try {
+      await deleteFolder(land);
+      const uploadPromises = Object.keys(images).map(async (imgKey) => {
+        const imageFile = images[imgKey];
+        const storageref = sref(storage, "Maps/" + land + "/" + imageFile.name);
+        const uploadTask = uploadBytesResumable(storageref, imageFile);
+
+        return new Promise(async (resolve, reject) => {
+          uploadTask.on('state_changed',
+            (snapshot) => { },
+            (error) => {
+              reject(error);
+            },
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                downloadURLs.push(downloadURL);
+                resolve();
+              } catch (err) {
+                reject(err);
+              }
+            }
+          );
+          await uploadTask;
+        });
+      });
+
+      await Promise.all(uploadPromises);
+      console.log(downloadURLs);
+      const dbRef = ref(db);
+      const landRef = child(dbRef, 'Development/LandSize/' + land + "/images");
+      await set(landRef, downloadURLs);
+    }
+    catch (error) {
+      console.error("Error during image upload:", error);
+      throw error;
+    }
   })
+async function deleteFolder(land) {
+  const desertRef = sref(storage, "Maps/" + land);
+  const res = await listAll(desertRef);
+  for (const itemRef of res.items) {
+    await deleteObject(itemRef);
+  }
+}
 
 
 const itemManagerSlice = createSlice({
@@ -50,11 +124,13 @@ const itemManagerSlice = createSlice({
     categories: {},
     headings: {},
     land: {},
+    landInfo: {},
     areas: {},
     selectedLand: {},
     loading: false,
     catloading: false,
     arealoading: false,
+    loading_land: true,
   },
   reducers: {
     addItem: (state, action) => {
@@ -175,11 +251,20 @@ const itemManagerSlice = createSlice({
     }).addCase(fetchLandSize.fulfilled, (state, action) => {
       state.land = action.payload;
       state.loading = false;
-    }).addCase(setSelectLand.pending, (state) => {
-      state.loading = true;
-    }).addCase(setSelectLand.fulfilled, (state, action) => {
-      state.selectedLand = action.payload;
-      state.loading = false;
+    }).addCase(checkLandAvailaibility.pending, (state) => {
+      // state.loading = true;
+    }).addCase(checkLandAvailaibility.fulfilled, (state, action) => {
+      // state.land = action.payload;
+      // state.loading = false;
+    }).addCase(fetchLandInfo.pending, (state) => {
+      state.loading_land = true;
+    }).addCase(fetchLandInfo.fulfilled, (state, action) => {
+      state.landInfo = action.payload;
+      state.loading_land = false;
+    }).addCase(uploadMaps.pending, (state) => {
+      state.loading_land = true;
+    }).addCase(uploadMaps.fulfilled, (state, action) => {
+      toast('Images Added Successfully')
     })
   }
 })

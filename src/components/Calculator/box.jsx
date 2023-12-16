@@ -46,9 +46,7 @@ const Box = (props = {}) => {
     setCLoading(false);
     return ()=>{setCLoading(true);}
   }, [])
-  // useEffect(()=>{
-  //   console.log(selectedItems)
-  // }, [selectedItems])
+
   return (
     <section className=''>
       <section>
@@ -72,9 +70,9 @@ const Box = (props = {}) => {
       </section>
       <section className='flex flex-row'>
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
-          <section className='w-[25%] bg-bg h-screen sticky left-0 top-0'>
+          <section className='w-[25%] bg-bg max-h-screen sticky left-0 top-0'>
             <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
-              <LeftBox setShow = {()=>setShow(!show)} items={headings} cost={cost} />
+              <LeftBox setShow = {()=>setShow(!show)} items={headings} cost={cost} land={props.landsize}/>
             </Suspense>
           </section>
           <article className={`${props.class} w-[75%] flex flex-col bg-bg`}>

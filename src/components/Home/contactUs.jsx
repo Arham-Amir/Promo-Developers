@@ -13,9 +13,9 @@ const ContactUs = () => {
     <section id='contactus' className='h-auto py-10 bg-bg'>
       <h1 className='text-5xl font-bold text-bg-dark flex-all-center mb-4 font-heading'>Contact Us</h1>
       <section className='w-5/6 mx-auto py-5
-      flex md:flex-row xs:flex-col xs:gap-4 md:gap-0'>
+      flex md:flex-row xs:flex-col xs:gap-x-4 md:gap-0'>
         <ContactLeft className='md:basis-3/5' />
-        <ContactRight className='md:basis-2/5' />
+        <ContactRight className='xs:h-[250px] md:h-auto md:basis-2/5' />
       </section>
       <section className="mt-6 grid w-5/6 h-full mx-auto lg:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 xs:gap-6">
         <ContactInfo>

@@ -42,8 +42,7 @@ export default function CenterBoxItems(props = {}) {
   return (
     <section className='shadow-lg border border-gray-300'>
       <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
+      onClick={() => setIsOpen(!isOpen)}
       >
         <input type="radio"
           name={`my-accordion-${props.index}`}

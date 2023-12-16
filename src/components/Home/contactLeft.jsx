@@ -4,7 +4,7 @@ const ContactLeft = (props = {}) => {
     console.log('ho')
   }
   return (
-    <section className={`${props.className} bg-[#e0dede] rounded-l-lg`}>
+    <section className={`${props.className} bg-[#e0dede] md:rounded-l-lg`}>
       <section className='w-3/5 mx-auto my-10 flex flex-col items-center gap-5 text-bg-dark'>
         <section className="w-full flex flex-col gap-2">
           <label className="ml-1 font-semibold text-sm" htmlFor="Full_Name">FULL NAME</label>
