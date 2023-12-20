@@ -3,13 +3,11 @@ import { Chart } from "react-google-charts";
 import { BsFillCircleFill } from 'react-icons/bs'
 import { Suspense, useState } from 'react';
 import { useEffect } from "react";
-import { fetchLandInfo } from "@redux/itemStore";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 export function LeftBox(props = {}) {
   const { loading_land, landInfo } = useSelector(state => state.itemManager);
-  const dispatch = useDispatch();
   const [data, setData] = useState([["Task", "Hours per Day"],
   ["Work", 11],
   ["Eat", 2],
@@ -62,9 +60,7 @@ export function LeftBox(props = {}) {
       fill: "",
     },
   };
-  useEffect(() => {
-    dispatch(fetchLandInfo())
-  }, [])
+
   return (
     <section className="flex flex-col items-center justify-center gap-10 py-8">
       <h1 className="text-2xl font-heading text-black font-bold text-center">Construction Cost</h1>

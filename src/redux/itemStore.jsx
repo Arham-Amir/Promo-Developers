@@ -49,6 +49,17 @@ export const fetchLandInfo = createAsyncThunk('fetchLandInfoForDisplay',
     }
   }
 )
+export const fetchLandExtraInfo = createAsyncThunk('fetchLandExtraInfoForDisplay',
+  async (land) => {
+    try {
+      const dbRef = ref(db)
+      const resp = await get(child(dbRef, 'Development/LandSize/' + land))
+      return resp.val()
+    } catch (error) {
+      return {}
+    }
+  }
+)
 export const fetchLandSize = createAsyncThunk('fetchLandSizeforDisplay',
   async (are) => {
     const dbRef = ref(db)
@@ -116,21 +127,25 @@ async function deleteFolder(land) {
   }
 }
 
-
 const itemManagerSlice = createSlice({
   name: 'ItemManager',
   initialState: {
     items: {},
-    categories: {},
+    categories: [],
     headings: {},
     land: {},
     landInfo: {},
     areas: {},
     selectedLand: {},
+    RCC: {},
+    PlinthADD: {},
+    PlinthSUB: {},
+    Radday: {},
     loading: false,
-    catloading: false,
+    headingloading: true,
     arealoading: false,
     loading_land: true,
+    LandOtherLoading: true,
   },
   reducers: {
     addItem: (state, action) => {
@@ -162,6 +177,10 @@ const itemManagerSlice = createSlice({
     addCategory: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
       toast('Category added into database');
+    },
+    addLandExtraInfo: (state, action) => {
+      set(ref(db, 'Development/LandSize/' + action.payload['land'] + '/' + action.payload['place'] + '/'), action.payload.value)
+      toast((action.payload['place'] + ' Updated'));
     },
     editName: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/name'), action.payload.name)
@@ -229,16 +248,16 @@ const itemManagerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchItemsHeadings.pending, (state) => {
       state.loading = true;
+      state.headingloading = true;
     }).addCase(fetchItemsHeadings.fulfilled, (state, action) => {
       state.headings = action.payload;
       state.loading = false;
+      state.headingloading = false;
     }).addCase(fetchCategories.pending, (state) => {
-      state.loading = true;
-      state.catloading = true;
+      // state.catloading = true;
     }).addCase(fetchCategories.fulfilled, (state, action) => {
       state.categories = action.payload;
-      state.loading = false;
-      state.catloading = false;
+      // state.catloading = false;
     }).addCase(fetchAreas.pending, (state) => {
       state.loading = true;
       state.arealoading = true;
@@ -265,6 +284,14 @@ const itemManagerSlice = createSlice({
       state.loading_land = true;
     }).addCase(uploadMaps.fulfilled, (state, action) => {
       toast('Images Added Successfully')
+    }).addCase(fetchLandExtraInfo.pending, (state) => {
+      state.LandOtherLoading = true
+    }).addCase(fetchLandExtraInfo.fulfilled, (state, action) => {
+      state.RCC = action.payload["RCC"] || {}
+      state.PlinthADD = action.payload["PlinthADD"] || {}
+      state.PlinthSUB = action.payload["PlinthSUB"] || {}
+      state.Radday = action.payload["Radday"] || {}
+      state.LandOtherLoading = false
     })
   }
 })

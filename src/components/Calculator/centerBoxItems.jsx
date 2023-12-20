@@ -1,10 +1,17 @@
 'use client'
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function CenterBoxItems(props = {}) {
   const [category, setCategory] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const quantity = props.areas[props.area][props.landsize][props.item];
+  const quan = props.areas[props.area][props.landsize][props.item];
+  const { landInfo } = useSelector(state => state.itemManager)
+  const [quantity, setquantity] = useState(quan);
+  const [raddayquantity, setraddayquantity] = useState(0);
+  let firstRcc = 0;
+  let firstPlinth = 0;
+
   useEffect(() => {
     if (props.choice === 'Recomended') {
       updatePrice(props.detail['recomended'])
@@ -16,18 +23,68 @@ export default function CenterBoxItems(props = {}) {
       draft[props.item] = (props.detail[category]?.['price'] || 0) * props.areas[props.area][props.landsize][props.item]
     })
   }, [category])
+  useEffect(() => {
+    if (Object.keys(landInfo).length != 0) {
+      if (props.item in landInfo[props.landsize]["Radday"]) {
+        setquantity(prevQuantity => prevQuantity - raddayquantity);
+        setraddayquantity(Number(landInfo[props.landsize]["Radday"][props.item]) * props.radday);
+      }
+    }
+  }, [props.radday]);
+  useEffect(() => {
+    setquantity(prevQuantity => prevQuantity + raddayquantity);
+  }, [raddayquantity])
+  useEffect(() => {
+    if (Object.keys(landInfo).length != 0) {
+      if (props.rcc && firstRcc == 0) {
+        firstRcc = 1;
+      }
+      if (props.item in landInfo[props.landsize]["RCC"] && firstRcc) {
+        if (props.rcc == "t") {
+          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["RCC"][props.item]));
+        }
+        else {
+          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["RCC"][props.item]));
+        }
+      }
+    }
+  }, [props.rcc]);
+  useEffect(() => {
+    if (Object.keys(landInfo).length != 0) {
+      if (props.plinth && firstPlinth == 0) {
+        firstPlinth = 1;
+      }
+      if (props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
+        if (props.plinth == "t") {
+          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]));
+        }
+        else {
+          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]));
+        }
+      }
+      if (props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
+        if (props.plinth == "t") {
+          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
+        }
+        else {
+          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
+        }
+      }
+    }
+  }, [props.plinth]);
+
   function updatePrice(cat) {
     props.setCost((draft) => {
       if (category) {
-        draft[props.head] -= Number(props.detail[category]?.['price']*quantity)
-        draft[props.head] += Number(props.detail[cat]?.['price']*quantity)
+        draft[props.head] -= Number(props.detail[category]?.['price'] * quantity)
+        draft[props.head] += Number(props.detail[cat]?.['price'] * quantity)
       }
       else if (cat) {
         if (draft[props.head]) {
-          draft[props.head] += Number(props.detail[cat]?.['price']*quantity)
+          draft[props.head] += Number(props.detail[cat]?.['price'] * quantity)
         }
         else {
-          draft[props.head] = Number(props.detail[cat]?.['price']*quantity)
+          draft[props.head] = Number(props.detail[cat]?.['price'] * quantity)
         }
       }
     })
@@ -42,7 +99,7 @@ export default function CenterBoxItems(props = {}) {
   return (
     <section className='shadow-lg border border-gray-300'>
       <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
-      onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen(!isOpen)}
       >
         <input type="radio"
           name={`my-accordion-${props.index}`}
@@ -50,19 +107,19 @@ export default function CenterBoxItems(props = {}) {
           onChange={() => { }}
           onClick={() => setIsOpen(!isOpen)}
         />
-        <div  className="transition-all !duration-500 collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
+        <div className="transition-all !duration-500 collapse-title flex items-center justify-between text-lg font-bold bg-bg-card">
           <p>{props.item}</p>
-          <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity  || 0)}</p>
+          <p className='text-sm'>{props.formatNumberWithCommas(props.detail[category]?.['price'] * quantity || 0)}</p>
         </div>
-        <div  className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
-          <section className='flex gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
-            <h1>Quantity : </h1>
-            <p>{props.areas[props.area][props.landsize][props.item]}</p>
+        <div className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
+          <section className='flex items-center gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
+            <h3>Quantity : </h3>
+            <p>{quantity}</p>
           </section>
           <section className='flex font-bold'>
-            <h3 className='flex-1'>Category</h3>
-            <h3 className='flex-1'>Name</h3>
-            <h3 className='flex-1'>Price</h3>
+            <p className='flex-1'>Category</p>
+            <p className='flex-1'>Name</p>
+            <p className='flex-1'>Price</p>
           </section>
           <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
           {Object.keys(props.detail).map((el, i) => {
@@ -72,8 +129,8 @@ export default function CenterBoxItems(props = {}) {
                   <section className='flex items-center'>
                     <button onClick={() => handleCategoryChange(el)}
                       className={`text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
-                    <h3 className='flex-1 py-[1px]'>{props.detail[el]['name']}</h3>
-                    <h3 className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</h3>
+                    <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
+                    <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
                   </section>
                 </section>
               )

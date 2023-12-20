@@ -24,7 +24,7 @@ const Step1_1 = (props = {}) => {
           return Object.keys(areas[el]).map((la, j) => {
             if (props.land === la) {
               return (
-                <Link href={'/calculator/' + el + '/' + props.land}
+                <Link key={j} href={'/calculator/' + el + '/' + props.land}
                   className="border border-bg-light p-3 rounded-lg text-lg font-semibold shadow-md shadow-black">
                   {el}
                 </Link>);

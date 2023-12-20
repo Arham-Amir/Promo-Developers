@@ -1,7 +1,9 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadMaps, fetchLandInfo } from "@redux/itemStore";
+import { uploadMaps, fetchLandInfo, fetchLandExtraInfo } from "@redux/itemStore";
+import AddOthersStuff from "./addOthersStuff/addOthersStuff.jsx";
+
 
 const ShowLandInfo = ({ land, index }) => {
   const dispatch = useDispatch();
@@ -31,6 +33,9 @@ const ShowLandInfo = ({ land, index }) => {
     })
   };
 
+  useEffect(() => {
+    dispatch(fetchLandExtraInfo(land))
+  }, []);
   useEffect(() => {
     if (landInfo[land] && landInfo[land]["images"] != "null") {
       setExistingImages(landInfo[land]["images"]);
@@ -99,6 +104,10 @@ const ShowLandInfo = ({ land, index }) => {
               Upload
             </button>
           </section>
+          <AddOthersStuff land={land} place="RCC" />
+          <AddOthersStuff land={land} place="PlinthADD" />
+          <AddOthersStuff land={land} place="PlinthSUB" />
+          <AddOthersStuff land={land} place="Radday" />
         </div>
       )}
     </div>
