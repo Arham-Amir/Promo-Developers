@@ -46,9 +46,9 @@ const Areas = (props = {}) => {
           </section>
           <section className="flex gap-5 items-center">
             <h1 className="p-4 text-2xl">Square Feet :</h1>
-            <p className="text-2xl">{squareFeet}</p>
+            <p className="text-2xl">{props.item["squareFeet"] || 0}</p>
           </section>
-          <h3 className="p-4">Quanity :</h3>
+          <h3 className="p-4">Quanity Info:-</h3>
           <section className="flex gap-10 flex-wrap" >
             {
               Object.keys(props.item).map((el, i) => {

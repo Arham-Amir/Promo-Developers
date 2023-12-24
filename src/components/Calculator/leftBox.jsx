@@ -63,7 +63,7 @@ export function LeftBox(props = {}) {
 
   return (
     <section className="flex flex-col items-center justify-center gap-10 py-8">
-      <h1 className="text-2xl font-heading text-black font-bold text-center">Construction Cost</h1>
+      <h3 className="font-heading text-black text-center">Construction Cost</h3>
       <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
         <Chart
           chartType="PieChart"
@@ -88,7 +88,7 @@ export function LeftBox(props = {}) {
         <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById('my_modal_3').showModal()}>View Maps</button>
         <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
       </section>
-      <section className="min-w-screen min-h-screen">
+      {/* <section className="min-w-screen min-h-screen">
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar">
             <button onClick={() => {
@@ -103,7 +103,7 @@ export function LeftBox(props = {}) {
             }
           </div>
         </dialog>
-      </section>
+      </section> */}
     </section>
   );
 }
