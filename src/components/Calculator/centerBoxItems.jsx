@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 export default function CenterBoxItems(props = {}) {
   const [category, setCategory] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const quan = props.areas[props.area][props.landsize][props.item];
+  const quan = Number(props.areas[props.area][props.landsize][props.item]);
   const { landInfo } = useSelector(state => state.itemManager)
   const [quantity, setquantity] = useState(quan);
   const [raddayquantity, setraddayquantity] = useState(0);
@@ -27,12 +27,14 @@ export default function CenterBoxItems(props = {}) {
     if (Object.keys(landInfo).length != 0) {
       if (props.item in landInfo[props.landsize]["Radday"]) {
         setquantity(prevQuantity => prevQuantity - raddayquantity);
+        props.item == "Plumbing" && console.log("1")
         setraddayquantity(Number(landInfo[props.landsize]["Radday"][props.item]) * props.radday);
       }
     }
   }, [props.radday]);
   useEffect(() => {
     setquantity(prevQuantity => prevQuantity + raddayquantity);
+    props.item == "Plumbing" && console.log("2")
   }, [raddayquantity])
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
@@ -42,9 +44,11 @@ export default function CenterBoxItems(props = {}) {
       if (props.item in landInfo[props.landsize]["RCC"] && firstRcc) {
         if (props.rcc == "t") {
           setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["RCC"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
         else {
           setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["RCC"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
       }
     }
@@ -57,17 +61,21 @@ export default function CenterBoxItems(props = {}) {
       if (props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
         if (props.plinth == "t") {
           setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
         else {
           setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
       }
       if (props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
         if (props.plinth == "t") {
           setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
         else {
           setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
+          props.item == "Plumbing" && console.log("1")
         }
       }
     }

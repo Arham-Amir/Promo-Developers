@@ -48,18 +48,20 @@ const Areas = (props = {}) => {
             <h1 className="p-4 text-2xl">Square Feet :</h1>
             <p className="text-2xl">{squareFeet}</p>
           </section>
-          <h1 className="p-4 text-2xl">Quanity :</h1>
+          <h3 className="p-4">Quanity :</h3>
           <section className="flex gap-10 flex-wrap" >
             {
-              Object.keys(props.item).map((el, i) => (
-                <QuantityPerHouse
-                  key={i}
-                  item={el}
-                  area={props.area}
-                  value={props.item[el]}
-                  land={props.children}
-                />
-              ))
+              Object.keys(props.item).map((el, i) => {
+                {
+                  return el != "order" && <QuantityPerHouse
+                    key={i}
+                    item={el}
+                    area={props.area}
+                    value={props.item[el]}
+                    land={props.children}
+                  />
+                }
+              })
             }
           </section>
         </div>

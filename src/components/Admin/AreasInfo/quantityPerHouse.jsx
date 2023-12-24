@@ -26,9 +26,9 @@ const QuantityPerHouse = (props = {}) => {
 
   return (
     <section className="flex items-center flex-row gap-4 p-4 xs:text-xs sm:text-base w-fit">
-      <h1 className="w-max">
+      <p className="w-max">
         {props.item} :
-      </h1>
+      </p>
       <section className="flex items-center gap-2">
         {editValue == false ?
           <>
