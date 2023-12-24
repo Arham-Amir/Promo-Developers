@@ -73,7 +73,7 @@ const Box = (props = {}) => {
   }
 
   return (
-    <section className='overflow-hidden'>
+    <section className=''>
       <section>
         <button onClick={() => { setShow(!show) }}
           className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-[#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[95%]' : 'right-0'}`}>
@@ -182,7 +182,7 @@ const RightTopBox = (props = {}) => {
   }, [props.cost]);
 
   return (
-    <section className='h-auto p-4 sticky top-0 right-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
+    <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
       <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1>
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-1 border-bg-light">
