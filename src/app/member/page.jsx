@@ -69,12 +69,12 @@ const Page = () => {
       web,
     };
     for (const key in templateParams) {
-      formData[key] = templateParams[key];
+      forlgata[key] = templateParams[key];
     }
     emailjs.send(
       "service_qx54ocn",
       "template_vf0abcq",
-      formData,
+      forlgata,
       "3uBa2MTILF_j_PX_3"
     ).then(function (response) {
       toast.success('Your Response has been sent successfully!');
@@ -85,8 +85,8 @@ const Page = () => {
 
   return (
     <section className="h-auto w-auto py-12 bg-bg">
-      <section className="flex h-auto relative">
-        <section className="w-[60%] flex justify-center items-center flex-col gap-5">
+      <section className="flex flex-col-reverse lg:flex-row justify-center items-center gap-5 lg:gap-0 h-auto relative">
+        <section className="w-11/12 lg:w-[60%] h-fit flex justify-center items-center flex-col gap-5">
           <h1 className="text-3xl font-themeFont font-bold text-themeFont">Tell me about yourelf</h1>
           <section className="flex justify-center items-center flex-col gap-4 min-w-max font-sans">
             <section className="flex gap-2 items-center justify-between w-full">
@@ -139,8 +139,8 @@ const Page = () => {
             <button className="btn px-8 mt-2 text-white bg-themeFont" onClick={handleFormSubmit}>Submit</button>
           </section>
         </section>
-        <section className="w-[40%] max-h-[84vh] sticky top-12 right-0">
-          <img src="/image/contactUs.gif" className="h-[90%] w-[80%] object-cover" alt="contactusgif" />
+        <section className="w-11/12 lg:w-[40%] h-[50vh] lg:h-[84vh] lg:sticky lg:top-12 lg:right-0">
+          <img src="/image/contactUs.gif" className="h-[90%] w-full lg:w-[80%] object-fit" alt="contactusgif" />
         </section>
       </section>
     </section>

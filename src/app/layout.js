@@ -3,8 +3,6 @@ import { Nunito_Sans, Lato } from 'next/font/google'
 import localFont from 'next/font/local'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
-import ContactUs from '@components/Base/ContactUs/contactUs';
-import Fotter from '@components/Base/fotter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,13 +31,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className='bg-bg'>
-      <body className={`${nunito.variable} ${myFont.variable} ${heading.variable} font-sans w-screen overflow-x-hidden`}>
+      <body className={`${nunito.variable} ${myFont.variable} ${heading.variable} custom-scrollbar font-sans w-screen overflow-x-hidden`}>
         <Provider>
           <Navbar />
           <ToastContainer />
           {children}
-          <ContactUs />
-          <Fotter />
         </Provider>
       </body>
     </html>
