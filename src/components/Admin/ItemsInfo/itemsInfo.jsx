@@ -30,12 +30,12 @@ const ItemInfo = (props = {}) => {
     <div className={`max-w-full collapse collapse-arrow bg-base-200 shadow-2xl rounded-none border-b border-bg-dark text-themeFont ${show ? 'collapse-open' : ''}`}>
       <input onChange={() => { }} className="max-w-full" type="radio" name={`my-accordion-${props.id}`} checked={show} onClick={handleShowBtn} />
       <div className="max-w-full collapse-title text-2xl font-bold bg-bg-1 flex justify-between items-center" onClick={handleShowBtn}>
-        <h1>{props.children}</h1>
+        <p>{props.children}</p>
         <button className='z-20' onClick={handledeletebutton}><RiDeleteBin5Line /></button>
       </div>
       {show && <>
         <div className="collapse-content bg-white flex flex-col gap-3">
-          <section className='flex font-bold pt-3'>
+          <section className='flex pt-3'>
             <h3 className='flex-1'>Select</h3>
             <h3 className='flex-1'>Category</h3>
             <h3 className='flex-1'>Name</h3>
