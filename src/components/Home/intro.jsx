@@ -19,13 +19,13 @@ const Intro = () => {
   }, [])
   useEffect(() => {
   }, [arr])
-  useEffect(() => {
-    let arr = []
-    Object.keys(areas).map((area) => {
-      areas[area] != "null" && arr.push(...Object.keys(areas[area]))
-    })
-    setArr([...new Set(arr)])
-  }, [areas])
+  // useEffect(() => {
+  //   let arr = []
+  //   Object.keys(areas).map((area) => {
+  //     areas[area] != "null" && arr.push(...Object.keys(areas[area]))
+  //   })
+  //   setArr([...new Set(arr)])
+  // }, [areas])
 
   function handelRightClick() {
     if (crouselRef.current) {
@@ -53,15 +53,21 @@ const Intro = () => {
           <span className="w-1/4 h-[2px] bg-bg-dark"></span>
         </section>
         <section className="relative">
-          <section ref={crouselRef} className="scroll-smooth grid grid-flow-col auto-cols-[calc(97%/4)] gap-[1%] h-full overflow-hidden">
-            <button onClick={handelRightClick} className="absolute top-1/2 -translate-y-1/2 right-0 "><FontAwesomeIcon icon={faChevronRight}
+          {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" /> :
+            <section ref={crouselRef} className="scroll-smooth flex flex-wrap gap-1 justify-between h-full overflow-hidden">
+              {/* <button onClick={handelRightClick} className="absolute top-1/2 -translate-y-1/2 right-0 "><FontAwesomeIcon icon={faChevronRight}
               className='text-white bg-themeFont w-3 h-4 p-2 text-sm' /></button>
             <button onClick={handelLeftClick} className="absolute top-1/2 -translate-y-1/2 left-0 "><FontAwesomeIcon icon={faChevronLeft}
-              className='text-white bg-themeFont w-3 h-4 p-2 text-sm' /></button>
-            {arr.map((ls, i) => {
-              return <Card key={i} land={ls} />
-            })}
-          </section>
+              className='text-white bg-themeFont w-3 h-4 p-2 text-sm' /></button> */}
+              {/* {arr.map((ls, i) => {
+                return <Card key={i} land={ls} />
+              })} */}
+              <Card link="/calculator/Al-Kabir Town ( Phase 2 )/3 Marla" land="3 Marla"></Card>
+              <Card link="/calculator/DHA Rahbar ( Phase XI )/5 Marla" land="5 Marla"></Card>
+              <Card link="/calculator/Jubilee Town /10 Marla" land="10 Marla"></Card>
+              <Card link="/calculator/Fazaia Housing Scheme/1 Kanal" land="1 Kanal"></Card>
+            </section>
+          }
         </section>
       </section>
     </section>
@@ -70,15 +76,15 @@ const Intro = () => {
 
 export default Intro;
 
-const Card = (props = {}) => {
+const Card = ({land, link}) => {
   return (<>
-    <section className="mb-3 glow-section font-themeFont border border-gray-400 shadow-md shadow-black p-5 rounded-2xl flex flex-col gap-3">
-      <h1 className="text-xl font-bold">{props.land}</h1>
+    <section className="basis-1/5 m-3 glow-section font-themeFont border border-gray-400 shadow-sm shadow-black p-5 rounded-2xl flex flex-col items-center justify-center gap-3">
+      <h1 className="text-xl font-bold">{land}</h1>
       <hr />
       <section className="flex flex-col gap-3">
-        <p className="border text-lg p-3">Al Kabir Town</p>
-        <p className="border text-lg p-3">Bahria</p>
-        <Link href={'/calculator'} className="border p-3 text-lg hover:bg-gray-300 font-bold text-themeFont">View All</Link>
+        {/* <p className="border text-lg p-3">Al Kabir Town</p>
+        <p className="border text-lg p-3">Bahria</p> */}
+        <Link href={link} className="border p-3 text-lg hover:bg-gray-300 font-bold text-themeFont rounded-md">View Construction Cost</Link>
       </section>
     </section>
   </>

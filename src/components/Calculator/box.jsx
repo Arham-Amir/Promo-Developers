@@ -183,11 +183,12 @@ const RightTopBox = (props = {}) => {
 
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
-      <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1>
+      {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
+      <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
-          <div className="stat-value text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] || 0}</div>
+          <div className="stat-value text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Price Per Sq Ft</div>

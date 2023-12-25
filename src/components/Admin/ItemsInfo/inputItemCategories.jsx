@@ -58,27 +58,27 @@ function InputItemCategories(props = {}) {
         add == false && <>
           <section className='flex-all-center p-4 gap-24'>
             <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
-              <h1>
+              <p>
                 Category :
-              </h1>
+              </p>
               <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 type="text" />
             </section>
             <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
-              <h1>
+              <p>
                 Name :
-              </h1>
+              </p>
               <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text" />
             </section>
             <section className="basis-1/4 flex justify-start items-center flex-row gap-4">
-              <h1>
+              <p>
                 Price-Per-Unit :
-              </h1>
+              </p>
               <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-full'
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}

@@ -35,7 +35,7 @@ const SideBySide = () => {
             ref={textRef1} className={`intro_text intro_h1 text-[30px] ${isVisible1 ? 'visible' : ''}`}>
             Promo Developers
           </h1>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo maiores deleniti, neque labore a quasi expedita sit est!</p>
+          <p>Promo Developers is a leading construction firm specializing in providing high-quality construction and contracting services. With a commitment to excellence and a customer-centric approach, we have established a strong reputation in the industry for delivering outstanding results. Our team of experienced professionals and skilled craftsmen work collaboratively to meet our client's unique construction need</p>
           <section className="bg-themeFont ml-2 rounded-md w-fit">
             <section className="border-themeFont bg-bg-light border -translate-x-[2px] -translate-y-[2px] px-5 py-2 rounded-md hover:-translate-x-1 hover:-translate-y-1 ease-in-out transition duration-300 text-xl">
               <Link href="/calculator">Calculator</Link>
