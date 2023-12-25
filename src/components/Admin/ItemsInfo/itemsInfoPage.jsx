@@ -23,7 +23,7 @@ const ItemsInfoPage = () => {
               <section className='mt-10 p-5 bg-heading border-b border-white text-xl font-heading text-heading-txt font-bold flex items-center justify-between relative'>
                 <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
                 <h1 className='absolute left-1/2 -translate-x-1/2 text-xl' > {el}</h1>
-                <p>{headings[el]['order']}</p>
+                <p>{headings[el]['order'] || 0}</p>
               </section>
               {Object.keys(headings[el]).map((ite, i) => {
                 return ite != 'order' && <ItemInfo head={el} key={i} recomended = {headings[el][ite]['recomended']}>{ite}</ItemInfo>

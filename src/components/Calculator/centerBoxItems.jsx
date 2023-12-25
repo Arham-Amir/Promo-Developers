@@ -25,7 +25,7 @@ export default function CenterBoxItems(props = {}) {
   }, [category])
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
-      if (props.item in landInfo[props.landsize]["Radday"]) {
+      if (landInfo[props.landsize]["Radday"] && props.item in landInfo[props.landsize]["Radday"]) {
         setquantity(prevQuantity => prevQuantity - raddayquantity);
         // props.item == "Plumbing" && console.log("1")
         setraddayquantity(Number(landInfo[props.landsize]["Radday"][props.item]) * props.radday);
@@ -41,7 +41,7 @@ export default function CenterBoxItems(props = {}) {
       if (props.rcc && firstRcc == 0) {
         firstRcc = 1;
       }
-      if (props.item in landInfo[props.landsize]["RCC"] && firstRcc) {
+      if (landInfo[props.landsize]["RCC"] && props.item in landInfo[props.landsize]["RCC"] && firstRcc) {
         if (props.rcc == "t") {
           setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["RCC"][props.item]));
           // props.item == "Plumbing" && console.log("1")
@@ -58,7 +58,7 @@ export default function CenterBoxItems(props = {}) {
       if (props.plinth && firstPlinth == 0) {
         firstPlinth = 1;
       }
-      if (props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
+      if (landInfo[props.landsize]["PlinthADD"] && props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
         if (props.plinth == "t") {
           setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]));
           // props.item == "Plumbing" && console.log("1")
@@ -68,7 +68,7 @@ export default function CenterBoxItems(props = {}) {
           // props.item == "Plumbing" && console.log("1")
         }
       }
-      if (props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
+      if (landInfo[props.landsize]["PlinthSUB"] && props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
         if (props.plinth == "t") {
           setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
           // props.item == "Plumbing" && console.log("1")
