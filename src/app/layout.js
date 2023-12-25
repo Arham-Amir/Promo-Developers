@@ -1,14 +1,16 @@
 import './globals.css'
-import { Nunito_Sans, Lato} from 'next/font/google'
+import { Nunito_Sans, Lato } from 'next/font/google'
 import localFont from 'next/font/local'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
+import ContactUs from '@components/Home/contactUs';
+import Fotter from '@components/Base/fotter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const nunito = Lato({
   subsets: ['latin'],
-  weight :['100', '300', '400', '700', '900'],
+  weight: ['100', '300', '400', '700', '900'],
   variable: '--font-roboto'
 })
 
@@ -36,6 +38,8 @@ export default function RootLayout({ children }) {
           <Navbar />
           <ToastContainer />
           {children}
+          <ContactUs />
+          <Fotter />
         </Provider>
       </body>
     </html>

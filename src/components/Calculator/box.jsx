@@ -95,7 +95,7 @@ const Box = (props = {}) => {
       </section>
       <section className='flex flex-row justify-center'>
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
-          <section className='w-[25%] bg-bg h-fit sticky-comp'>
+          <section className='w-[25%] bg-bg max-h-screen sticky-comp'>
             <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
               <LeftBox setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
             </Suspense>
