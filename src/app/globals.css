@@ -85,7 +85,21 @@
     position: sticky;
     top: 0;
   }
+  .shaky-component {
+    animation: shake 3s infinite;
+  }
 
+  @keyframes shake {
+    0%, 20%, 100% {
+      transform: translateX(0);
+    }
+    5%, 11% {
+      transform: translateX(-7px);
+    }
+    8% {
+      transform: translateX(7px);
+    }
+  }
   .btn-self {
     @apply w-fit px-4 py-2 rounded-md
   }
