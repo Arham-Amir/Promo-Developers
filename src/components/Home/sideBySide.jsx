@@ -34,7 +34,7 @@ const SideBySide = () => {
       <section className='w-full md:w-1/2 h-auto py-10 bg-bg-dark'>
         <section className='mx-auto w-4/5 h-full flex flex-col justify-center items-center gap-10 text-lightFont text-center'>
           <h1 data-text={`Promo Developers`} style={{ whiteSpace: 'nowrap', letterSpacing: '4px', wordSpacing: '8px' }}
-            ref={textRef1} className={`intro_text intro_h1 text-lg sm:text-[30px] ${isVisible1 ? 'visible' : ''}`}>
+            ref={textRef1} className={`intro_text intro_h1 text-xl sm:text-[30px] ${isVisible1 ? 'visible' : ''}`}>
             Promo Developers
           </h1>
           <p className='font-sans'>Promo Developers is a leading construction firm specializing in providing high-quality construction and contracting services. With a commitment to excellence and a customer-centric approach, we have established a strong reputation in the industry for delivering outstanding results. Our team of experienced professionals and skilled craftsmen work collaboratively to meet our client's unique construction need</p>
