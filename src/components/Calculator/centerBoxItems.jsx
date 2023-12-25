@@ -26,15 +26,13 @@ export default function CenterBoxItems(props = {}) {
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
       if (landInfo[props.landsize]["Radday"] && props.item in landInfo[props.landsize]["Radday"]) {
-        setquantity(prevQuantity => prevQuantity - raddayquantity);
-        // props.item == "Plumbing" && console.log("1")
+        updateTotalPriceAndQuantity(quantity - raddayquantity)
         setraddayquantity(Number(landInfo[props.landsize]["Radday"][props.item]) * props.radday);
       }
     }
   }, [props.radday]);
   useEffect(() => {
-    setquantity(prevQuantity => prevQuantity + raddayquantity);
-    // props.item == "Plumbing" && console.log("2")
+    updateTotalPriceAndQuantity(quantity + raddayquantity)
   }, [raddayquantity])
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
@@ -43,12 +41,10 @@ export default function CenterBoxItems(props = {}) {
       }
       if (landInfo[props.landsize]["RCC"] && props.item in landInfo[props.landsize]["RCC"] && firstRcc) {
         if (props.rcc == "t") {
-          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["RCC"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["RCC"][props.item]))
         }
         else {
-          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["RCC"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["RCC"][props.item]))
         }
       }
     }
@@ -60,27 +56,22 @@ export default function CenterBoxItems(props = {}) {
       }
       if (landInfo[props.landsize]["PlinthADD"] && props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
         if (props.plinth == "t") {
-          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
         else {
-          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
       }
       if (landInfo[props.landsize]["PlinthSUB"] && props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
         if (props.plinth == "t") {
-          setquantity(prevQuantity => prevQuantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
         else {
-          setquantity(prevQuantity => prevQuantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]));
-          // props.item == "Plumbing" && console.log("1")
+          updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
       }
     }
   }, [props.plinth]);
-
   function updatePrice(cat) {
     props.setCost((draft) => {
       if (category) {
@@ -104,6 +95,16 @@ export default function CenterBoxItems(props = {}) {
     updatePrice(cat);
     setCategory(cat);
   };
+  function updateTotalPriceAndQuantity(newQuantity) {
+    props.setCost((draft) => {
+      if (category) {
+        draft[props.head] -= Number(props.detail[category]?.['price'] * quantity)
+        draft[props.head] += Number(props.detail[category]?.['price'] * newQuantity)
+      }
+    })
+    setquantity(newQuantity);
+
+  }
   return (
     <section className='shadow-lg border border-gray-300'>
       <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
@@ -124,26 +125,29 @@ export default function CenterBoxItems(props = {}) {
             <h3>Quantity : </h3>
             <p>{quantity}</p>
           </section>
-          <section className='flex font-bold'>
-            <p className='flex-1'>Category</p>
-            <p className='flex-1'>Name</p>
-            <p className='flex-1'>Price</p>
-          </section>
-          <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
-          {Object.keys(props.detail).map((el, i) => {
-            if (el != 'recomended') {
-              return (
-                <section key={i} className={`${el == category && 'bg-bg-card'}`}>
-                  <section className='flex items-center'>
-                    <button onClick={() => handleCategoryChange(el)}
-                      className={`text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
-                    <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
-                    <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
-                  </section>
-                </section>
-              )
-            }
-          })}
+          {props.detail == "null" ? <p>No Category Available</p>
+            : <>
+              <section className='flex font-bold'>
+                <p className='flex-1'>Category</p>
+                <p className='flex-1'>Name</p>
+                <p className='flex-1'>Price</p>
+              </section>
+              <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
+              {Object.keys(props.detail).map((el, i) => {
+                if (el != 'recomended') {
+                  return (
+                    <section key={i} className={`${el == category && 'bg-bg-card'}`}>
+                      <section className='flex items-center'>
+                        <button onClick={() => handleCategoryChange(el)}
+                          className={`text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
+                        <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
+                        <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
+                      </section>
+                    </section>
+                  )
+                }
+              })}
+            </>}
         </div>
       </div>
     </section>

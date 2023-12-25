@@ -15,7 +15,7 @@ const AddCategoriesPage = () => {
   }
 
   return (
-    <section className="text-white flex gap-5 justify-center my-10">
+    <section className="text-themeFont flex gap-5 justify-center my-10">
       <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={item}
         onChange={(e) => setItem(e.target.value)}
