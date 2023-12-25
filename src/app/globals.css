@@ -81,20 +81,25 @@
     transition: clip-path 0.3s ease-in-out;
   }
 
-  .sticky-comp{
+  .sticky-comp {
     position: sticky;
     top: 0;
   }
 
+  .btn-self {
+    @apply w-fit px-4 py-2 rounded-md
+  }
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  button{
+
+  button {
     @apply w-fit px-4 py-2 rounded-md
   }
+
   h1 {
     @apply text-2xl md:text-3xl lg:text-5xl font-bold;
   }

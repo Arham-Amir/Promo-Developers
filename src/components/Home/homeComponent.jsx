@@ -7,11 +7,9 @@ const HomeComponent = () => {
   return (
     <section>
       <VideoComp />
-      {/* <ProjectsInfo /> */}
       <SideBySide />
       <Intro />
       <Services />
-      {/* <AboutUs /> */}
     </section>
   );
 }

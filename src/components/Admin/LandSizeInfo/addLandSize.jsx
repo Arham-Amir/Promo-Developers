@@ -53,7 +53,7 @@ const AddLandSize = () => {
   }
 
   return (
-    <section className="flex-all-center flex-col md:w-4/5 xs:w-11/12 mx-auto gap-10">
+    <section className="flex-all-center flex-col w-11/12 md:w-4/5 mx-auto gap-10">
       <section className="text-themeFont mt-10 flex gap-5 justify-center w-full">
         {arealoading || loading ? <span className="loading loading-dots loading-lg text-themeFont" />
           : <>

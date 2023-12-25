@@ -24,16 +24,15 @@ const NavLinks = (props = {}) => {
         Home
       </button>
       <section className="relative group">
-        <button
-          className={`text-xl lg:hover:bg-themeFont hover:text-lightFont`}
-          onClick={() => handleClick("#aboutus")}
+        <p
+          className={`text-xl btn-self lg:hover:bg-themeFont hover:text-lightFont`}
         >
           Services
-        </button>
+        </p>
         <section className="absolute top-full bg-bg rounded-md border-2 min-w-max  hidden group-hover:flex flex-col p-2">
           <button
             className={`min-w-fit lg:hover:bg-themeFont hover:text-lightFont`}
-            onClick={() => handleClick("#aboutus")}
+            onClick={() => handleClick("/construction-services")}
           >
             Construction Services
           </button>
@@ -41,7 +40,7 @@ const NavLinks = (props = {}) => {
             className={`min-w-fit lg:hover:bg-themeFont hover:text-lightFont`}
             onClick={() => handleClick("#aboutus")}
           >
-            Other Services
+            Material Estimation
           </button>
         </section>
       </section>

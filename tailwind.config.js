@@ -17,11 +17,7 @@ module.exports = {
         '1/8': '8%',
         '7/8': '92%',
       },
-      screens: {
-        'xs': '0px',
-        'sm': '480px',
-        'lg': '1000px',
-      },
+
       fontFamily: {
         sans: ['var(--font-roboto)'],
         'themeFont': ['var(--font-myFont)'],

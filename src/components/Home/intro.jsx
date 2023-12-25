@@ -47,7 +47,7 @@ const Intro = () => {
 
   return (
     <section className="my-8 py-8 bg-bg w-screen flex items-center justify-center">
-      <section className="p-5 w-[96%] text-bg-dark flex flex-col gap-10">
+      <section className="p-5 w-[90%] text-bg-dark flex flex-col gap-10">
         <section className="flex gap-5 items-center">
           <h1 className="text-3xl font-bold pl-1 font-heading">Browse Properties</h1>
           <span className="w-1/4 h-[2px] bg-bg-dark"></span>

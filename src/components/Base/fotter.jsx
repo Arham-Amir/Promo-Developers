@@ -31,7 +31,7 @@ const Footer = () => {
       </section>
       <section className='w-full bg-black'>
         <section className="py-3 px-5 mx-auto text-xs md:text-sm text-white flex justify-between items-center flex-col sm:flex-row gap-y-2">
-          <p className='md:text-sm text-center'>&copy; 2018 - Promo Garlic | All Rights Reserved</p>
+          <p className='md:text-sm text-center'>&copy; 2018 - Promo Developers | All Rights Reserved</p>
           <p className='md:text-sm' >Built by FurmTech</p>
         </section>
       </section>

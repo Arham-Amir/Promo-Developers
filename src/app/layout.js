@@ -3,14 +3,14 @@ import { Nunito_Sans, Lato } from 'next/font/google'
 import localFont from 'next/font/local'
 import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
-import ContactUs from '@components/Home/contactUs';
+import ContactUs from '@components/Base/ContactUs/contactUs';
 import Fotter from '@components/Base/fotter';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const nunito = Lato({
+const nunito = Nunito_Sans({
   subsets: ['latin'],
-  weight: ['100', '300', '400', '700', '900'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   variable: '--font-roboto'
 })
 

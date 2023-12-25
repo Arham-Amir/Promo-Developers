@@ -25,7 +25,7 @@ const QuantityPerHouse = (props = {}) => {
   }
 
   return (
-    <section className="flex items-center flex-row gap-4 p-4 xs:text-xs sm:text-base w-fit">
+    <section className="flex items-center flex-row gap-4 p-4 text-xs sm:text-base w-fit">
       <p className="w-max">
         {props.item} :
       </p>
