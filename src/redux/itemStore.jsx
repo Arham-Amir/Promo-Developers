@@ -145,7 +145,7 @@ const itemManagerSlice = createSlice({
     headingloading: true,
     arealoading: false,
     loading_land: true,
-    LandOtherLoading: true,
+    landOtherLoading: true,
   },
   reducers: {
     addItem: (state, action) => {
@@ -289,13 +289,13 @@ const itemManagerSlice = createSlice({
     }).addCase(uploadMaps.fulfilled, (state, action) => {
       toast('Images Added Successfully')
     }).addCase(fetchLandExtraInfo.pending, (state) => {
-      state.LandOtherLoading = true
+      state.landOtherLoading = true
     }).addCase(fetchLandExtraInfo.fulfilled, (state, action) => {
       state.RCC = action.payload["RCC"] || {}
       state.PlinthADD = action.payload["PlinthADD"] || {}
       state.PlinthSUB = action.payload["PlinthSUB"] || {}
       state.Radday = action.payload["Radday"] || {}
-      state.LandOtherLoading = false
+      state.landOtherLoading = false
     })
   }
 })

@@ -16,12 +16,12 @@ const AddCategoriesPage = () => {
 
   return (
     <section className="text-white flex gap-5 justify-center my-10">
-      <input className='focus:outline-none w-[40%] bg-bg-light py-2 px-6 rounded-sm'
+      <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={item}
         onChange={(e) => setItem(e.target.value)}
         type="text"
         placeholder="Add Category" />
-      <button onClick={handleAddCategory} className='bg-bg-light text-themeFont py-2 px-6 rounded-sm'>ADD</button>
+      <button onClick={handleAddCategory} className='bg-themeFont text-white'>ADD</button>
     </section>
   );
 }

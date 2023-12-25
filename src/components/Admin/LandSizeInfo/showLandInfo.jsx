@@ -7,16 +7,16 @@ import AddOthersStuff from "./addOthersStuff/addOthersStuff.jsx";
 
 const ShowLandInfo = ({ land, index }) => {
   const dispatch = useDispatch();
-  const { landInfo } = useSelector((state) => state.itemManager);
+  const { landInfo, landOtherLoading } = useSelector((state) => state.itemManager);
   const [show, setShow] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
   const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true);
 
   const handleRadioChange = () => {
+    dispatch(fetchLandExtraInfo(land))
     setShow(!show);
   };
-
   const handleImageChange = (event) => {
     const files = event.target.files;
     setSelectedImages(files);
@@ -33,9 +33,6 @@ const ShowLandInfo = ({ land, index }) => {
     })
   };
 
-  useEffect(() => {
-    dispatch(fetchLandExtraInfo(land))
-  }, []);
   useEffect(() => {
     if (landInfo[land] && landInfo[land]["images"] != "null") {
       setExistingImages(landInfo[land]["images"]);
@@ -63,7 +60,8 @@ const ShowLandInfo = ({ land, index }) => {
       >
         {land}
       </div>
-      {show && (
+      {show && (landOtherLoading ? <span className="loading loading-dots loading-lg text-themeFont" />
+        :
         <div className="collapse-content bg-white flex flex-col gap-5 pt-5">
           <section className="flex justify-between">
             <input

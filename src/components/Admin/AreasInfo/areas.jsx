@@ -18,6 +18,7 @@ const Areas = (props = {}) => {
       'land': props.children,
       squareFeet
     }))
+    dispatch(fetchAreas())
   }
   function handledeletebutton(e) {
     e.stopPropagation();

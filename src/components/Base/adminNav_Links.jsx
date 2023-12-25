@@ -13,11 +13,11 @@ const AdminNav_Links = (props = {}) => {
 
   return (
     <section className={`${props.className}`}>
-      <button className={`${pathname == '/' ? 'lg:border-t-2 lg:border-t-themeFont' : 'bg-transparent lg:hover:border-t-2 hover:border-t-themeFont'}  p-2 text-xl`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
-      <button className={`text-xl lg:hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Items</button>
-      <button className={`text-xl lg:hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/categories') }}>Add Category</button>
-      <button className={`text-xl lg:hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/landSize') }}>LandSizes</button>
-      <button className={`text-xl lg:hover:border-t-2 hover:border-t-themeFont p-2`} onClick={(e) => { handleClick(e, '/admin/areas') }}>Areas</button>
+      <button className={`${pathname == '/' ? 'lg:bg-themeFont text-lightFont' : 'bg-transparent lg:hover:bg-themeFont hover:text-lightFont'} p-2 text-xl`} onClick={(e) => { handleClick(e, '/') }}>Home</button>
+      <button className={`${pathname == '/admin/items' ? 'lg:bg-themeFont text-lightFont' : 'bg-transparent lg:hover:bg-themeFont hover:text-lightFont'} text-xl p-2`} onClick={(e) => { handleClick(e, '/admin/items') }}>Items</button>
+      <button className={`${pathname == '/admin/categories' ? 'lg:bg-themeFont text-lightFont' : 'bg-transparent lg:hover:bg-themeFont hover:text-lightFont'} text-xl p-2`} onClick={(e) => { handleClick(e, '/admin/categories') }}>Add Category</button>
+      <button className={`${pathname == '/admin/landSize' ? 'lg:bg-themeFont text-lightFont' : 'bg-transparent lg:hover:bg-themeFont hover:text-lightFont'} text-xl p-2`} onClick={(e) => { handleClick(e, '/admin/landSize') }}>LandSizes</button>
+      <button className={`${pathname == '/admin/areas' ? 'lg:bg-themeFont text-lightFont' : 'bg-transparent lg:hover:bg-themeFont hover:text-lightFont'} text-xl p-2`} onClick={(e) => { handleClick(e, '/admin/areas') }}>Areas</button>
     </section>
   );
 }

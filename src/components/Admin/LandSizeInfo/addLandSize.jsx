@@ -13,7 +13,6 @@ const AddLandSize = () => {
   const dispatch = useDispatch();
   const [areaName, setAreaName] = useState('Areas')
   const [size, setSize] = useState('');
-  const [show, setShow] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -64,18 +63,15 @@ const AddLandSize = () => {
                 onChange={(e) => setSize(e.target.value)}
                 type="text"
                 placeholder="Add Land Size" />
-              <div className="w-max collapse collapse-arrow bg-bg-1 text-themeFont rounded-none">
-                <input onChange={() => { }} type="radio" name="my-accordion-100" checked={show} onClick={() => setShow(!show)} />
-                <div className="collapse-title text-xl font-medium border-b border-bg-dark">
-                  {areaName}
-                </div>
-                <div className="collapse-content flex flex-col items-start">
+              <section className="min-h-full">
+                <select className="h-full bg-bg-1 rounded-sm p-2" name="areas" id="areas" value={areaName} onChange={(e) => setAreaName(e.target.value)}>
+                  <option value="Areas">Select</option>
                   {Object.keys(areas)?.map((el, i) => {
-                    return <button onClick={() => { setAreaName(el); setShow(false) }} key={i} className="w-fit hover:scale-105">{el}</button>
+                    return <option key={i} value={el}>{el}</option>
                   })}
-                </div>
-              </div>
-              <button onClick={handleAddArea} className='bg-themeFont text-white py-2 px-6 rounded-sm'>ADD</button>
+                </select>
+              </section>
+              <button onClick={handleAddArea} className='bg-themeFont text-white'>ADD</button>
             </>
               : <p className="text-themeFont">First Add Area. <Link className="text-blue-600 underline" href="/admin/areas">Click here</Link> to add Area.</p>}
 

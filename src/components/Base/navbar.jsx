@@ -23,9 +23,9 @@ const Navbar = () => {
         }
 
         <section onClick={() => { setShowLinks(!showLinks) }} className="z-30 lg:hidden xs:flex flex-col items-end gap-2" >
-          <p className={`${showLinks ? 'w-8 rotate-[495deg]' : 'w-9'}  transition-all duration-500 p-[1px] bg-lightFont`}></p>
-          <p className={`w-7 p-[1px] transition-all duration-500 bg-lightFont ${showLinks ? 'opacity-0' : 'opacity-100'} transform ${showLinks ? '-translate-y-10' : 'translate-y-0'}`}></p>
-          <p className={`${showLinks ? 'w-8 rotate-[405deg] -translate-y-[19px]' : 'w-5'} transition-all duration-500   p-[1px] bg-lightFont`}></p>
+          <p className={`${showLinks ? 'w-8 rotate-[495deg]' : 'w-9'}  transition-all duration-500 p-[1px] bg-bg-dark`}></p>
+          <p className={`w-7 p-[1px] transition-all duration-500 bg-bg-dark ${showLinks ? 'opacity-0' : 'opacity-100'} transform ${showLinks ? '-translate-y-10' : 'translate-y-0'}`}></p>
+          <p className={`${showLinks ? 'w-8 rotate-[405deg] -translate-y-[19px]' : 'w-5'} transition-all duration-500   p-[1px] bg-bg-dark`}></p>
         </section>
 
         <Nav_Links showLinks={showLinks} show={() => setShowLinks(false)}

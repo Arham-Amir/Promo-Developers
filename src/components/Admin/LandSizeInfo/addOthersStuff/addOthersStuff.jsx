@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ItemManagerActions, fetchLandExtraInfo } from "@redux/itemStore";
 
 const AddOthersStuff = ({ land, place }) => {
-  const { headingloading, headings, RCC, PlinthADD, PlinthSUB, Radday, LandOtherLoading } = useSelector((state) => state.itemManager)
+  const { headingloading, headings, RCC, PlinthADD, PlinthSUB, Radday, landOtherLoading } = useSelector((state) => state.itemManager)
   const dispatch = useDispatch();
   const [items, setitems] = useState([]);
   const [selected, setselected] = useState({});
@@ -21,7 +21,7 @@ const AddOthersStuff = ({ land, place }) => {
     }
   }, []);
   useEffect(() => {
-    if (LandOtherLoading == false) {
+    if (landOtherLoading == false) {
       let updatedInputValues = {}
       if (place == "RCC") {
         for (const key in RCC) {
@@ -46,7 +46,7 @@ const AddOthersStuff = ({ land, place }) => {
 
       setselected(updatedInputValues);
     }
-  }, [LandOtherLoading]);
+  }, [landOtherLoading]);
 
   function handleAddRCCButton() {
     if (current != "select" && current != "" && current in selected == false) {
@@ -84,7 +84,7 @@ const AddOthersStuff = ({ land, place }) => {
             <button onClick={handleAddRCCButton} className="bg-themeFont text-white">Add</button>
           </section>
         }
-        {LandOtherLoading ? <span className="loading loading-dots loading-lg text-themeFont" />
+        {landOtherLoading ? <span className="loading loading-dots loading-lg text-themeFont" />
           : selected &&
           <section className="flex flex-col gap-4">
             {Object.keys(selected).map((el, i) => (

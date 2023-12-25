@@ -23,7 +23,7 @@ const AddAreasInfo = () => {
         type="text"
         placeholder="Add Area Name"
       />
-      <button onClick={handleAddAreaName} className='text-white font-semibold bg-themeFont py-2 px-6 rounded-sm'>ADD</button>
+      <button onClick={handleAddAreaName} className='text-white font-semibold bg-themeFont'>ADD</button>
     </section>
   );
 }
