@@ -30,7 +30,16 @@ export function LeftBox(props = {}) {
     }
     setData(newData);
   }
-  
+  function formatNumberWithCommas(number) {
+    if (number >= 100000) {
+      return (number / 100000).toFixed(2).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + 'Lac';
+    } else if (number >= 1000) {
+      return (number / 1000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'K';
+    } else {
+      return number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+  }
+
   useEffect(() => {
     updateData()
   }, [props.cost])
@@ -81,9 +90,12 @@ export function LeftBox(props = {}) {
           if (i == 0) {
             return;
           }
-          return <section key={i} className="flex gap-8 items-center">
-            <BsFillCircleFill size={12} fill={colors[i - 1]} />
-            <p className="text-sm">{el[0]}</p>
+          return <section key={i} className="flex gap-4 items-center justify-between">
+            <section className="flex gap-4 items-center">
+              <BsFillCircleFill size={12} fill={colors[i - 1]} />
+              <p className="text-sm">{el[0]}</p>
+            </section>
+            <p className="font-bold text-sm">{formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
           </section>
         })}
       </section>

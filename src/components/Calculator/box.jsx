@@ -184,7 +184,10 @@ const RightTopBox = (props = {}) => {
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
-      <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
+      <section className='flex justify-between items-center'>
+        <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
+        <p className='text-black font-themeFont pr-5'>Prices last updated on 19th December, 2023</p>
+      </section>
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
@@ -192,7 +195,7 @@ const RightTopBox = (props = {}) => {
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-2xl">{formatNumberWithCommas(total / props.areas[props.area][props.landsize]['squareFeet'] || 1)}</div>
+          <div className="stat-value text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-sm">Total Cost</div>
