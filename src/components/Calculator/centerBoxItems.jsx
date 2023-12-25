@@ -122,15 +122,15 @@ export default function CenterBoxItems(props = {}) {
         </div>
         <div className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
           <section className='flex items-center gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
-            <h3>Quantity : </h3>
+            <p>Quantity : </p>
             <p>{quantity}</p>
           </section>
           {props.detail == "null" ? <p>No Category Available</p>
             : <>
               <section className='flex font-bold'>
-                <p className='flex-1'>Category</p>
-                <p className='flex-1'>Name</p>
-                <p className='flex-1'>Price</p>
+                <p className='flex-1 py-[1px]'>Category</p>
+                <p className='flex-1 py-[1px]'>Name</p>
+                <p className='flex-1 py-[1px]'>Price</p>
               </section>
               <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
               {Object.keys(props.detail).map((el, i) => {
@@ -139,7 +139,7 @@ export default function CenterBoxItems(props = {}) {
                     <section key={i} className={`${el == category && 'bg-bg-card'}`}>
                       <section className='flex items-center'>
                         <button onClick={() => handleCategoryChange(el)}
-                          className={`text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
+                          className={`p-0 text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
                         <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
                         <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
                       </section>

@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CenterBoxItems from '@components/Calculator/centerBoxItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItemsHeadings, fetchAreas, fetchLandInfo } from '@redux/itemStore';
@@ -95,13 +95,14 @@ const Box = (props = {}) => {
       </section>
       <section className='flex flex-row justify-center'>
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
-          <section className='w-[25%] bg-bg max-h-screen sticky-comp'>
-            <Suspense fallback={<span className="loading loading-dots loading-lg"></span>}>
-              <LeftBox setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
-            </Suspense>
+          <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky-comp'>
+            <LeftBox setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
           </section>
-          <article className={`${props.class} w-[75%] flex flex-col bg-bg`}>
+          <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
             <RightTopBox areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
+            <section className='block lg:hidden w-full bg-bg h-fit'>
+              <LeftBox setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
+            </section>
             <section className="flex-grow px-2 py-4 bg-bg">
               <section className='flex flex-col-reverse gap-4'>
                 <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
@@ -131,14 +132,13 @@ const Box = (props = {}) => {
                     </section>
                     {Object.keys(headings[head]).map((el, j) => {
                       if (el != 'order') {
-                        return <Suspense key={j} fallback={<span className="loading loading-dots loading-lg"></span>}>
-                          <CenterBoxItems key={j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
-                            setChoice={setChoice}></CenterBoxItems>
-                        </Suspense>
+                        return <CenterBoxItems key={j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
+                          setChoice={setChoice}></CenterBoxItems>
                       }
                     })}
                   </section>
                 })}
+
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                     <section className='flex items-center gap-3'>
@@ -184,22 +184,22 @@ const RightTopBox = (props = {}) => {
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
-      <section className='flex justify-between items-center'>
-        <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
-        <p className='text-black font-themeFont pr-5'>Prices last updated on 19th December, 2023</p>
+      <section className='flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0'>
+        <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
+        <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on 19th December, 2023</p>
       </section>
       <div className="stats shadow text-themeFont">
         <div className="stat place-items-center bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-sm">{props.landsize} /Sq Ft</div>
-          <div className="stat-value text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
+          <div className="stat-title text-black text-xs sm:text-sm">{props.landsize} /Sq Ft</div>
+          <div className="stat-value text-lg sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
+          <div className="stat-title text-black text-xs sm:text-sm">Price Per Sq Ft</div>
+          <div className="stat-value text-lg sm:text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-sm">Total Cost</div>
-          <div className="stat-value text-2xl">
+          <div className="stat-title text-black text-xs sm:text-sm">Total Cost</div>
+          <div className="stat-value text-lg sm:text-2xl">
             {formatNumberWithCommas(total)}
           </div>
         </div>
