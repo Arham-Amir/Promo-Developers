@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ItemManagerActions, fetchAreas } from "@redux/itemStore";
+import { addAreaName, fetchAreas } from "@redux/itemStore";
 
 const AddAreasInfo = () => {
   const dispatch = useDispatch();
@@ -9,13 +9,14 @@ const AddAreasInfo = () => {
 
 
   function handleAddAreaName() {
-    dispatch(ItemManagerActions.addAreaName({ area, value: 'null' }));
-    dispatch(fetchAreas());
+    dispatch(addAreaName({ 'area': area, value: 'null' })).then(() => {
+      dispatch(fetchAreas());
+    })
     setArea('');
   }
 
   return (
-    <section className="text-themeFont flex gap-5 justify-center">
+    <section className="text-themeFont flex gap-5 justify-center w-full">
       <input
         className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={area}

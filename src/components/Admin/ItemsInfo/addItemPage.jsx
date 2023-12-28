@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ItemManagerActions, fetchItemsHeadings } from "@redux/itemStore";
+import { ItemManagerActions, addItem, fetchItemsHeadings } from "@redux/itemStore";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
@@ -14,11 +14,11 @@ const AddItemPage = () => {
 
   function handleAddItem() {
     if (item !== '' && itemHead !== 'Category') {
-      dispatch(ItemManagerActions.addItem({ item, itemHead }))
-      dispatch(fetchItemsHeadings())
+      dispatch(addItem({ item, itemHead })).then(()=>{
+        dispatch(fetchItemsHeadings())
+      })
       setItem('')
       setItemHead('Category')
-      router.push('/admin/items')
     }
     else {
       toast.error("Enter Both Input Field First");

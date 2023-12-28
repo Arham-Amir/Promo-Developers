@@ -22,9 +22,12 @@ const ItemInfo = (props = {}) => {
     setShow(!show)
   }
   function handledeletebutton(e) {
-    e.stopPropagation();
-    dispatch(ItemManagerActions.deleteItem({ 'head': props.head, 'item': props.children }));
-    dispatch(fetchItemsHeadings());
+    const confirmed = window.confirm("Are you sure you want to delete?");
+    if (confirmed) {
+      e.stopPropagation();
+      dispatch(ItemManagerActions.deleteItem({ 'head': props.head, 'item': props.children }));
+      dispatch(fetchItemsHeadings());
+    }
   }
   function handleItemUnit() {
     dispatch(ItemManagerActions.editItemUnit({ 'head': props.head, 'item': props.children, 'unit': itemUnit }))
@@ -62,7 +65,7 @@ const ItemInfo = (props = {}) => {
           </section>
           <div className="divider my-1 before:bg-themeFont after:bg-themeFont"></div>
           {Object.keys(headings[props.head][props.children]).map((el, i) => {
-            if (el != 'recomended' && headings[props.head][props.children] != 'null') {
+            if ((el != 'recomended' && el != 'itemUnit') && headings[props.head][props.children] != 'null') {
               return (
                 <section key={i} className='flex items-center'>
                   <section className='flex-1'>

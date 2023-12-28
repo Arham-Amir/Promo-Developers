@@ -12,6 +12,27 @@ async function checkPathAvailable(path) {
   }
   return true
 }
+export const addItem = createAsyncThunk('addItem',
+  async (action) => {
+    const dbRef = child(ref(db), 'Development/Items/' + action['itemHead'] + '/' + action['item']);
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Item Already Available')
+    }
+    else {
+      await set(ref(db, 'Development/Items/' + action['itemHead'] + '/' + action['item']), 'null')
+      get(child(ref(db), 'Development/Areas')).then(
+        (resp) => {
+          const data = resp.val()
+          Object.keys(data).forEach(area => {
+            Object.keys(data[area]).forEach(land => {
+              set(ref(db, 'Development/Areas/' + area + '/' + land + '/' + action['item']), 0)
+            });
+          });
+        })
+      toast('Item Added into DataBase')
+    }
+  })
 export const addItemsHeading = createAsyncThunk('addItemHeading',
   async (action) => {
     const dbRef = child(ref(db), 'Development/Items/' + action);
@@ -22,6 +43,43 @@ export const addItemsHeading = createAsyncThunk('addItemHeading',
     else {
       await update(ref(db, 'Development/Items/'), { [action]: 'null' })
       toast('Add Items Category')
+    }
+  })
+export const addLandSize = createAsyncThunk('addLandSize',
+  async ({ area, land, value }) => {
+    const dbRef = child(ref(db), 'Development/Areas/' + area + '/' + land);
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Land Already Available')
+    }
+    else {
+      await update(ref(db, 'Development/Areas/' + area + '/'), { [land]: value })
+      toast('Add ' + land + ' Land Size in ' + area)
+    }
+  })
+export const addCommonLandSize = createAsyncThunk('addCommonLandSize',
+  async ({ land }) => {
+    const dbRef = child(ref(db), 'Development/LandSize/' + land);
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Land Already Available')
+    }
+    else {
+      await set(ref(db, 'Development/LandSize/' + land), 'null')
+      toast('Land Added Successfully.')
+    }
+  })
+export const addAreaName = createAsyncThunk('addAreaName',
+  async ({ area, value }) => {
+    console.log(area)
+    const dbRef = child(ref(db), 'Development/Areas/' + area)
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Area Already Available')
+    }
+    else {
+      await set(ref(db, 'Development/Areas/' + area), value)
+      toast('Area Added Successffully')
     }
   })
 export const shiftItems = createAsyncThunk('shiftItemsDisplay',
@@ -37,41 +95,11 @@ export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay
     const resp = await get(child(dbRef, 'Development/Items'))
     return resp.val()
   })
-export const checkLandAvailaibility = createAsyncThunk('checkLandAvailaibilityForUpdate',
-  async (land) => {
-    const dbRef = ref(db);
-    const landSizeRef = child(dbRef, 'Development/LandSize');
-    try {
-      const landSizeSnapshot = await checkPathAvailable(landSizeRef)
-      if (!landSizeSnapshot) {
-        await set(landSizeRef, {});
-      }
-      const landRef = child(landSizeRef, land);
-      const landSnapshot = await checkPathAvailable(landRef)
-      if (!landSnapshot) {
-        await set(landRef, { 'images': "null" });
-      }
-    } catch (error) {
-      console.error('Error checking land availability:', error);
-    }
-  }
-)
 export const fetchLandInfo = createAsyncThunk('fetchLandInfoForDisplay',
   async () => {
     try {
       const dbRef = ref(db)
       const resp = await get(child(dbRef, 'Development/LandSize/'))
-      return resp.val()
-    } catch (error) {
-      return []
-    }
-  }
-)
-export const fetchLandExtraInfo = createAsyncThunk('fetchLandExtraInfoForDisplay',
-  async (land) => {
-    try {
-      const dbRef = ref(db)
-      const resp = await get(child(dbRef, 'Development/LandSize/' + land))
       return resp.val()
     } catch (error) {
       return {}
@@ -97,13 +125,13 @@ export const fetchAreas = createAsyncThunk('fetchAreasforDisplay',
     return await resp.val()
   })
 export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
-  async ({ land, images }) => {
+  async ({ area, land, images }) => {
     const downloadURLs = [];
     try {
-      await deleteFolder(land);
+      await deleteFolder(area + '/' + land);
       const uploadPromises = Object.keys(images).map(async (imgKey) => {
         const imageFile = images[imgKey];
-        const storageref = sref(storage, "Maps/" + land + "/" + imageFile.name);
+        const storageref = sref(storage, "Maps/" + area + "/" + land + "/" + imageFile.name);
         const uploadTask = uploadBytesResumable(storageref, imageFile);
 
         return new Promise(async (resolve, reject) => {
@@ -127,9 +155,8 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
       });
 
       await Promise.all(uploadPromises);
-      console.log(downloadURLs);
       const dbRef = ref(db);
-      const landRef = child(dbRef, 'Development/LandSize/' + land + "/images");
+      const landRef = child(dbRef, 'Development/Areas/' + area + '/' + land + "/images");
       await set(landRef, downloadURLs);
     }
     catch (error) {
@@ -155,39 +182,13 @@ const itemManagerSlice = createSlice({
     landInfo: {},
     areas: {},
     selectedLand: {},
-    RCC: {},
-    PlinthADD: {},
-    PlinthSUB: {},
-    Radday: {},
     loading: false,
     headingloading: true,
     arealoading: false,
-    loading_land: true,
-    landOtherLoading: true,
+    landloading: true,
+    imageUploading: false,
   },
   reducers: {
-    addItem: (state, action) => {
-      // state.items[0] = (action.payload['item'])
-      set(ref(db, 'Development/Items/' + action.payload['itemHead'] + '/' + action.payload['item']), 'null')
-      get(child(ref(db), 'Development/Areas')).then(
-        (resp) => {
-          const data = resp.val()
-          Object.keys(data).forEach(area => {
-            Object.keys(data[area]).forEach(land => {
-              set(ref(db, 'Development/Areas/' + area + '/' + land + '/' + action.payload['item']), 0)
-            });
-          });
-        })
-      toast('Add Item in DataBase')
-    },
-    addLandSize: (state, action) => {
-      set(ref(db, 'Development/Areas/' + action.payload.areaName + '/' + action.payload.size), action.payload.value)
-      toast('Add ' + action.payload.size + ' Land Size in ' + action.payload.areaName)
-    },
-    addAreaName: (state, action) => {
-      set(ref(db, 'Development/Areas/' + action.payload.area), action.payload.value)
-      toast('Added')
-    },
     addCategory: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
       toast('Category added into database');
@@ -239,6 +240,11 @@ const itemManagerSlice = createSlice({
         });
 
     },
+    deleteCommonLand: (state, action) => {
+      const dbRef = ref(db, 'Development/LandSize/' + action.payload['land']);
+      remove(dbRef)
+      toast('Land Deleted Successfully');
+    },
     deleteItemHeading: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head']);
       remove(dbRef)
@@ -283,39 +289,25 @@ const itemManagerSlice = createSlice({
       state.categories = action.payload;
       // state.catloading = false;
     }).addCase(fetchAreas.pending, (state) => {
-      state.loading = true;
       state.arealoading = true;
     }).addCase(fetchAreas.fulfilled, (state, action) => {
       state.areas = action.payload;
-      state.loading = false;
       state.arealoading = false;
     }).addCase(fetchLandSize.pending, (state) => {
       state.loading = true;
     }).addCase(fetchLandSize.fulfilled, (state, action) => {
       state.land = action.payload;
       state.loading = false;
-    }).addCase(checkLandAvailaibility.pending, (state) => {
-      // state.loading = true;
-    }).addCase(checkLandAvailaibility.fulfilled, (state, action) => {
-      // state.land = action.payload;
-      // state.loading = false;
     }).addCase(fetchLandInfo.pending, (state) => {
-      state.loading_land = true;
+      state.landloading = true;
     }).addCase(fetchLandInfo.fulfilled, (state, action) => {
       state.landInfo = action.payload;
-      state.loading_land = false;
+      state.landloading = false;
     }).addCase(uploadMaps.pending, (state) => {
-      state.loading_land = true;
+      state.imageUploading = true
     }).addCase(uploadMaps.fulfilled, (state, action) => {
+      state.imageUploading = false
       toast('Images Added Successfully')
-    }).addCase(fetchLandExtraInfo.pending, (state) => {
-      state.landOtherLoading = true
-    }).addCase(fetchLandExtraInfo.fulfilled, (state, action) => {
-      state.RCC = action.payload["RCC"] || {}
-      state.PlinthADD = action.payload["PlinthADD"] || {}
-      state.PlinthSUB = action.payload["PlinthSUB"] || {}
-      state.Radday = action.payload["Radday"] || {}
-      state.landOtherLoading = false
     })
   }
 })

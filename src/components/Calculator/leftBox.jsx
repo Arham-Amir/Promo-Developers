@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 
 export function LeftBox(props = {}) {
-  const { loading_land, landInfo } = useSelector(state => state.itemManager);
+  const { arealoading, areas } = useSelector(state => state.itemManager);
   const [data, setData] = useState([["Task", "Hours per Day"],
   ["Work", 11],
   ["Eat", 2],
@@ -103,11 +103,15 @@ export function LeftBox(props = {}) {
           <button onClick={() => {
             document.getElementById(props.id).close();
           }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          {loading_land ? <span className="loading loading-dots loading-lg text-themeFont" />
+          {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" />
             : <section className="flex-all-center flex-col gap-5">
-              {landInfo[props.land]["images"] != "null" && landInfo[props.land]["images"].map((el, i) => (
-                <img className="object-cover" src={el} key={i} alt="map image" />
-              ))}
+              {areas[props.sarea][props.land]["images"] ?
+               areas[props.sarea][props.land]["images"].map((el, i) => (
+                <img className="object-fit" src={el} key={i} alt="map image" />
+              ))
+              :
+              <p>Sorry, Currently, Maps not available.</p>
+              }
             </section>
           }
         </div>

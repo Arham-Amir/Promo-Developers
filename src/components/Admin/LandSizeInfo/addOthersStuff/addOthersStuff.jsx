@@ -2,10 +2,10 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { ItemManagerActions, fetchLandExtraInfo } from "@redux/itemStore";
+import { ItemManagerActions, fetchLandInfo } from "@redux/itemStore";
 
 const AddOthersStuff = ({ land, place }) => {
-  const { headingloading, headings, RCC, PlinthADD, PlinthSUB, Radday, landOtherLoading } = useSelector((state) => state.itemManager)
+  const { headingloading, headings, landInfo, landloading } = useSelector((state) => state.itemManager)
   const dispatch = useDispatch();
   const [items, setitems] = useState([]);
   const [selected, setselected] = useState({});
@@ -21,32 +21,32 @@ const AddOthersStuff = ({ land, place }) => {
     }
   }, []);
   useEffect(() => {
-    if (landOtherLoading == false) {
+    if (landloading == false) {
       let updatedInputValues = {}
       if (place == "RCC") {
-        for (const key in RCC) {
-          updatedInputValues = { ...updatedInputValues, [key]: RCC[key] };
+        for (const key in landInfo[land]['RCC']) {
+          updatedInputValues = { ...updatedInputValues, [key]: landInfo[land]['RCC'][key] };
         }
       }
       else if (place == "PlinthADD") {
-        for (const key in PlinthADD) {
-          updatedInputValues = { ...updatedInputValues, [key]: PlinthADD[key] };
+        for (const key in landInfo[land]['PlinthADD']) {
+          updatedInputValues = { ...updatedInputValues, [key]: landInfo[land]['PlinthADD'][key] };
         }
       }
       else if (place == "PlinthSUB") {
-        for (const key in PlinthSUB) {
-          updatedInputValues = { ...updatedInputValues, [key]: PlinthSUB[key] };
+        for (const key in landInfo[land]['PlinthSUB']) {
+          updatedInputValues = { ...updatedInputValues, [key]: landInfo[land]['PlinthSUB'][key] };
         }
       }
       else if (place == "Radday") {
-        for (const key in Radday) {
-          updatedInputValues = { ...updatedInputValues, [key]: Radday[key] };
+        for (const key in landInfo[land]['Radday']) {
+          updatedInputValues = { ...updatedInputValues, [key]: landInfo[land]['Radday'][key] };
         }
       }
 
       setselected(updatedInputValues);
     }
-  }, [landOtherLoading]);
+  }, [landloading]);
 
   function handleAddRCCButton() {
     if (current != "select" && current != "" && current in selected == false) {
@@ -61,7 +61,7 @@ const AddOthersStuff = ({ land, place }) => {
     const confirmed = window.confirm("Are you sure you want to save?");
     if (confirmed) {
       dispatch(ItemManagerActions.addLandExtraInfo({ land, place, value: selected }))
-      dispatch(fetchLandExtraInfo(land))
+      dispatch(fetchLandInfo())
     }
 
   }
@@ -84,7 +84,7 @@ const AddOthersStuff = ({ land, place }) => {
             <button onClick={handleAddRCCButton} className="bg-themeFont text-white">Add</button>
           </section>
         }
-        {landOtherLoading ? <span className="loading loading-dots loading-lg text-themeFont" />
+        {landloading ? <span className="loading loading-dots loading-lg text-themeFont" />
           : selected &&
           <section className="flex flex-col gap-4">
             {Object.keys(selected).map((el, i) => (

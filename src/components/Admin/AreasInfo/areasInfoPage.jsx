@@ -1,30 +1,31 @@
 'use client'
 import Areas from "@components/Admin/AreasInfo/areas";
-import { fetchAreas } from "@redux/itemStore";
-import { Suspense, useEffect } from "react";
+import { fetchAreas, fetchItemsHeadings } from "@redux/itemStore";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddAreasInfo from "@components/Admin/AreasInfo/addAreasInfo";
 import { SiBlockchaindotcom } from "react-icons/si";
+import AddLandSize from "./addLandSize";
 
 const AreasInfoPage = () => {
-  const { loading, areas } = useSelector(state => state.itemManager)
+  const { arealoading, headingloading, areas } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchAreas())
   }, [])
   useEffect(() => {
-  }, [areas])
+    dispatch(fetchItemsHeadings())
+  }, [])
 
   return (
-    <section className="w-11/12 md:w-4/5 mx-auto py-10">
-      {loading ? <span className="loading loading-dots loading-lg text-themeFont" />
+    <section className="w-11/12 md:w-4/5 mx-auto py-10 flex flex-col items-center justify-center">
+      <AddAreasInfo />
+      {arealoading || headingloading ? <span className="loading loading-dots loading-lg text-themeFont" />
         : <>
-          <Suspense>
-            <AddAreasInfo />
-          </Suspense>
+          <AddLandSize />
           {areas && Object.keys(areas)?.map((are, i) => {
-            return <section key={i} className="flex flex-col my-10 items-center bg-bg-1">
+            return <section key={i} className="w-full flex flex-col my-10 items-center bg-bg-1">
               <section className='w-full p-5 bg-heading border-b border-white text-xl font-heading text-heading-txt font-bold flex items-center justify-between relative'>
                 <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
                 <h1 className='absolute left-1/2 -translate-x-1/2 text-xl' > {are}</h1>

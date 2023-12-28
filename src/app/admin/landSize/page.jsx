@@ -1,9 +1,9 @@
-import AddLandSize from '@components/Admin/LandSizeInfo/addLandSize'
+import AddLandInfo from '@components/Admin/LandSizeInfo/addLandInfo'
 
 const landInfo = () => {
   return (
     <section>
-      <AddLandSize />
+      <AddLandInfo />
     </section>
   );
 }

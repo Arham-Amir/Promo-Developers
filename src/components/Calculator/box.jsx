@@ -118,12 +118,12 @@ const Box = (props = {}) => {
       <section className='flex flex-row justify-center'>
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
           <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0'>
-            <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
+            <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea= {props.area} land={props.landsize} />
           </section>
           <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
             <RightTopBox areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
             <section className='block lg:hidden w-full bg-bg h-fit'>
-              <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} land={props.landsize} />
+              <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea= {props.area} land={props.landsize} />
             </section>
             <section className="flex-grow px-2 py-4 bg-bg">
               <section className='flex flex-col-reverse gap-4'>
@@ -186,6 +186,7 @@ const Box = (props = {}) => {
           </article>
         </>}
       </section >
+
       <section className="flex flex-col gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:mt-16">
         <section className="flex gap-5 items-center">
           <h1 className="pl-1 font-heading min-w-fit">Standards</h1>
