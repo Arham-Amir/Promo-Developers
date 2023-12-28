@@ -108,7 +108,7 @@ export default function CenterBoxItems(props = {}) {
   return (
     <section className='shadow-lg border border-gray-300'>
       <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}
-        onClick={() => setIsOpen(!isOpen)}
+
       >
         <input type="radio"
           name={`my-accordion-${props.index}`}
@@ -136,20 +136,22 @@ export default function CenterBoxItems(props = {}) {
               {Object.keys(props.detail).map((el, i) => {
                 if (el != 'recomended') {
                   return (
-                    <section key={i} className={`${el == category && 'bg-bg-card'}`}>
-                      <section className='flex items-center'>
-                        <button onClick={() => handleCategoryChange(el)}
-                          className={`p-0 text-start flex-1 py-[1px] ${el == category && 'text-themeFont font-bold'}`}>{el}</button>
-                        <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
-                        <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
+                    <button key={i} onClick={() => handleCategoryChange(el)}
+                      className={`p-0 w-full ${el == category && 'text-themeFont font-bold'} md:hover:bg-bg-card`}>
+                      <section className={`${el == category && 'bg-bg-card'}`}>
+                        <section className='flex text-start'>
+                          <p className='flex-1 py-[1px]'>{el}</p>
+                          <p className='flex-1 py-[1px]'>{props.detail[el]['name']}</p>
+                          <p className='flex-1 py-[1px]'>{props.formatNumberWithCommas(props.detail[el]?.['price'] || 0)}</p>
+                        </section>
                       </section>
-                    </section>
+                    </button>
                   )
                 }
               })}
             </>}
         </div>
       </div>
-    </section>
+    </section >
   );
 }

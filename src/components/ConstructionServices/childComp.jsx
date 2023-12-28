@@ -36,12 +36,12 @@ const ChildComp = () => {
   ]
 
   return (
-    <section className="flex flex-col gap-12 pb-5 w-screen">
+    <section className="flex flex-col gap-12 pb-5 w-screen font-sans">
       <section className="bg-[url('/image/calc.png')] w-full bg-cover py-10 relative">
         <div className="absolute top-0 w-full h-full bg-black/30 z-10 backdrop-blur-[1px]"></div>
         <section className="flex flex-col w-full md:w-4/5 mx-auto">
-          <h1 className='w-4/5 text-center p-5 mx-auto font-heading z-30 text-white'>Introduction</h1>
-          <p className="z-30 text-white text-center p-5">Promo Developers is a leading construction firm specializing in providing high-quality construction and contracting services. With a commitment to excellence and a customer-centric approach, we have established a strong reputation in the industry for delivering outstanding results. Our team of experienced professionals and skilled craftsmen work collaboratively to meet our client's unique construction needs</p>
+          <h1 className='w-4/5 text-center p-5 mx-auto font-heading z-20 text-white'>Construction Services</h1>
+          <p className="z-20 text-white text-center p-5">Promo Developers is a leading construction firm specializing in providing high-quality construction and contracting services. With a commitment to excellence and a customer-centric approach, we have established a strong reputation in the industry for delivering outstanding results. Our team of experienced professionals and skilled craftsmen work collaboratively to meet our client's unique construction needs</p>
         </section>
       </section>
       <section className="flex flex-col gap-12 w-11/12 md:w-4/5 mx-auto">
@@ -76,7 +76,7 @@ export default ChildComp;
 const Right = (props = {}) => {
   return (
     <section className={`xs:w-full xs:px-5 smd:px-10 xs:py-12 smd:py-16 md:p-0 md:min-w-[42vw] lg:min-w-[55%] z-40 ${props.i % 2 == 0 ? 'md:-translate-x-28 lg:-translate-x-[20%] md:text-right xs:text-left' : 'md:translate-x-28 lg:translate-x-[20%] text-left'} flex flex-col gap-1 2xl:gap-2`}>
-      <h2 className="text-themeFont font-bold">{props.prj['name']}</h2>
+      <h2 className="text-themeFont font-bold font-heading">{props.prj['name']}</h2>
       <section className="md:bg-bg-light my-4 md:p-5">
         <p className="text-themeFont md:text-lightFont">{props.prj['description']}</p>
       </section>

@@ -2,7 +2,7 @@ import { BsFacebook, BsInstagram, BsLinkedin, BsYoutube } from 'react-icons/bs'
 import LazyImage from './lazyImage';
 const Footer = () => {
   return (
-    <section className="bg-gradient-to-br from-[#151325] to-[#180a20] flex flex-col max-w-screen over">
+    <section className="bg-gradient-to-br from-[#0c0b1a] to-themeFont flex flex-col max-w-screen over">
       <section className="w-[85%] mx-auto flex flex-row flex-wrap md:flex-nowrap justify-center md:gap-x-10 py-6">
         <a href="https://www.promodevelopers.com/" target='_blank' className="h-full mx-auto w-1/2 md:w-1/5 px-4 order-2 md:order-1">
           <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] p-3 w-full object-contain hover:-translate-y-2 md:hover:border-t-4 border-bg transition-all duration-75" src="/logos/promodevelopers.gif" />

@@ -27,7 +27,7 @@ export default Services;
 const Card = (props = {}) => {
   return (
     <section className="hover:-translate-y-3 transiton duration-300 ease-in-out shadow-md flex flex-col gap-3 bg-white">
-      <section className={`h-[50vh] md:h-[70vh]`}>
+      <section className={`h-[50vh]`}>
         <img src={props.img} className="h-full w-full object-cover"></img>
       </section>
       <section className="flex flex-col gap-3 p-5">

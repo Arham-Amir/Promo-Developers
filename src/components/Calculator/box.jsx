@@ -11,9 +11,9 @@ import { CgOptions } from "react-icons/cg";
 
 function formatNumberWithCommas(number) {
   if (number >= 100000) {
-    return (number / 100000).toFixed(2).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + 'Lac';
+    return (number / 100000).toFixed(2).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ' Lac';
   } else if (number >= 1000) {
-    return (number / 1000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'K';
+    return (number / 1000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' K';
   } else {
     return number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
@@ -125,10 +125,10 @@ const Box = (props = {}) => {
               <section className="text-black text-sm px-4 pb-4">
                 {sortedHeadings.map((head, i) => {
                   return <section key={i} className='my-4'>
-                    <section className='p-5 bg-heading border-b border-white font-heading text-heading-txt font-bold flex items-center justify-between'>
+                    <section className='p-5 bg-heading border-b border-white text-heading-txt flex items-center justify-between'>
                       <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
-                      <h3 className='' > {head}</h3>
-                      <h3 className='font-sans' > {formatNumberWithCommas(cost[head])}</h3>
+                      <h3 className='font-heading' > {head}</h3>
+                      <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
                     </section>
                     {Object.keys(headings[head]).map((el, j) => {
                       if (el != 'order') {
@@ -138,7 +138,6 @@ const Box = (props = {}) => {
                     })}
                   </section>
                 })}
-
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                     <section className='flex items-center gap-3'>
@@ -188,18 +187,18 @@ const RightTopBox = (props = {}) => {
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
         <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on 19th December, 2023</p>
       </section>
-      <div className="stats shadow text-themeFont">
+      <div className="stats shadow text-themeFont w-full overflow-hidden sm:overflow-auto">
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">{props.landsize} /Sq Ft</div>
-          <div className="stat-value text-lg sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
+          <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-lg sm:text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
+          <div className="stat-value text-base sm:text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
         <div className="stat place-items-center bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Total Cost</div>
-          <div className="stat-value text-lg sm:text-2xl">
+          <div className="stat-value text-base sm:text-2xl">
             {formatNumberWithCommas(total)}
           </div>
         </div>
