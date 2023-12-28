@@ -30,23 +30,23 @@ const Areas = (props = {}) => {
     <div className={`max-w-full collapse collapse-arrow bg-base-200 rounded-none border-b border-bg-dark text-themeFont ${show ? 'collapse-open' : ''}`}>
       <input onChange={() => { }} className="max-w-full" type="radio" name={`my-accordion-${props.id}`} checked={show} onClick={handleRadioChange} />
       <div className="max-w-full collapse-title text-2xl font-bold bg-bg-1 flex justify-between items-center" onClick={handleRadioChange}>
-        {props.children}
+        <p>{props.children}</p>
         <button className='z-20' onClick={handledeletebutton}><RiDeleteBin5Line /></button>
       </div>
       {show && (
         <div className="collapse-content bg-white">
           <section className="flex mt-5 mx-4 gap-10 items-center">
             <input
-              className='focus:outline-none h-[70%] w-[40%] bg-bg-1 py-2 px-3 rounded-sm'
+              className='focus:outline-none h-[70%] w-[40%] bg-bg-1 py-2 px-3 rounded-md'
               value={squareFeet}
               onChange={(e) => setSquareFeet(e.target.value)}
               type="text"
               placeholder="Add Square Feet"
             />
-            <button onClick={handleSquareFeet} className='text-white font-semibold bg-themeFont py-2 px-6 rounded-sm'>ADD</button>
+            <button onClick={handleSquareFeet} className='text-white bg-themeFont'>ADD</button>
           </section>
           <section className="flex gap-5 items-center">
-            <h1 className="p-4 text-2xl">Square Feet :</h1>
+            <h3 className="p-4">Square Feet :</h3>
             <p className="text-2xl">{props.item["squareFeet"] || 0}</p>
           </section>
           <h3 className="p-4">Quanity Info:-</h3>

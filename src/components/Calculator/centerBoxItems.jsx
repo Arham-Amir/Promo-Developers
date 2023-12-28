@@ -122,7 +122,7 @@ export default function CenterBoxItems(props = {}) {
         </div>
         <div className="transition-all !duration-500 collapse-content bg-bg-card/20 flex flex-col gap-2">
           <section className='flex items-center gap-10 font-bold border-y-2 py-2 border-dashed border-gray-400 my-3'>
-            <p>Quantity : </p>
+            <p>{props.detail['itemUnit'] || "Quantity"} : </p>
             <p>{quantity}</p>
           </section>
           {props.detail == "null" ? <p>No Category Available</p>
@@ -134,7 +134,7 @@ export default function CenterBoxItems(props = {}) {
               </section>
               <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
               {Object.keys(props.detail).map((el, i) => {
-                if (el != 'recomended') {
+                if (el != 'recomended' || el != 'itemUnit') {
                   return (
                     <button key={i} onClick={() => handleCategoryChange(el)}
                       className={`p-0 w-full ${el == category && 'text-themeFont font-bold'} md:hover:bg-bg-card`}>

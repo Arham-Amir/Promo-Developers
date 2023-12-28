@@ -212,6 +212,10 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/' + action.payload.item), action.payload.quantity)
       toast('Quantity Edited Into DB');
     },
+    editItemUnit: (state, action) => {
+      set(ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/itemUnit'), action.payload['unit'])
+      toast('Item Unit Edited Into DB');
+    },
     editSqFeet: (state, action) => {
       set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/squareFeet'), action.payload.squareFeet)
       toast('Square Feet Edited Into DB');

@@ -8,7 +8,8 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 
 const ItemInfo = (props = {}) => {
   const [show, setShow] = useState(false)
-  const { loading, headings } = useSelector(state => state.itemManager)
+  const { headings } = useSelector(state => state.itemManager)
+  const [itemUnit, setItemUnit] = useState('')
   const [recommended, setRecommended] = useState(props.recomended || 0);
   const dispatch = useDispatch()
   const handleChange = (item, el) => {
@@ -22,7 +23,11 @@ const ItemInfo = (props = {}) => {
   }
   function handledeletebutton(e) {
     e.stopPropagation();
-    dispatch(ItemManagerActions.deleteItem({ 'head': props.head, 'item': props.children}));
+    dispatch(ItemManagerActions.deleteItem({ 'head': props.head, 'item': props.children }));
+    dispatch(fetchItemsHeadings());
+  }
+  function handleItemUnit() {
+    dispatch(ItemManagerActions.editItemUnit({ 'head': props.head, 'item': props.children, 'unit': itemUnit }))
     dispatch(fetchItemsHeadings());
   }
 
@@ -33,8 +38,22 @@ const ItemInfo = (props = {}) => {
         <p>{props.children}</p>
         <button className='z-20' onClick={handledeletebutton}><RiDeleteBin5Line /></button>
       </div>
-      {show && <>
-        <div className="collapse-content bg-white flex flex-col gap-3">
+      {show && <section className='flex flex-col bg-white'>
+        <section className="flex mt-5 mx-4 gap-10 items-center">
+          <input
+            className='focus:outline-none h-[70%] w-[40%] bg-bg-1 py-2 px-3 rounded-md'
+            value={itemUnit}
+            onChange={(e) => setItemUnit(e.target.value)}
+            type="text"
+            placeholder="Add Item Measuring Unit"
+          />
+          <button onClick={handleItemUnit} className='text-white bg-themeFont'>ADD</button>
+        </section>
+        <section className="flex gap-5 items-center">
+          <h3 className="p-4">Unit :</h3>
+          <p className="text-2xl">{headings[props.head][props.children]["itemUnit"] || "No Unit"}</p>
+        </section>
+        <div className="collapse-content flex flex-col gap-3">
           <section className='flex pt-3'>
             <p className='flex-1'>Select</p>
             <p className='flex-1'>Category</p>
@@ -60,7 +79,7 @@ const ItemInfo = (props = {}) => {
                     item={props.children} category={el} name={headings[props.head][props.children][el]['name']}
                     pricePU={headings[props.head][props.children][el]['price']}
                     setRecommended={setRecommended}
-                    head = {props.head}
+                    head={props.head}
                     recommended={recommended}>
                   </ItemCategories>
                 </section>)
@@ -69,7 +88,7 @@ const ItemInfo = (props = {}) => {
           }
           <InputItemCategories head={props.head} item={props.children} ></InputItemCategories>
         </div>
-      </>}
+      </section>}
     </div>
   );
 }
