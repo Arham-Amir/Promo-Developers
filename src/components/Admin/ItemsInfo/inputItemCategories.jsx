@@ -85,7 +85,7 @@ function InputItemCategories(props = {}) {
                 type="text" />
             </section>
           </section>
-          <section className='flex justify-end items-center'>
+          <section className='flex justify-end items-center text-white'>
             <button onClick={handleCancelBtn} className='bg-red-800 py-2 px-6 rounded-full'>Cancel</button>
             <button onClick={handleSaveBtn} className='bg-green-800 py-2 px-6 rounded-full'>Save</button>
           </section>

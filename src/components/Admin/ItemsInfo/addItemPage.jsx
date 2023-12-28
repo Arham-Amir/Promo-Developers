@@ -24,11 +24,9 @@ const AddItemPage = () => {
       toast.error("Enter Both Input Field First");
     }
   }
-  useEffect(() => {
-    dispatch(fetchItemsHeadings())
-  }, []);
+
   return (
-    <section className="text-themeFont flex gap-5 justify-center">
+    <section className="text-themeFont flex gap-5 justify-center w-full">
       <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={item}
         onChange={(e) => setItem(e.target.value)}
@@ -37,7 +35,7 @@ const AddItemPage = () => {
       <section className="min-h-full">
         <select className="h-full bg-bg-1 rounded-sm p-2" name="itemHead" id="itemHead" value={itemHead} onChange={(e) => setItemHead(e.target.value)}>
           <option value="Category">Select</option>
-          {Object.keys(headings)?.map((el, i) => {
+          {headings && Object.keys(headings)?.map((el, i) => {
             return <option key={i} value={el}>{el}</option>
           })}
         </select>

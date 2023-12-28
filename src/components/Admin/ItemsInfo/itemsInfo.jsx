@@ -36,10 +36,10 @@ const ItemInfo = (props = {}) => {
       {show && <>
         <div className="collapse-content bg-white flex flex-col gap-3">
           <section className='flex pt-3'>
-            <h3 className='flex-1'>Select</h3>
-            <h3 className='flex-1'>Category</h3>
-            <h3 className='flex-1'>Name</h3>
-            <h3 className='flex-1'>Price-Per-Unit</h3>
+            <p className='flex-1'>Select</p>
+            <p className='flex-1'>Category</p>
+            <p className='flex-1'>Name</p>
+            <p className='flex-1'>Price-Per-Unit</p>
           </section>
           <div className="divider my-1 before:bg-themeFont after:bg-themeFont"></div>
           {Object.keys(headings[props.head][props.children]).map((el, i) => {

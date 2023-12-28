@@ -1,7 +1,7 @@
 'use client'
 import { Chart } from "react-google-charts";
 import { BsFillCircleFill } from 'react-icons/bs'
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -30,16 +30,6 @@ export function LeftBox(props = {}) {
     }
     setData(newData);
   }
-  function formatNumberWithCommas(number) {
-    if (number >= 100000) {
-      return (number / 100000).toFixed(2).replace(/\B(?=(\d{2})+(?!\d))/g, ',') + 'Lac';
-    } else if (number >= 1000) {
-      return (number / 1000).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'K';
-    } else {
-      return number?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
-  }
-
   useEffect(() => {
     updateData()
   }, [props.cost])
@@ -97,21 +87,21 @@ export function LeftBox(props = {}) {
                   <BsFillCircleFill size={12} fill={colors[i - 1]} />
                   <p className="text-sm">{el[0]}</p>
                 </section>
-                <p className="font-bold text-sm">{formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
+                <p className="font-bold text-sm">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
               </section>
             })}
           </section>
           <section className="flex flex-row gap-5">
-            <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById('my_modal_3').showModal()}>View Maps</button>
+            <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById(props.id).showModal()}>View Maps</button>
             <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
           </section>
         </section>
       </section>
 
-      <dialog id="my_modal_3" className="modal min-w-screen min-h-screen">
-        <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar">
+      <dialog id={props.id} className="modal min-w-screen min-h-screen">
+        <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar z-40">
           <button onClick={() => {
-            document.getElementById('my_modal_3').close();
+            document.getElementById(props.id).close();
           }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           {loading_land ? <span className="loading loading-dots loading-lg text-themeFont" />
             : <section className="flex-all-center flex-col gap-5">

@@ -5,9 +5,6 @@ import Provider from '@redux/provider'
 import Navbar from '@components/Base/navbar'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UpComingEvent from '@components/Base/upComingEvent'
-import ContactPopUpBtn from '@components/Base/contactPopUpBtn'
-import ShowEvent from '@components/Base/showEvent'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,9 +31,6 @@ export default function RootLayout({ children }) {
     <html lang="en" className='bg-bg'>
       <body className={`${inter.variable} ${myFont.variable} ${heading.variable} custom-scrollbar font-sans w-screen overflow-x-hidden`}>
         <Provider>
-          <ShowEvent />
-          <ContactPopUpBtn />
-          <UpComingEvent />
           <Navbar />
           <ToastContainer />
           {children}

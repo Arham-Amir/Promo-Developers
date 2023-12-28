@@ -76,8 +76,6 @@ const Navbar = () => {
               ? <>
                 <li className={`${path == '/admin/items' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/items">Items-Pricing</Link></li>
-                <li className={`${path == '/admin/categories' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
-                  href="/admin/categories">Add Category</Link></li>
                 <li className={`${path == '/admin/landSize' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/landSize">LandSizes</Link></li>
                 <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
@@ -109,8 +107,6 @@ const Navbar = () => {
             ? <>
               <li className={`${path == '/admin/items' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/items">Items-Pricing</Link></li>
-              <li className={`${path == '/admin/categories' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
-                href="/admin/categories">Add Category</Link></li>
               <li className={`${path == '/admin/landSize' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/landSize">LandSizes</Link></li>
               <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link

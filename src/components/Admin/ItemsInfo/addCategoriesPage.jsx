@@ -1,21 +1,20 @@
 'use client'
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ItemManagerActions } from "@redux/itemStore";
-import { useRouter } from "next/navigation";
+import { addItemsHeading, fetchItemsHeadings } from "@redux/itemStore";
 
 const AddCategoriesPage = () => {
   const dispatch = useDispatch();
   const [item, setItem] = useState('')
-  const router = useRouter()
   function handleAddCategory() {
-    dispatch(ItemManagerActions.addItemsHeading(item))
+    dispatch(addItemsHeading(item)).then(()=>{
+      dispatch(fetchItemsHeadings())
+    })
     setItem('')
-    router.push('/admin/categories')
   }
 
   return (
-    <section className="text-themeFont flex gap-5 justify-center my-10">
+    <section className="text-themeFont flex gap-5 justify-center w-full">
       <input className='focus:outline-none w-[40%] bg-bg-1 py-2 px-6 rounded-sm'
         value={item}
         onChange={(e) => setItem(e.target.value)}

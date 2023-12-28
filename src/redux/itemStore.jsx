@@ -5,6 +5,25 @@ import { set, get, ref, child, remove, update } from 'firebase/database'
 import { ref as sref, uploadBytesResumable, getDownloadURL, listAll, deleteObject } from 'firebase/storage'
 import { toast } from 'react-toastify';
 
+async function checkPathAvailable(path) {
+  const snapshot = await get(path);
+  if (!snapshot.exists()) {
+    return false
+  }
+  return true
+}
+export const addItemsHeading = createAsyncThunk('addItemHeading',
+  async (action) => {
+    const dbRef = child(ref(db), 'Development/Items/' + action);
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Heading Already Available')
+    }
+    else {
+      await update(ref(db, 'Development/Items/'), { [action]: 'null' })
+      toast('Add Items Category')
+    }
+  })
 export const shiftItems = createAsyncThunk('shiftItemsDisplay',
   async ({ item, head }) => {
     const dbRef = ref(db)
@@ -23,16 +42,15 @@ export const checkLandAvailaibility = createAsyncThunk('checkLandAvailaibilityFo
     const dbRef = ref(db);
     const landSizeRef = child(dbRef, 'Development/LandSize');
     try {
-      const landSizeSnapshot = await get(landSizeRef);
-      if (!landSizeSnapshot.exists()) {
+      const landSizeSnapshot = await checkPathAvailable(landSizeRef)
+      if (!landSizeSnapshot) {
         await set(landSizeRef, {});
       }
       const landRef = child(landSizeRef, land);
-      const landSnapshot = await get(landRef);
-      if (!landSnapshot.exists()) {
+      const landSnapshot = await checkPathAvailable(landRef)
+      if (!landSnapshot) {
         await set(landRef, { 'images': "null" });
       }
-      return 'Land availability checked successfully';
     } catch (error) {
       console.error('Error checking land availability:', error);
     }
@@ -162,10 +180,6 @@ const itemManagerSlice = createSlice({
         })
       toast('Add Item in DataBase')
     },
-    addItemsHeading: (state, action) => {
-      update(ref(db, 'Development/Items/'), { [action.payload]: 'null' })
-      toast('Add Items Category')
-    },
     addLandSize: (state, action) => {
       set(ref(db, 'Development/Areas/' + action.payload.areaName + '/' + action.payload.size), action.payload.value)
       toast('Add ' + action.payload.size + ' Land Size in ' + action.payload.areaName)
@@ -221,6 +235,10 @@ const itemManagerSlice = createSlice({
         });
 
     },
+    deleteItemHeading: (state, action) => {
+      const dbRef = ref(db, 'Development/Items/' + action.payload['head']);
+      remove(dbRef)
+    },
     deleteCategory: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/');
       remove(dbRef).then(() => {
@@ -251,11 +269,9 @@ const itemManagerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchItemsHeadings.pending, (state) => {
-      state.loading = true;
       state.headingloading = true;
     }).addCase(fetchItemsHeadings.fulfilled, (state, action) => {
       state.headings = action.payload;
-      state.loading = false;
       state.headingloading = false;
     }).addCase(fetchCategories.pending, (state) => {
       // state.catloading = true;
