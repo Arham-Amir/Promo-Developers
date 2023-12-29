@@ -194,7 +194,7 @@ const Box = (props = {}) => {
                 </section>
                 {landTextInfo['Details'][he] && Object.keys(landTextInfo['Details'][he]).map((sub, j) => (
                   <section className='flex gap-2 w-full justify-start items-start md:hover:scale-110 transition duration-300' key={j}>
-                    <TiTickOutline className='text-themeFont !text-xl min-w-fit max-w-fit' />
+                    <TiTickOutline className='text-themeFont !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
                     <section className="flex gap-1 items-start justify-start flex-col w-auto">
                       <p className="font-bold min-w-fit">{landTextInfo['Details'][he][sub][0]}:</p>
                       <p >{landTextInfo['Details'][he][sub][1]}</p>
