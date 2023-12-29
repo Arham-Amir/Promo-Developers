@@ -134,7 +134,7 @@ export default function CenterBoxItems(props = {}) {
               </section>
               <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
               {Object.keys(props.detail).map((el, i) => {
-                if (el != 'recomended' || el != 'itemUnit') {
+                if (el != 'recomended' && el != 'itemUnit') {
                   return (
                     <button key={i} onClick={() => handleCategoryChange(el)}
                       className={`p-0 w-full ${el == category && 'text-themeFont font-bold'} md:hover:bg-bg-card`}>
