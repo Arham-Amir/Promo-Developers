@@ -29,26 +29,10 @@ const Box = (props = {}) => {
   const [selectedItems, setSelectedItems] = useImmer({});
   const { headings, areas, arealoading } = useSelector(state => state.itemManager)
   const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
+  const [landTextInfo, setLandTextInfo] = useState({});
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
   const [radday, setradday] = useState(0);
-  const construction_materials = [
-    ["Bricks", "Class A+ bricks are advised for usage in building a home. The grey structure will take about 30K – 35K bricks to build."],
-    ["Crush", "Class A+ Crush Like Sargodha (3 Suter or ½ Down) is advised for usage in building a home. Approximately 1000 - 1200 cubic feet of crush would be needed."],
-    ["Sand", "Ravi sand recommended for masonry works and concrete works. Usually Chenab sand used in plaster works. Approximately 1500 -1800 cubic feet of Ravi sand will be required. In addition, 300 -500 cubic feet of Chenab sand are needed for plastering."],
-    ["Cement", "Class A+ Cement Like Maple Leaf, Best Way, and DG are advised for usage in building a home. Around 350 - 400 bags of regular Portland cement will be required."],
-    ["Kassu", "Additionally, you'll need Kassu, a clay and sand mixture. It is frequently utilized to cover the open space. Its measurement depends on the depth of the plot. Normally 2.5K – 3K cubic feet Kassu needed to construct a five-marla home in Lahore."],
-    ["Rebar / Steel / Sariya", "Class A+ Steel Like Mughal, Amreli, and Moiz {(40 or 60 Grade), (3 or 4 or 6 Sutar) are advised for usage in building a home. In addition, 1.5 – 1.8 tons of rebar will be required."],
-    ["Safety Grills", "Normally (14 or 16 or 18 Gauge) Safety Grills are available in the market. (16 Gauge is recommended). Around it covered 175 - 200 Square feet of area."],
-    ["Chokat", "Normally (14 or 16 or 18 Gauge) Steel Chokat is available in the market. (16 Gauge is recommended). Around it covered 270 - 300 Square feet of area."],
-    ["PCC", "The term PCC refers to plain cement concrete. The amalgamation of cement, fine aggregate, and coarse aggregate are known as plain cement concrete (PCC). Normally its ratio Is 1:4:8 (Cement, sand, and Crush)."],
-    ["DPC", "A damp-proof course (DPC) is a barrier through the structure designed to prevent moisture rising by capillary action such as through a phenomenon known as rising damp. Normally its ratio Is 1:2:4 (Cement, sand, and Crush)."],
-    ["Plinth Beam Work", "A damp-proof course (DPC) is a barrier through the structure designed to prevent moisture rising by capillary action such as through a phenomenon known as rising damp. Normally its ratio Is 1:2:4 (Cement, sand, and Crush)."],
-    ["PCC for 5 Marla", "Normally... Kg of Steel, ... of bags of cement, ....... cubic feet of sand, and ....... cubic feet of crush is required for 5 Marla PCC work."],
-    ["Masonry Work", "Masonry is a construction technique that involves stacking materials, such as bricks, stone blocks or concrete blocks, on top of one another to build structures or walls. Masons layer these materials using mortar, an adhesive paste that fills the gaps and binds materials together. Masonry work includes Brick, Cement, and sand as material. Normally Mortar ratio Is 1:4 (Cement and Sand)."],
-    ["Plaster Work", "Plastering is the process of covering rough walls and uneven surfaces in the construction of houses and other structures with a plastic material, called plaster, which is a mixture of cement and sand along with the required quantity of water. Plaster work includes Brick, Cement, and sand. Normally Mortar ratio Is 1:4 (Cement and Sand). Normally its ratio Is 1:4 (Cement, sand, and Crush)."],
-    ["Slab Poring Work", "Masonry is a construction technique that involves stacking materials, such as bricks, stone blocks or concrete blocks, on top of one another to build structures or walls. Masons layer these materials using mortar, an adhesive paste that fills the gaps and binds materials together. Masonry work includes Steel, Cement, sand, and Crush as material. Normally Mortar ratio Is 1:2:4 (Cement, Sand and Cush). Normally its ratio Is 1:2:4 (Cement, sand, and Crush)."]
-  ]
 
   const handleOptionChange = (event) => {
     setChoice(event.target.value);
@@ -62,6 +46,7 @@ const Box = (props = {}) => {
     dispatch(fetchItemsHeadings())
     dispatch(fetchAreas())
     dispatch(fetchLandInfo(props.landsize))
+    getLocalData()
     return () => { setCLoading(true); }
   }, [])
   useEffect(() => {
@@ -93,7 +78,17 @@ const Box = (props = {}) => {
   function handleRaddayButton(e) {
     setradday(e.target.value)
   }
+  async function getLocalData() {
+    const path = props.landsize.split(' ').join('')
+    try {
+      const jsonDataModule = await import(`/public/landsInfo/${path}.json`);
+      const jsonData = jsonDataModule.default;
+      setLandTextInfo(jsonData)
+    } catch (error) {
+      setLandTextInfo({})
+    }
 
+  }
   return (
     <section className=''>
       <section>
@@ -118,12 +113,12 @@ const Box = (props = {}) => {
       <section className='flex flex-row justify-center'>
         {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
           <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0'>
-            <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea= {props.area} land={props.landsize} />
+            <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
           </section>
           <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
-            <RightTopBox areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
+            <RightTopBox landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
             <section className='block lg:hidden w-full bg-bg h-fit'>
-              <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea= {props.area} land={props.landsize} />
+              <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
             </section>
             <section className="flex-grow px-2 py-4 bg-bg">
               <section className='flex flex-col-reverse gap-4'>
@@ -153,12 +148,12 @@ const Box = (props = {}) => {
                       <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
                     </section>
                     {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
-                    :Object.keys(headings[head]).map((el, j) => {
-                      if (el != 'order') {
-                        return <CenterBoxItems key={j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
-                          setChoice={setChoice}></CenterBoxItems>
-                      }
-                    })}
+                      : Object.keys(headings[head]).map((el, j) => {
+                        if (el != 'order') {
+                          return <CenterBoxItems key={j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
+                            setChoice={setChoice}></CenterBoxItems>
+                        }
+                      })}
                   </section>
                 })}
                 <section className="flex flex-col gap-4">
@@ -187,20 +182,40 @@ const Box = (props = {}) => {
         </>}
       </section >
 
-      <section className="flex flex-col gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:mt-16">
-        <section className="flex gap-5 items-center">
-          <h1 className="pl-1 font-heading min-w-fit">Standards</h1>
-          <span className="w-1/4 h-[2px] bg-bg-dark"></span>
-        </section>
-        {construction_materials.map((e, i) => (
-          <section className='flex gap-2 items-start md:hover:scale-110 transition duration-300' key={i}>
-            <TiTickOutline className='text-themeFont !text-xl min-w-fit' />
-            <section className="flex gap-1 items-start justify-start flex-col">
-              <p className="font-bold min-w-fit">{e[0]}:</p>
-              <p >{e[1]}</p>
-            </section>
-          </section>
-        ))}
+
+      <section className="flex flex-col items-center gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:my-16">
+        {landTextInfo == {} ? <span className="mx-auto loading loading-dots loading-lg text-themeFont" />
+          : (<>
+            {landTextInfo['Details'] && Object.keys(landTextInfo['Details']).map((he, i) => {
+              return <section key={i} className='flex flex-col gap-10'>
+                <section className="flex gap-5 items-center">
+                  <h1 className="pl-1 font-heading min-w-fit">{he}</h1>
+                  <span className="w-1/4 h-[2px] bg-bg-dark"></span>
+                </section>
+                {landTextInfo['Details'][he] && Object.keys(landTextInfo['Details'][he]).map((sub, j) => (
+                  <section className='flex gap-2 items-start md:hover:scale-110 transition duration-300' key={j}>
+                    <TiTickOutline className='text-themeFont !text-xl min-w-fit' />
+                    <section className="flex gap-1 items-start justify-start flex-col">
+                      <p className="font-bold min-w-fit">{landTextInfo['Details'][he][sub][0]}:</p>
+                      <p >{landTextInfo['Details'][he][sub][1]}</p>
+                    </section>
+                  </section>
+                ))}
+
+              </section>
+            })}
+            {landTextInfo["Disclaimer"] && <section className='flex flex-col gap-6 items-center'>
+              <section className="flex gap-5 items-center justify-center w-full">
+                <span className="w-1/6 h-[2px] bg-bg-dark"></span>
+                <h1 className="pl-1 font-heading min-w-fit">Disclaimer</h1>
+                <span className="w-1/6 h-[2px] bg-bg-dark"></span>
+              </section>
+              <section className='w-11/12 sm:w-4/5 flex gap-2 justify-center text-center items-start md:hover:scale-110 transition duration-300'>
+                <p >{landTextInfo['Disclaimer']}</p>
+              </section>
+            </section>}
+          </>)
+        }
       </section>
     </section>
   );
@@ -220,11 +235,11 @@ const RightTopBox = (props = {}) => {
   }, [props.cost]);
 
   return (
-    <section className='h-auto p-4 sticky top-0 w-full bg-bg text-black text-sm z-20 shadow-2xl flex flex-col gap-4'>
+    <section className='h-auto p-4 sticky top-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
       <section className='flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0'>
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
-        <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on 19th December, 2023</p>
+        <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.landTextInfo['LastUpdatePrices']}</p>
       </section>
       <div className="stats shadow text-themeFont w-full overflow-hidden sm:overflow-auto">
         <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
