@@ -11,9 +11,32 @@ const Areas = (props = {}) => {
   const [existingImages, setExistingImages] = useState([]);
   const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
+  const [byLaws, setByLaws] = useState({
+    'Front Side': '',
+    'Rear Side': '',
+    'Left Side': '',
+    'Right Side': '',
+  });
   const { areas, imageUploading } = useSelector(state => state.itemManager)
   const dispatch = useDispatch()
 
+  const handleByLawsChange = (e) => {
+    const { name, value } = e.target;
+    setByLaws((prevByLaws) => ({
+      ...prevByLaws,
+      [name]: value,
+    }));
+  };
+  function handleSaveByLawsClick() {
+    const resp = window.confirm("Are you sure you want to save")
+    if (resp) {
+      const byLawsToSave = Object.fromEntries(
+        Object.entries(byLaws).map(([key, value]) => [key, value === '' ? 'null' : value])
+      );
+      setByLaws(byLawsToSave);
+      dispatch(ItemManagerActions.addByLaws({ 'area': props.area, 'land': props.children, 'value': byLawsToSave }))
+    }
+  }
   function handleSquareFeet() {
     dispatch(ItemManagerActions.editSqFeet({
       'area': props.area,
@@ -48,6 +71,9 @@ const Areas = (props = {}) => {
       setExistingImages(areas[props.area][props.children]["images"]);
     } else {
       setExistingImages([]);
+    }
+    if (areas[props.area][props.children]["ByLaws"]) {
+      setByLaws(areas[props.area][props.children]["ByLaws"]);
     }
   }, [areas]);
 
@@ -104,8 +130,31 @@ const Areas = (props = {}) => {
                 </section>
               </>}
           </section>
-          <section>
-            <section className="flex mx-4 gap-10 items-center">
+          <section className="border-dashed border-y-2 p-4 flex flex-col gap-2">
+            <section className="flex gap-2 items-center">
+              <p>Front Side:</p>
+              <input value={byLaws['Front Side']} onChange={handleByLawsChange} className='focus:outline-none w-[30%] bg-bg-1 py-2 px-3 rounded-md'
+                placeholder="Leave empty for not mendatory" type="text" name="Front Side" id="Front Side" />
+            </section>
+            <section className="flex gap-2 items-center">
+              <p>Rear Side:</p>
+              <input value={byLaws['Rear Side']} onChange={handleByLawsChange} className='focus:outline-none w-[30%] bg-bg-1 py-2 px-3 rounded-md'
+                placeholder="Leave empty for not mendatory" type="text" name="Rear Side" id="Rear Side" />
+            </section>
+            <section className="flex gap-2 items-center">
+              <p>Left Side:</p>
+              <input value={byLaws['Left Side']} onChange={handleByLawsChange} className='focus:outline-none w-[30%] bg-bg-1 py-2 px-3 rounded-md'
+                placeholder="Leave empty for not mendatory" type="text" name="Left Side" id="Left Side" />
+            </section>
+            <section className="flex gap-2 items-center">
+              <p>Right Side:</p>
+              <input value={byLaws['Right Side']} onChange={handleByLawsChange} className='focus:outline-none w-[30%] bg-bg-1 py-2 px-3 rounded-md'
+                placeholder="Leave empty for not mendatory" type="text" name="Right Side" id="Right Side" />
+            </section>
+            <button onClick={handleSaveByLawsClick} className="text-white bg-themeFont">Save</button>
+          </section>
+          <section className="border-dashed border-y-2 p-4 flex flex-col gap-2">
+            <section className="flex gap-10 items-center">
               <input
                 className='focus:outline-none h-[70%] w-[40%] bg-bg-1 py-2 px-3 rounded-md'
                 value={squareFeet}
@@ -116,25 +165,27 @@ const Areas = (props = {}) => {
               <button onClick={handleSquareFeet} className='text-white bg-themeFont'>ADD</button>
             </section>
             <section className="flex gap-5 items-center">
-              <h3 className="p-4">Square Feet :</h3>
+              <h3 className="">Square Feet :</h3>
               <p className="text-2xl">{props.item["squareFeet"] || 0}</p>
             </section>
           </section>
-          <h3 className="p-4">Quanity Info:-</h3>
-          <section className="flex gap-10 flex-wrap" >
-            {
-              Object.keys(props.item).map((el, i) => {
-                {
-                  return (el != "order" && el != "images") && <QuantityPerHouse
-                    key={i}
-                    item={el}
-                    area={props.area}
-                    value={props.item[el]}
-                    land={props.children}
-                  />
-                }
-              })
-            }
+          <section>
+            <h3 className="p-4">Quanity Info:-</h3>
+            <section className="flex gap-x-10 gap-y-5 flex-wrap" >
+              {
+                Object.keys(props.item).map((el, i) => {
+                  {
+                    return (el != "order" && el != "images" && el != "squareFeet" && el != "ByLaws") && <QuantityPerHouse
+                      key={i}
+                      item={el}
+                      area={props.area}
+                      value={props.item[el]}
+                      land={props.children}
+                    />
+                  }
+                })
+              }
+            </section>
           </section>
         </div>
       )}

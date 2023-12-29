@@ -8,7 +8,8 @@ import { useImmer } from "use-immer";
 import { BiExpandHorizontal } from 'react-icons/bi'
 import { SiBlockchaindotcom } from 'react-icons/si'
 import { CgOptions } from "react-icons/cg";
-import { TiTickOutline } from 'react-icons/ti';
+import { TiTickOutline, TiTick } from 'react-icons/ti';
+import { ImCross } from "react-icons/im";
 
 function formatNumberWithCommas(number) {
   if (number >= 100000) {
@@ -91,27 +92,70 @@ const Box = (props = {}) => {
   }
   return (
     <section className=''>
-      <section>
-        <button onClick={handleToggleShow}
-          className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[95%]' : 'right-0'}`}>
-          <BiExpandHorizontal size={25} fill='white' />
-        </button>
-        <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
+      {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
+        <section>
+          <button onClick={handleToggleShow}
+            className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[95%]' : 'right-0'}`}>
+            <BiExpandHorizontal size={25} fill='white' />
+          </button>
+          <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
         h-screen w-[95%] bg-bg-1 flex p-8`}>
-          <section className={`w-1/2`}>By Laws Data</section>
-          <div className="divider lg:divider-horizontal">||</div>
-          <section className={`w-1/2 h-full custom-scrollbar`}>
-            <section className='flex flex-col gap-3 mx-2 '>
-              {Object.keys(selectedItems).map((el, i) => {
-                return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
-              })}
-              <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
+            <section className={`w-1/2 flex flex-col gap-8`}>
+              <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4  border-themeFont'>{props.landsize} By Laws</h3>
+              <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
+              {areas[props.area][props.landsize]["ByLaws"] ?
+                Object.keys(areas[props.area][props.landsize]["ByLaws"]).map((el, i) => (
+                  <section className='flex flex-col gap-3 w-max'>
+                    <section key={i} className='flex items-center gap-3 justify-between w-full'>
+                      <section className='flex gap-2 items-center'>
+                        {areas[props.area][props.landsize]["ByLaws"][el] == "null" ? <ImCross className='text-sm text-red-700 w-5' /> : <TiTick className='text-xl text-green-600 w-5' />}
+                        <p className='font-bold w-24'>{el} :</p>
+                      </section>
+                      {areas[props.area][props.landsize]["ByLaws"][el] != "null" &&
+                        <>
+                          <p className='h-[1px] w-10 bg-themeFont' ></p>
+                          <p className=''>{areas[props.area][props.landsize]["ByLaws"][el]}</p>
+                        </>}
+                    </section>
+                  </section>
+                ))
+                :
+                <section className='flex flex-col gap-3'>
+                  <section className='flex items-center gap-3'>
+                    <ImCross className='text-sm text-red-700' />
+                    <p>Front Space</p>
+                  </section>
+                  <section className='flex items-center gap-3'>
+                    <ImCross className='text-sm text-red-700' />
+                    <p>Back Space</p>
+                  </section>
+                  <section className='flex items-center gap-3'>
+                    <ImCross className='text-sm text-red-700' />
+                    <p>Left Space</p>
+                  </section>
+                  <section className='flex items-center gap-3'>
+                    <ImCross className='text-sm text-red-700' />
+                    <p>Right Space</p>
+                  </section>
+                </section>
+              }
+              <section className='flex flex-col items-center gap-1'>
+                <div className="h-[2px] w-3/5 bg-themeFont"></div>
+                <div className="h-[2px] w-3/5 bg-themeFont"></div>
+              </section>
+            </section>
+            <div className="divider lg:divider-horizontal">||</div>
+            <section className={`w-1/2 h-full custom-scrollbar`}>
+              <section className='flex flex-col gap-3 mx-2 '>
+                {Object.keys(selectedItems).map((el, i) => {
+                  return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
+                })}
+                <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
+              </section>
             </section>
           </section>
         </section>
-      </section>
-      <section className='flex flex-row justify-center'>
-        {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
+        <section className='flex flex-row justify-center'>
           <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0'>
             <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
           </section>
@@ -179,9 +223,8 @@ const Box = (props = {}) => {
               </section>
             </section>
           </article>
-        </>}
-      </section >
-
+        </section >
+      </>}
 
       <section className="flex flex-col items-center gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:my-16">
         {landTextInfo == {} ? <span className="mx-auto loading loading-dots loading-lg text-themeFont" />

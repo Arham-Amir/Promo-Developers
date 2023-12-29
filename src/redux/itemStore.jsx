@@ -197,6 +197,10 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/LandSize/' + action.payload['land'] + '/' + action.payload['place'] + '/'), action.payload.value)
       toast((action.payload['place'] + ' Updated'));
     },
+    addByLaws: (state, action) => {
+      set(ref(db, 'Development/Areas/' + action.payload['area'] + '/' + action.payload['land'] + '/ByLaws/'), action.payload['value'])
+      toast("ByLaws Updated SuccessFully");
+    },
     editOrder: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload['head'] + "/order"), action.payload['order'])
       toast('Order Edited Into Database');
