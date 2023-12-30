@@ -10,7 +10,7 @@ import ShowEvent from '@components/Base/showEvent'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@api/dbConfig";
 import { signOut } from "firebase/auth";
-import useStorage from 'hooks/useStorage';
+import useStorage from '@api/storage';
 
 const Provider = ({ children }) => {
   const router = useRouter()
