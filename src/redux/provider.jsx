@@ -10,11 +10,12 @@ import ShowEvent from '@components/Base/showEvent'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@api/dbConfig";
 import { signOut } from "firebase/auth";
+import { GetUser } from "@api/getUser";
 
 const Provider = ({ children }) => {
   const router = useRouter()
   const [user] = useAuthState(auth);
-  const userSession = sessionStorage.getItem('user');
+  const userSession = GetUser();
   const path = usePathname();
   if (!user && !userSession && path.includes("/admin")) {
     router.push('/admin')

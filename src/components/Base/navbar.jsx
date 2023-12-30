@@ -49,12 +49,13 @@ import { AiFillStar } from "react-icons/ai";
 import { signOut } from "firebase/auth";
 import { auth } from "@api/dbConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { GetUser } from "@api/getUser";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [user] = useAuthState(auth);
-  const userSession = sessionStorage.getItem('user');
+  const userSession = GetUser()
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

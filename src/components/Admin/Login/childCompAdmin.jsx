@@ -4,6 +4,7 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { auth } from '@api/dbConfig'
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { SetUser } from '@api/getUser';
 
 const ChildCompAdmin = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const ChildCompAdmin = () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
       if (res) {
-        sessionStorage.setItem('user', true)
+        SetUser("true")
         setEmail('');
         setPassword('');
         toast.success("Welcome Sir !")
