@@ -4,25 +4,26 @@ import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
 import { auth } from '@api/dbConfig'
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import { SetUser } from '@api/getUser';
+import useStorage from '@api/storage';
 
 const ChildCompAdmin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter()
+  const { setItem } = useStorage();
 
   const handleSignIn = async () => {
     try {
       const res = await signInWithEmailAndPassword(email, password);
       if (res) {
-        SetUser("true")
+        setItem("true")
         setEmail('');
         setPassword('');
         toast.success("Welcome Sir !")
         router.push("/admin/items")
       }
-      else{
+      else {
         toast.error("Invalid Email or Password")
       }
     } catch (e) {
