@@ -1,10 +1,17 @@
 'use client'
+
+import { useEffect } from "react";
+
 export const GetUser = () => {
-  return window.sessionStorage.getItem('user')
+  useEffect(() => {
+    return window.sessionStorage.getItem('user')
+  }, []);
 }
 
-export const SetUser = (uid) =>{
-  window.sessionStorage.setItem('user', uid)
+export const SetUser = (uid) => {
+  useEffect(() => {
+    window.sessionStorage.setItem('user', uid)
+  }, []);
 }
 
 
