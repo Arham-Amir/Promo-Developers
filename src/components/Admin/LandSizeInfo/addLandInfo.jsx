@@ -27,13 +27,11 @@ const AddLandInfo = () => {
   useEffect(() => {
     if (!arealoading) {
       const landArray = [];
-      console.log(areas)
       Object.keys(areas)?.forEach((ar) => {
         Object.keys(areas[ar]).forEach((la) => {
           landArray.push(la);
         });
       });
-      console.log(landArray)
       setLands([...new Set(landArray)]);
       setcustomLoading(false)
     }

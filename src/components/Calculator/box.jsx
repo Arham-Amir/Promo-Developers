@@ -101,7 +101,7 @@ const Box = (props = {}) => {
           <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
         h-screen w-[95%] bg-bg-1 flex p-8`}>
             <section className={`w-1/2 flex flex-col gap-8`}>
-              <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4  border-themeFont'>{props.landsize} By Laws</h3>
+              <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
               <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
               {areas[props.area][props.landsize]["ByLaws"] ?
                 <section className='flex flex-col w-max gap-5'>

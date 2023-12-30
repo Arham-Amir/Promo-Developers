@@ -46,11 +46,15 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import LazyImage from "./lazyImage";
 import { AiFillStar } from "react-icons/ai";
-
+import { signOut } from "firebase/auth";
+import { auth } from "@api/dbConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [user] = useAuthState(auth);
+  const userSession = sessionStorage.getItem('user');
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -80,6 +84,10 @@ const Navbar = () => {
                   href="/admin/landSize">LandSizes</Link></li>
                 <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/areas">Areas</Link></li>
+                <li><button onClick={() => {
+                  signOut(auth)
+                  sessionStorage.removeItem('user')
+                }} className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Logout</button></li>
               </> : <>
                 <li >
                   <a className={`${path == '/construction-services' || path == '/material-estimation' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</a>
@@ -103,7 +111,7 @@ const Navbar = () => {
       <div className="navbar-center hidden xl:flex justify-between">
         <ul className="menu menu-horizontal px-1">
           <li className={`${path == '/' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/">Home</Link></li>
-          {path.includes("/admin")
+          {path.includes("/admin") && user && userSession
             ? <>
               <li className={`${path == '/admin/items' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/items">Items-Pricing</Link></li>
@@ -111,7 +119,7 @@ const Navbar = () => {
                 href="/admin/landSize">LandSizes</Link></li>
               <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/areas">Areas</Link></li>
-            </> : <>
+            </> : !path.includes("/admin") && <>
               <li tabIndex={0} >
                 <details {...(dropdownOpen == false ? { open: true } : {})}>
                   <summary onClick={() => setDropdownOpen(!dropdownOpen)} className={`${path == '/construction-services' || path == '/material-estimation' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</summary>
@@ -127,9 +135,19 @@ const Navbar = () => {
             </>}
         </ul>
       </div>
-      <div className="hidden xl:flex navbar-end">
-        <a href="https://wa.me/+923004439445" target="blank" className="btn bg-themeFont text-white bg-themeColor rounded-3xl">Whatsapp</a>
-      </div>
+      {path.includes("/admin") && user && userSession
+        ?
+        <div className="hidden xl:flex navbar-end">
+          <button onClick={() => {
+            signOut(auth)
+            sessionStorage.removeItem('user')
+          }} className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Logout</button>
+        </div>
+        : !path.includes("/admin") &&
+        <div className="hidden xl:flex navbar-end">
+          <a href="https://wa.me/+923004439445" target="blank" className="btn bg-themeFont text-white bg-themeColor rounded-3xl">Whatsapp</a>
+        </div>
+      }
     </div>
   );
 }
