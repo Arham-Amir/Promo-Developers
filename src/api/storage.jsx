@@ -1,5 +1,3 @@
-'use client'
-
 const useStorage = () => {
   const storageType = 'sessionStorage';
 

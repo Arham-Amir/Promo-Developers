@@ -11,6 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@api/dbConfig";
 import { signOut } from "firebase/auth";
 import useStorage from '@api/storage';
+import { useEffect, useState } from "react";
 
 const Provider = ({ children }) => {
   const router = useRouter()
@@ -18,13 +19,17 @@ const Provider = ({ children }) => {
   const { getItem, removeItem } = useStorage();
   const userSession = getItem();
   const path = usePathname();
+  const [loadingAdmin, setLoadingAdmin] = useState(path.includes("/admin") ? true : false);
 
-  if (!user && !userSession && path.includes("/admin")) {
-    router.push('/admin')
-  }
-  if (user && userSession && (path == ("/admin") || path == ("/admin/"))) {
-    router.push('/admin/items')
-  }
+  useEffect(() => {
+    if (!user && !userSession && path.includes("/admin")) {
+      router.push('/admin')
+    }
+  }, []);
+  useEffect(() => {
+    setLoadingAdmin(false)
+  }, []);
+
   if (path == ("/") && user && userSession) {
     signOut(auth)
     removeItem()
@@ -32,7 +37,8 @@ const Provider = ({ children }) => {
 
   return (
     <Prov store={store}>
-      {children}
+      {loadingAdmin ? <span className="loading loading-dots loading-lg text-themeFont" />
+        : children}
       {!path.includes("/admin")
         && <>
           <ShowEvent />
