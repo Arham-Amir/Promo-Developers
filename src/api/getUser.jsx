@@ -1,9 +1,10 @@
+'use client'
 export const GetUser = () => {
-  return sessionStorage.getItem('user')
+  return window.sessionStorage.getItem('user')
 }
 
 export const SetUser = (uid) =>{
-  sessionStorage.setItem('user', uid)
+  window.sessionStorage.setItem('user', uid)
 }
 
 
