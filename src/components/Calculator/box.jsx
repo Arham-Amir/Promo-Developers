@@ -104,38 +104,35 @@ const Box = (props = {}) => {
               <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4  border-themeFont'>{props.landsize} By Laws</h3>
               <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
               {areas[props.area][props.landsize]["ByLaws"] ?
-                Object.keys(areas[props.area][props.landsize]["ByLaws"]).map((el, i) => (
-                  <section className='flex flex-col gap-3 w-max'>
-                    <section key={i} className='flex items-center gap-3 justify-between w-full'>
-                      <section className='flex gap-2 items-center'>
-                        {areas[props.area][props.landsize]["ByLaws"][el] == "null" ? <ImCross className='text-sm text-red-700 w-5' /> : <TiTick className='text-xl text-green-600 w-5' />}
-                        <p className='font-bold w-24'>{el} :</p>
-                      </section>
-                      {areas[props.area][props.landsize]["ByLaws"][el] != "null" &&
-                        <>
-                          <p className='h-[1px] w-10 bg-themeFont' ></p>
-                          <p className=''>{areas[props.area][props.landsize]["ByLaws"][el]}</p>
-                        </>}
+                <section className='flex flex-col w-max gap-5'>
+                  {Object.keys(areas[props.area][props.landsize]["ByLaws"]).map((el, i) => (
+                    <section key={i} className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+                      {areas[props.area][props.landsize]["ByLaws"][el] == "null" ?
+                        <p className='border-x h-full border-themeFont p-3 flex-all-center'><ImCross className='text-sm text-red-700 w-5' /></p>
+                        :
+                        <p className='border-x h-full border-themeFont p-3 flex-all-center'><TiTick className='text-xl text-green-600 w-5' /></p>}
+                      <p className='font-bold min-w-fit w-32 border-r border-themeFont p-3'>{el} :</p>
+                      {areas[props.area][props.landsize]["ByLaws"][el] != "null" ? <p className='border-r min-w-fit w-60 border-themeFont p-3'>{areas[props.area][props.landsize]["ByLaws"][el]}</p> : <p className='border-r min-w-fit w-60 border-themeFont p-3'>{"0"}</p>}
                     </section>
-                  </section>
-                ))
+                  ))}
+                </section>
                 :
-                <section className='flex flex-col gap-3'>
-                  <section className='flex items-center gap-3'>
-                    <ImCross className='text-sm text-red-700' />
-                    <p>Front Space</p>
+                <section className='flex flex-col gap-5'>
+                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
+                    <p className='border-themeFont border-x  border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
+                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Front Space</p>
                   </section>
-                  <section className='flex items-center gap-3'>
-                    <ImCross className='text-sm text-red-700' />
-                    <p>Back Space</p>
+                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
+                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
+                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Back Space</p>
                   </section>
-                  <section className='flex items-center gap-3'>
-                    <ImCross className='text-sm text-red-700' />
-                    <p>Left Space</p>
+                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
+                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
+                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Left Space</p>
                   </section>
-                  <section className='flex items-center gap-3'>
-                    <ImCross className='text-sm text-red-700' />
-                    <p>Right Space</p>
+                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
+                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
+                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Right Space</p>
                   </section>
                 </section>
               }
@@ -202,8 +199,8 @@ const Box = (props = {}) => {
                 })}
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
-                    <section className='flex items-center gap-3'>
-                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
+                    <section className='flex items-center'>
+                      <h1><CgOptions classNam border-be='text-themeFont text-2xl' /></h1>
                       <h3 className='' >RCC</h3>
                     </section>
                     <input type="checkbox" className="toggle"
@@ -211,8 +208,8 @@ const Box = (props = {}) => {
                       onChange={() => handleRccButton()} />
                   </section>
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
-                    <section className='flex items-center gap-3'>
-                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
+                    <section className='flex items-center'>
+                      <h1><CgOptions classNam border-be='text-themeFont text-2xl' /></h1>
                       <h3 className='' >Plinth Beam</h3>
                     </section>
                     <input type="checkbox" className="toggle"
@@ -260,7 +257,7 @@ const Box = (props = {}) => {
           </>)
         }
       </section>
-    </section>
+    </section >
   );
 };
 
