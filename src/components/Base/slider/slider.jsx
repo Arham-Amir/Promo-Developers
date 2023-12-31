@@ -44,7 +44,7 @@ export default function Slider({ data }) {
             setimg(e)
             document.getElementById("model-7").showModal()
           }}
-            key={i} className='hover:cursor-pointer' ><LazyImage className="h-[250px] w-full object-fill border-4 border-gray-300" src={e} /></SwiperSlide>
+            key={i} className='hover:cursor-zoom-in' ><LazyImage className="h-[250px] w-full object-fill border-4 border-gray-300" src={e} /></SwiperSlide>
         ))}
       </Swiper>
       <dialog id="model-7" className="modal min-w-screen min-h-screen">

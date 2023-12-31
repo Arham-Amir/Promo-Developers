@@ -63,7 +63,7 @@ const ChildComp = () => {
                 <section onClick={() => {
                   setimg(prj['imageLink'])
                   document.getElementById("model-6").showModal()
-                }} className={`w-full md:min-w-[55%] h-[40vh] md:h-[55vh] 2xl:h-[46vh] image-container hover:cursor-pointer`}>
+                }} className={`w-full md:min-w-[55%] h-[40vh] md:h-[55vh] 2xl:h-[46vh] image-container hover:cursor-zoom-in`}>
                   <img className="object-fill h-full w-full grayscale-[50] hover:grayscale-0 transition-all duration-200" src={prj['imageLink']} />
                 </section>
                 <Right prj={prj} i={i} />

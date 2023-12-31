@@ -4,14 +4,14 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCMDqE9UHC79iJ1_fGwpNysbBPO3SVw-tU",
-  authDomain: "promo-developers.firebaseapp.com",
-  databaseURL: "https://promo-developers-default-rtdb.firebaseio.com",
-  projectId: "promo-developers",
-  storageBucket: "promo-developers.appspot.com",
-  messagingSenderId: "1073164355581",
-  appId: "1:1073164355581:web:c93eee0bb9a5e5486fbb94",
-  measurementId: "G-KHH55VM4EP"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 
