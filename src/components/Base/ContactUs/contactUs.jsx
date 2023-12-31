@@ -23,12 +23,12 @@ const ContactUs = () => {
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Address: <span className='font-normal'>60-J Block, DHA EME Sector, Multan Road, Lahore, Pakistan</span></p>
         </ContactInfo>
         <ContactInfo>
-          <BiWorld size={54} className='bg-themeFont text-white rounded-full p-3' />
-          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Website: <span className='font-normal'>www.promodevelopers.com</span></p>
-        </ContactInfo>
-        <ContactInfo>
           <SiMinutemailer size={54} className='bg-themeFont text-white rounded-full p-3' />
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Email: <span className='font-normal'>promoestateanddeveloper@gmail.com</span></p>
+        </ContactInfo>
+        <ContactInfo>
+          <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />
+          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Telephone: <span className='font-normal'>+92 42 37512219</span></p>
         </ContactInfo>
         <ContactInfo>
           <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />

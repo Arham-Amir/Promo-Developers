@@ -10,6 +10,7 @@ import { SiBlockchaindotcom } from 'react-icons/si'
 import { CgOptions } from "react-icons/cg";
 import { TiTickOutline, TiTick } from 'react-icons/ti';
 import { ImCross } from "react-icons/im";
+import LazyImage from '@components/Base/lazyImage';
 
 function formatNumberWithCommas(number) {
   if (number >= 100000) {
@@ -27,6 +28,7 @@ const Box = (props = {}) => {
   const [choice, setChoice] = useState('Recomended');
   const [cLoading, setCLoading] = useState(true);
   const [cost, setCost] = useImmer({});
+  const [total, setTotal] = useState(0);
   const [selectedItems, setSelectedItems] = useImmer({});
   const { headings, areas, arealoading } = useSelector(state => state.itemManager)
   const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
@@ -34,6 +36,7 @@ const Box = (props = {}) => {
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
   const [radday, setradday] = useState(0);
+  const dispatch = useDispatch();
 
   const handleOptionChange = (event) => {
     setChoice(event.target.value);
@@ -42,7 +45,7 @@ const Box = (props = {}) => {
     setShow(!show);
     document.body.style.overflowY = show ? "auto" : "hidden";
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchItemsHeadings())
     dispatch(fetchAreas())
@@ -59,6 +62,13 @@ const Box = (props = {}) => {
     setCLoading(false);
     return () => { setCLoading(true); }
   }, [])
+  useEffect(() => {
+    let price = 0;
+    Object.keys(cost).forEach(el => {
+      price += cost[el];
+    });
+    setTotal(price);
+  }, [cost]);
 
   function handleRccButton() {
     if (rcc == 'f') {
@@ -95,59 +105,37 @@ const Box = (props = {}) => {
       {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
         <section>
           <button onClick={handleToggleShow}
-            className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[95%]' : 'right-0'}`}>
+            className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
             <BiExpandHorizontal size={25} fill='white' />
           </button>
           <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
-        h-screen w-[95%] bg-bg-1 flex p-8`}>
-            <section className={`w-1/2 flex flex-col gap-8`}>
+        h-screen custom-scrollbar w-[92%] bg-bg-1 flex flex-col md:flex-row p-8`}>
+            <section className={`w-full md:w-1/2 flex flex-col gap-5 items-center`}>
+              <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodevelopers.gif" />
               <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
               <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
               {areas[props.area][props.landsize]["ByLaws"] ?
-                <section className='flex flex-col w-max gap-5'>
-                  {Object.keys(areas[props.area][props.landsize]["ByLaws"]).map((el, i) => (
-                    <section key={i} className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
-                      {areas[props.area][props.landsize]["ByLaws"][el] == "null" ?
-                        <p className='border-x h-full border-themeFont p-3 flex-all-center'><ImCross className='text-sm text-red-700 w-5' /></p>
-                        :
-                        <p className='border-x h-full border-themeFont p-3 flex-all-center'><TiTick className='text-xl text-green-600 w-5' /></p>}
-                      <p className='font-bold min-w-fit w-32 border-r border-themeFont p-3'>{el} :</p>
-                      {areas[props.area][props.landsize]["ByLaws"][el] != "null" ? <p className='border-r min-w-fit w-60 border-themeFont p-3'>{areas[props.area][props.landsize]["ByLaws"][el]}</p> : <p className='border-r min-w-fit w-60 border-themeFont p-3'>{"0"}</p>}
-                    </section>
-                  ))}
-                </section>
+                <ByLawsData available="true" areas={areas} area={props.area} landsize={props.landsize} />
                 :
-                <section className='flex flex-col gap-5'>
-                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
-                    <p className='border-themeFont border-x  border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
-                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Front Space</p>
-                  </section>
-                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
-                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
-                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Back Space</p>
-                  </section>
-                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
-                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
-                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Left Space</p>
-                  </section>
-                  <section className='flex items-center shadow-sm shadow-themeFont w-fit'>
-                    <p className='border-themeFont border-x border-y h-full p-3 flex-all-center'><ImCross className='w-5 text-sm text-red-700' /></p>
-                    <p className='min-w-fit w-32 font-bold border-r border-y border-themeFont p-3'>Right Space</p>
-                  </section>
-                </section>
+                <ByLawsData available="false" areas={areas} area={props.area} landsize={props.landsize} />
               }
-              <section className='flex flex-col items-center gap-1'>
+              <section className='hidden md:flex flex-col items-center gap-1 w-full'>
                 <div className="h-[2px] w-3/5 bg-themeFont"></div>
                 <div className="h-[2px] w-3/5 bg-themeFont"></div>
               </section>
             </section>
-            <div className="divider lg:divider-horizontal">||</div>
-            <section className={`w-1/2 h-full custom-scrollbar`}>
-              <section className='flex flex-col gap-3 mx-2 '>
+            <div className="divider divider-vertical md:divider-horizontal">||</div>
+            <section className={`w-full md:w-1/2 h-full md:custom-scrollbar`}>
+              <section className='flex flex-col gap-5 mx-2'>
+                <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>Client Selected Items</h3>
                 {Object.keys(selectedItems).map((el, i) => {
                   return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
                 })}
-                <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
+                {/* <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button> */}
+                <section className='flex justify-end items-center gap-2 p-2 w-full border-b border-gray-300'>
+                  <h3>Total Amount:</h3>
+                  <h3>{formatNumberWithCommas(total)}</h3>
+                </section>
               </section>
             </section>
           </section>
@@ -157,7 +145,7 @@ const Box = (props = {}) => {
             <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
           </section>
           <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
-            <RightTopBox landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
+            <RightTopBox total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
             <section className='block lg:hidden w-full bg-bg h-fit'>
               <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
             </section>
@@ -200,7 +188,7 @@ const Box = (props = {}) => {
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                     <section className='flex items-center'>
-                      <h1><CgOptions classNam border-be='text-themeFont text-2xl' /></h1>
+                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
                       <h3 className='' >RCC</h3>
                     </section>
                     <input type="checkbox" className="toggle"
@@ -209,7 +197,7 @@ const Box = (props = {}) => {
                   </section>
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                     <section className='flex items-center'>
-                      <h1><CgOptions classNam border-be='text-themeFont text-2xl' /></h1>
+                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
                       <h3 className='' >Plinth Beam</h3>
                     </section>
                     <input type="checkbox" className="toggle"
@@ -264,15 +252,7 @@ const Box = (props = {}) => {
 export default Box;
 
 const RightTopBox = (props = {}) => {
-  const [total, setTotal] = useState(0);
-  let price = 0;
 
-  useEffect(() => {
-    Object.keys(props.cost).forEach(el => {
-      price += props.cost[el];
-    });
-    setTotal(price);
-  }, [props.cost]);
 
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
@@ -288,14 +268,132 @@ const RightTopBox = (props = {}) => {
         </div>
         <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Price Per Sq Ft</div>
-          <div className="stat-value text-base sm:text-2xl">{Math.round(total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
+          <div className="stat-value text-base sm:text-2xl">{Math.round(props.total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
         <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Total Cost</div>
-          <div className="stat-value text-base sm:text-2xl">{formatNumberWithCommas(total)}</div>
+          <div className="stat-value text-base sm:text-2xl">{formatNumberWithCommas(props.total)}</div>
         </div>
       </div>
     </section>
   );
 };
 
+function ByLawsData({ available, areas, area, landsize }) {
+  return available == "true" ?
+    <section className='flex flex-col w-full gap-5'>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont' >
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Front Side"} :</p>
+        {
+          areas[area][landsize]["ByLaws"]["Front Side"] == "null" ?
+            <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            </section> :
+            <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            </section>
+        }
+        {
+          areas[area][landsize]["ByLaws"]["Front Side"] != "null" ?
+            <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{areas[area][landsize]["ByLaws"]["Front Side"]}</p>
+            : <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>
+        }
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Rear Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Rear Side"] == "null" ?
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Rear Side"] != "null" ?
+          <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{areas[area][landsize]["ByLaws"]["Rear Side"]}</p>
+          : <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>}
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Left Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Left Side"] == "null" ?
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Left Side"] != "null" ?
+          <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{areas[area][landsize]["ByLaws"]["Left Side"]}</p>
+          : <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>}
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Right Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Right Side"] == "null" ?
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Right Side"] != "null" ?
+          <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{areas[area][landsize]["ByLaws"]["Right Side"]}</p>
+          : <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>}
+      </section>
+    </section >
+    : <section className='flex flex-col w-full gap-5'>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Front Side"} :</p>
+        <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Rear Side"} :</p>
+
+        <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Left Side"} :</p>
+
+        <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-themeFont shadow-sm shadow-themeFont'>
+        <p className='font-bold min-w-fit flex-1 border-x border-themeFont p-3'>{"Right Side"} :</p>
+        <section className='border-r h-full flex-1 border-themeFont p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-themeFont p-3'>{"0"}</p>
+      </section>
+    </section>
+
+}
