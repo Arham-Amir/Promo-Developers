@@ -38,7 +38,7 @@ const UpComingEvent = () => {
                   <p className="text-xs ms:text-sm">Expo Center Johar Town, Lahore</p>
                 </section>
                 <section className="flex gap-2 justify-center md:justify-end">
-                  <h1 className="font-bold text-xs ms:text-sm">JANUARY 5, 6, 7</h1>
+                  <h1 className="font-bold text-xs md:text-sm">JANUARY 7, 8, 9</h1>
                 </section>
                 <section className="flex gap-2 justify-center md:justify-end">
                   <h1 className="font-bold text-xs ms:text-sm">2024</h1>
