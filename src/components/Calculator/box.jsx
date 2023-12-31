@@ -35,7 +35,7 @@ const Box = (props = {}) => {
   const [landTextInfo, setLandTextInfo] = useState({});
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
-  const [radday, setradday] = useState(0);
+  const [radday, setradday] = useState(4);
   const dispatch = useDispatch();
 
   const handleOptionChange = (event) => {
@@ -50,6 +50,7 @@ const Box = (props = {}) => {
     dispatch(fetchItemsHeadings())
     dispatch(fetchAreas())
     dispatch(fetchLandInfo(props.landsize))
+    getUpdatedPriceDate()
     getLocalData()
     return () => { setCLoading(true); }
   }, [])
@@ -92,13 +93,23 @@ const Box = (props = {}) => {
   async function getLocalData() {
     const path = props.landsize.split(' ').join('')
     try {
-      const jsonDataModule = await import(`/public/landsInfo/${path}.json`);
-      const jsonData = jsonDataModule.default;
-      setLandTextInfo(jsonData)
+      let jsonDataModule = await import(`/public/landsInfo/${path}.json`);
+      let jsonData = jsonDataModule.default;
+      setLandTextInfo(prevLandTextInfo => {
+        return { ...prevLandTextInfo, ...jsonData };
+      });
     } catch (error) {
-      setLandTextInfo({})
     }
-
+  }
+  async function getUpdatedPriceDate() {
+    try {
+      let jsonDataModule = await import(`/public/landsInfo/landsCommonInfo.json`);
+      let jsonData = jsonDataModule.default;
+      setLandTextInfo(prevLandTextInfo => {
+        return { ...prevLandTextInfo, ...jsonData };
+      });
+    } catch (error) {
+    }
   }
   return (
     <section className=''>
@@ -151,11 +162,14 @@ const Box = (props = {}) => {
             </section>
             <section className="flex-grow px-2 py-4 bg-bg">
               <section className='flex flex-col-reverse gap-4'>
-                <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
-                  <p>Extra Radday</p>
-                  <input type="number" name="range" id="range" min="0" max="10"
-                    className='p-1 w-fit bg-bg rounded-md border border-themeFont'
-                    value={radday} onChange={handleRaddayButton} />
+                <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
+                  <p>Additional Masonry Work:</p>
+                  <section className='flex items-center gap-1'>
+                    <input type="number" name="range" id="range" min="0" max="10"
+                      className='p-1 w-14 bg-bg rounded-md border border-themeFont'
+                      value={radday} onChange={handleRaddayButton} />
+                    <p>feets</p>
+                  </section>
                 </section>
                 <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
                   <section className='flex gap-2 items-center'>
