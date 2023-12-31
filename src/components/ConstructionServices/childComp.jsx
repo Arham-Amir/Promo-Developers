@@ -60,7 +60,7 @@ ChildComp = () => {
         <section className='flex flex-col items-center justify-center gap-5 md:gap-24'>
           {mainProjects.map((prj, i) => {
             return (
-              <section className={`p-5 md:p-0 flex flex-col gap-5 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse'}  items-center w-full relative`}>
+              <section className={`p-5 md:p-0 flex flex-col gap-3 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse'}  items-center w-full relative`}>
                 <section onClick={() => {
                   setimg(prj['imageLink'])
                   document.getElementById("model-6").showModal()
