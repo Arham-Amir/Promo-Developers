@@ -60,7 +60,7 @@ ChildComp = () => {
         <section className='flex flex-col items-center justify-center gap-5 md:gap-24'>
           {mainProjects.map((prj, i) => {
             return (
-              <section className={`p-5 md:p-0 flex flex-col gap-3 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse'}  items-center w-full relative`}>
+              <section className={`p-5 md:p-0 flex flex-col gap-5 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse'}  items-center w-full relative`}>
                 <section onClick={() => {
                   setimg(prj['imageLink'])
                   document.getElementById("model-6").showModal()
@@ -74,12 +74,12 @@ ChildComp = () => {
         </section>
       </section>
       <dialog id="model-6" className="modal min-w-screen min-h-screen">
-        <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar z-40">
+        <div className="modal-box min-h-[80%] min-w-[80%] max-h-[80%] max-w-[80%] custom-scrollbar z-40">
           <button onClick={() => {
             document.getElementById("model-6").close();
           }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          <section className="flex-all-center flex-col gap-5">
-            <img className="object-fit" src={img} alt="map image" />
+          <section className="w-full h-full">
+            <img className="object-fill w-full h-full" src={img} alt="map image" />
           </section>
         </div>
       </dialog>
@@ -92,9 +92,9 @@ export default ChildComp;
 
 const Right = (props = {}) => {
   return (
-    <section className={`w-full px-5 sm:px-10 py-12 sm:py-16 md:p-0 md:min-w-[42vw] lg:min-w-[55%] z-40 ${props.i % 2 == 0 ? 'md:-translate-x-28 lg:-translate-x-[20%] md:text-right xs:text-left' : 'md:translate-x-28 lg:translate-x-[20%] text-left'} flex flex-col gap-1 2xl:gap-2`}>
+    <section className={`w-full md:p-0 md:min-w-[42vw] lg:min-w-[55%] z-40 ${props.i % 2 == 0 ? 'md:-translate-x-28 lg:-translate-x-[20%] md:text-right xs:text-left' : 'md:translate-x-28 lg:translate-x-[20%] text-left'} flex flex-col gap-1 2xl:gap-2`}>
       <h2 className="text-themeFont font-bold font-heading">{props.prj['name']}</h2>
-      <section className="md:bg-bg-light my-4 md:p-5">
+      <section className="md:bg-bg-light my-2 md:p-5">
         <p className="text-themeFont md:text-lightFont">{props.prj['description']}</p>
       </section>
     </section>

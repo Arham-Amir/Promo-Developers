@@ -120,7 +120,7 @@ const Box = (props = {}) => {
             <BiExpandHorizontal size={25} fill='white' />
           </button>
           <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
-        h-screen custom-scrollbar w-[92%] bg-bg-1 flex flex-col md:flex-row p-8`}>
+        !h-screen custom-scrollbar w-[92%] bg-bg-1 flex flex-col md:flex-row p-8`}>
             <section className={`w-full md:w-1/2 flex flex-col gap-5 items-center`}>
               <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodevelopers.gif" />
               <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
@@ -275,16 +275,16 @@ const RightTopBox = (props = {}) => {
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
         <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.landTextInfo['LastUpdatePrices']}</p>
       </section>
-      <div className="stats shadow text-themeFont w-full overflow-hidden sm:overflow-auto">
-        <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
+      <div className="stats shadow text-themeFont w-full overflow-auto">
+        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">{props.landsize} /Sq Ft</div>
           <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
-        <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
+        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Price Per Sq Ft</div>
           <div className="stat-value text-base sm:text-2xl">{Math.round(props.total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
-        <div className="stat place-items-center gap-1 bg-bg-1 border-bg-light">
+        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Total Cost</div>
           <div className="stat-value text-base sm:text-2xl">{formatNumberWithCommas(props.total)}</div>
         </div>
