@@ -1,35 +1,38 @@
 'use client'
 
+import { useState } from "react";
+
 const ChildComp = () => {
+  const [img, setimg] = useState("");
   const mainProjects = [
     {
       'name': 'Online Cost Calculator',
-      'imageLink': "/image/services1.jpg",
+      'imageLink': "/constructionServices/1.png",
       'description': "Introducing our user-friendly online Grey Structure Cost Calculator for constructing your new house. Empower yourself to estimate costs independently by choosing the material quality that aligns with your preferences. Enjoy the convenience of a customized cost calculation tailored to your specific construction needs, ensuring transparency and control throughout the process. Build with confidence using our intuitive tool.",
     },
     {
       'name': 'Site Management',
-      'imageLink': "/image/services2.jpg",
+      'imageLink': "/constructionServices/2.png",
       'description': "With our comprehensive 'Site Management' services, we excel in delivering quality labor, efficient material procurement, and expert handling. Ensuring seamless coordination, we prioritize excellence in every aspect of construction, guaranteeing a smooth and successful project execution from start to finish.",
     },
     {
       'name': 'Online Customer Portal',
-      'imageLink': "/image/services1.jpg",
+      'imageLink': "/constructionServices/3.png",
       'description': "Introducing our Online Customer Portal, designed for seamless account management. Users can effortlessly review their account costs, supported by easily accessible and attached invoices. This user-friendly platform ensures transparency and convenience, allowing customers to stay informed about their financial transactions and enabling a hassle-free experience in managing their accounts.",
     },
     {
       'name': 'Time-Line Chart',
-      'imageLink': "/image/services2.jpg",
+      'imageLink': "/constructionServices/4.png",
       'description': "Discover the efficiency of our 'Timeline Chart' a detailed roadmap meticulously crafted by our team. This tool provides a clear, step-by-step schedule, highlighting precisely when each task will be completed by us. Stay informed, track progress eamlessly, and witness the timely and successful execution of your project under our dedicated timeline management.",
     },
     {
       'name': '24/7 Online Camera View',
-      'imageLink': "/image/services1.jpg",
+      'imageLink': "/constructionServices/5.png",
       'description': "Experience the convenience of our 'Online Camera View' allowing you to remotely monitor your project from the comfort of your home. Stay connected with real-time visual updates, ensuring transparency and peace of mind as you witness the progress of your construction project.",
     },
     {
       'name': 'Client Feedback',
-      'imageLink': "/image/services2.jpg",
+      'imageLink': "/constructionServices/6.png",
       'description': "Introducing our dedicated WhatsApp group for streamlined communication. Stay in the loop with daily project updates and provide instant feedback. This interactive platform ensures real-time engagement, fostering transparent communication between our team and clients, ultimately enhancing collaboration and ensuring your project progresses smoothly according to your expectations.",
     },
 
@@ -56,9 +59,12 @@ const ChildComp = () => {
         <section className='flex flex-col items-center justify-center gap-5 md:gap-24'>
           {mainProjects.map((prj, i) => {
             return (
-              <section className={`p-5 md:p-0 flex flex-col gap-5 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse' }  items-center w-full relative`}>
-                <section className={`w-full md:min-w-[55%] h-[40vh] md:h-[55vh] 2xl:h-[46vh] image-container`}>
-                  <img className="xs:object-cover md:object-fill h-full w-full grayscale-[50] hover:grayscale-0 transition-all duration-200" src={prj['imageLink']} />
+              <section className={`p-5 md:p-0 flex flex-col gap-5 md:gap-0 ${i % 2 == 0 ? 'md:flex-row' : 'md:flex-row-reverse'}  items-center w-full relative`}>
+                <section onClick={() => {
+                  setimg(prj['imageLink'])
+                  document.getElementById("model-6").showModal()
+                }} className={`w-full md:min-w-[55%] h-[40vh] md:h-[55vh] 2xl:h-[46vh] image-container hover:cursor-pointer`}>
+                  <img className="object-fill h-full w-full grayscale-[50] hover:grayscale-0 transition-all duration-200" src={prj['imageLink']} />
                 </section>
                 <Right prj={prj} i={i} />
               </section>
@@ -66,6 +72,16 @@ const ChildComp = () => {
           })}
         </section>
       </section>
+      <dialog id="model-6" className="modal min-w-screen min-h-screen">
+        <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar z-40">
+          <button onClick={() => {
+            document.getElementById("model-6").close();
+          }} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          <section className="flex-all-center flex-col gap-5">
+            <img className="object-fit" src={img} alt="map image" />
+          </section>
+        </div>
+      </dialog>
     </section>
   );
 }
@@ -75,7 +91,7 @@ export default ChildComp;
 
 const Right = (props = {}) => {
   return (
-    <section className={`xs:w-full xs:px-5 smd:px-10 xs:py-12 smd:py-16 md:p-0 md:min-w-[42vw] lg:min-w-[55%] z-40 ${props.i % 2 == 0 ? 'md:-translate-x-28 lg:-translate-x-[20%] md:text-right xs:text-left' : 'md:translate-x-28 lg:translate-x-[20%] text-left'} flex flex-col gap-1 2xl:gap-2`}>
+    <section className={`w-full px-5 sm:px-10 py-12 sm:py-16 md:p-0 md:min-w-[42vw] lg:min-w-[55%] z-40 ${props.i % 2 == 0 ? 'md:-translate-x-28 lg:-translate-x-[20%] md:text-right xs:text-left' : 'md:translate-x-28 lg:translate-x-[20%] text-left'} flex flex-col gap-1 2xl:gap-2`}>
       <h2 className="text-themeFont font-bold font-heading">{props.prj['name']}</h2>
       <section className="md:bg-bg-light my-4 md:p-5">
         <p className="text-themeFont md:text-lightFont">{props.prj['description']}</p>

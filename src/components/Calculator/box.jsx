@@ -201,22 +201,22 @@ const Box = (props = {}) => {
                 })}
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
-                    <section className='flex items-center'>
-                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
-                      <h3 className='' >RCC</h3>
-                    </section>
-                    <input type="checkbox" className="toggle"
-                      checked={rcc === 't'}
-                      onChange={() => handleRccButton()} />
-                  </section>
-                  <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
-                    <section className='flex items-center'>
+                    <section className='flex items-center gap-1'>
                       <h1><CgOptions className='text-themeFont text-2xl' /></h1>
                       <h3 className='' >Plinth Beam</h3>
                     </section>
                     <input type="checkbox" className="toggle"
                       checked={plinth === 't'}
                       onChange={() => handlePlinthButton()} />
+                  </section>
+                  <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
+                    <section className='flex items-center gap-1'>
+                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
+                      <h3 className='' >RCC</h3>
+                    </section>
+                    <input type="checkbox" className="toggle"
+                      checked={rcc === 't'}
+                      onChange={() => handleRccButton()} />
                   </section>
                 </section>
               </section>
