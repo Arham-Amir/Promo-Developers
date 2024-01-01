@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xxs': { 'max': '290px' },
+      },
       flexBasis: {
         '1/7': '17%',
         '2/7': '25%',
@@ -24,7 +27,7 @@ module.exports = {
         'heading': ['var(--font-heading)'],
       },
       colors: {
-        'bg-dark' : '#333C4B',
+        'bg-dark': '#333C4B',
         // 'themeFont': '#f85606',
         // 'themeFont': '#FFA900',
         'themeFont': '#291334',

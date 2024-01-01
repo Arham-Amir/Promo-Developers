@@ -117,7 +117,7 @@ const Box = (props = {}) => {
       {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
         <section>
           <button onClick={handleToggleShow}
-            className={`z-10 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
+            className={`z-50 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
             <BiExpandHorizontal size={25} fill='white' />
           </button>
           <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}

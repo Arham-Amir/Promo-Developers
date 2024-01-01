@@ -105,9 +105,9 @@ const Navbar = () => {
               </>}
           </ul>
         </div>
-        <Link href="/" className="btn btn-ghost normal-case text-xl text-themeFont">
+        <Link href="/" className="btn btn-ghost normal-case text-themeFont">
           <LazyImage className="h-full w-fit object-contain mr-1" src="/image/nav_logo.gif" />
-          Promo Developers
+          <p className="xxs:hidden block text-xl">Promo Developers</p>
         </Link>
       </div>
       <div className="navbar-center hidden xl:flex justify-between">
