@@ -1,3 +1,29 @@
 {
-  "LastUpdatePrices": "19th December, 2023"
+  "LastUpdatePrices": "19th December, 2023",
+  "Standards": [
+    [
+      "PCC",
+      "The term PCC refers to plain cement concrete. The amalgamation of cement, fine aggregate, and coarse aggregate are known as plain cement concrete (PCC). Before beginning R.C.C. or masonry PCC is done to form an even surface and to avoid mixing with the soil and to avoid soil extracting water PCC is used. Normally its ratio Is 1:4:8 (Cement, sand, and Crush)"
+    ],
+    [
+      "DPC",
+      "A damp-proof course (DPC) is a barrier through the structure designed to prevent moisture rising by capillary action such as through a phenomenon known as rising damp. Rising damp is the effect of water rising from the ground into property. The damp proof course may be horizontal or vertical. Normally its ratio Is 1:2:4 (Cement, sand, and Crush)"
+    ],
+    [
+      "Plinth Beam Work",
+      "Plinth beam is RCC structure which contains cement, crush sand, and steel. Plinth Beam provided at the plinth level of building which supports the superstructure evenly. Normally its ratio Is 1:2:4 (Cement, sand, and Crush)"
+    ],
+    [
+      "Masonry Work",
+      "Masonry is a construction technique that involves stacking materials, such as bricks, stone blocks or concrete blocks, on top of one another to build structures or walls. Masons layer these materials using mortar, an adhesive paste that fills the gaps and binds materials together. Normally Mortar ratio Is 1:4 (Cement and Sand)."
+    ],
+    [
+      "Plaster Work",
+      "Plastering is the process of covering rough walls and uneven surfaces in the construction of houses and other structures with a plastic material, called plaster, which is a mixture of cement and sand along with the required quantity of water. Normally Mortar ratio Is 1:4 (Cement and Sand)."
+    ],
+    [
+      "Slab Poring Work",
+      "It's an RCC Structure that divides the building into multiple floors. It contains of cement, sand, crush, and steel. Normally slab thickness is (6 inches). Normally its ratio Is 1:2:4 (Cement, sand, and Crush)"
+    ]
+  ]
 }

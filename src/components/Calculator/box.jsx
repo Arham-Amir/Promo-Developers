@@ -111,6 +111,7 @@ const Box = (props = {}) => {
     } catch (error) {
     }
   }
+
   return (
     <section className=''>
       {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
@@ -243,9 +244,23 @@ const Box = (props = {}) => {
                     </section>
                   </section>
                 ))}
-
               </section>
             })}
+            <section className='flex flex-col gap-10'>
+              <section className="flex gap-5 items-center">
+                <h1 className="pl-1 font-heading min-w-fit">Standard's</h1>
+                <span className="w-1/4 h-[2px] bg-bg-dark"></span>
+              </section>
+              {landTextInfo["Standards"] && Object.keys(landTextInfo['Standards']).map((sub, j) => (
+                <section className='flex gap-2 w-full justify-start items-start md:hover:scale-110 transition duration-300' key={j}>
+                  <TiTickOutline className='text-themeFont hidden sm:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                  <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
+                    <p className="font-bold min-w-fit">{landTextInfo['Standards'][sub][0]}:</p>
+                    <p >{landTextInfo['Standards'][sub][1]}</p>
+                  </section>
+                </section>
+              ))}
+            </section>
             {landTextInfo["Disclaimer"] && <section className='flex flex-col gap-6 items-center'>
               <section className="flex gap-5 items-center justify-center w-full">
                 <span className="w-1/6 h-[2px] bg-bg-dark"></span>
@@ -272,12 +287,12 @@ const RightTopBox = (props = {}) => {
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
       <section className='flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0'>
-        <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost</h1>
+        <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Gray Structure Construction Cost</h1>
         <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.landTextInfo['LastUpdatePrices']}</p>
       </section>
       <div className="stats shadow text-themeFont w-full overflow-auto">
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-xs sm:text-sm">{props.landsize} /Sq Ft</div>
+          <div className="stat-title text-black text-xs sm:text-sm">Covered Area /Sq Ft</div>
           <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">

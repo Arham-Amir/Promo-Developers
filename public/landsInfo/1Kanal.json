@@ -1,27 +1,52 @@
 {
   "Details": {
     "Standards of Foundation & Structure": [
-      ["Bricks", "Class A+ bricks are advised for usage in building a home. The grey structure will take about 140K – 150K bricks to build."],
-      ["Crush", "Class A+ Crush Like Sargodha (3 Suter or ½ Down) is advised for usage in building a home. Approximately 5000 - 5500 cubic feet of crush would be needed."],
-      ["Sand", "Ravi sand recommended for masonry works and concrete works. Usually, Chenab sand used in plaster works. Approximately 6000 - 6500 cubic feet of Ravi sand will be required. In addition, 1500 - 2000 cubic feet of Chenab sand are needed for plastering."],
-      ["Cement", "Class A+ Cement Like Maple Leaf, Best Way, and DG are advised for usage in building a home. Around 1500 - 1800 bags of regular Portland cement will be required."],
-      ["Kassu", "Additionally, you'll need Kassu, a clay and sand mixture. It is frequently utilized to cover the open space. Its measurement depends on the depth of the plot. Normally 15K – 20K cubic feet Kassu needed to construct a five-marla home in Lahore."],
-      ["Rebar / Steel / Sariya", "Class A+ Steel Like Mughal, Amreli, and Moiz {(40 or 60 Grade), (3 or 4 or 6 Sutar) are advised for usage in building a home. In addition, 10 – 12 tons of rebar will be required."],
-      ["Safety Grills", "Normally (14 or 16 or 18 Gauge) Safety Grills are available in the market. (16 Gauge is recommended). Around it covered 550 - 600 Square feet of area."],
-      ["Chokat", "Normally (14 or 16 or 18 Gauge) Steel Chokat is available in the market. (16 Gauge is recommended). Around it covered 650 - 700 Square feet of area."]
-    ],
-    "Standard's": [
-      ["PCC", "The term PCC refers to plain cement concrete. The amalgamation of cement, fine aggregate, and coarse aggregate are known as plain cement concrete (PCC). Before beginning R.C.C. or masonry PCC is done to form an even surface and to avoid mixing with the soil and to avoid soil extracting water PCC is used. Normally its ratio Is 1:4:8 (Cement, sand, and Crush)"],
-      ["DPC", "A damp-proof course (DPC) is a barrier through the structure designed to prevent moisture rising by capillary action such as through a phenomenon known as rising damp. Rising damp is the effect of water rising from the ground into property. The damp proof course may be horizontal or vertical. Normally its ratio Is 1:2:4 (Cement, sand, and Crush)"],
-      ["Plinth Beam Work", "A damp-proof course (DPC) is a barrier through the structure designed to prevent moisture rising by capillary action such as through a phenomenon known as rising damp. Rising damp is the effect of water rising from the ground into property. The damp proof course may be horizontal or vertical. Normally its ratio Is 1:2:4 (Cement, sand, and Crush) Normally ..... Kg of Steel, ..... of bags of cement, ........ cubic feet of sand, and ....... cubic feet of crush is required for 5 Marla PCC work."],
-      ["Masonry Work", "Masonry is a construction technique that involves stacking materials, such as bricks, stone blocks or concrete blocks, on top of one another to build structures or walls. Masons layer these materials using mortar, an adhesive paste that fills the gaps and binds materials together. Masonry work includes Brick, Cement, and sand as material. Normally Mortar ratio Is 1:4 (Cement and Sand)."],
-      ["Plaster Work", "Plastering is the process of covering rough walls and uneven surfaces in the construction of houses and other structures with a plastic material, called plaster, which is a mixture of cement and sand along with the required quantity of water. Plaster work includes Brick, Cement, and sand. Normally Mortar ratio Is 1:4 (Cement and Sand). Normally its ratio Is 1:4 (Cement, sand, and Crush)."],
-      ["Slab Poring Work", "Masonry is a construction technique that involves stacking materials, such as bricks, stone blocks or concrete blocks, on top of one another to build structures or walls. Masons layer these materials using mortar, an adhesive paste that fills the gaps and binds materials together. Masonry work includes Steel, Cement, sand, and Crush as material. Normally Mortar ratio Is 1:2:4 (Cement, Sand and Cush). Normally its ratio Is 1:2:4 (Cement, sand, and Crush)."]
+      [
+        "Bricks",
+        "Class A+ bricks are advised for usage in building a home. The grey structure will take about 140K – 150K bricks to build."
+      ],
+      [
+        "Crush",
+        "Class A+ Crush Like Sargodha (3 Suter or ½ Down) is advised for usage in building a home. Approximately 5000 - 5500 cubic feet of crush would be needed."
+      ],
+      [
+        "Sand",
+        "Ravi sand recommended for masonry works and concrete works. Usually, Chenab sand used in plaster works. Approximately 6000 - 6500 cubic feet of Ravi sand will be required. In addition, 1500 - 2000 cubic feet of Chenab sand are needed for plastering."
+      ],
+      [
+        "Cement",
+        "Class A+ Cement Like Maple Leaf, Best Way, and DG are advised for usage in building a home. Around 1500 - 1800 bags of regular Portland cement will be required."
+      ],
+      [
+        "Kassu",
+        "Additionally, you'll need Kassu, a clay and sand mixture. It is frequently utilized to cover the open space. Its measurement depends on the depth of the plot. Normally 15K – 20K cubic feet Kassu needed to construct a five-marla home in Lahore."
+      ],
+      [
+        "Rebar / Steel / Sariya",
+        "Class A+ Steel Like Mughal, Amreli, and Moiz {(40 or 60 Grade), (3 or 4 or 6 Sutar) are advised for usage in building a home. In addition, 10 – 12 tons of rebar will be required."
+      ],
+      [
+        "Safety Grills",
+        "Normally (14 or 16 or 18 Gauge) Safety Grills are available in the market. (16 Gauge is recommended). Around it covered 550 - 600 Square feet of area."
+      ],
+      [
+        "Chokat",
+        "Normally (14 or 16 or 18 Gauge) Steel Chokat is available in the market. (16 Gauge is recommended). Around it covered 650 - 700 Square feet of area."
+      ]
     ],
     "Grey Structure Labour": [
-      ["Grey structure", "Grey structure labor refers to the construction work that involves basic structural elements of a building, such as the foundation, walls, and roof. It includes tasks like excavation, masonry, framing, and roofing, forming the essential framework."],
-      ["Electric", "Conducting of electric work is not included in grey structure labor. It is charged separately according to Square feet OR Lump Sum."],
-      ["Sanitary", "Conducting of sanitary work is not included in grey structure labor. It is charged separately according to Square feet OR Lump Sum."]
+      [
+        "Grey structure",
+        "Grey structure labor refers to the construction work that involves basic structural elements of a building, such as the foundation, walls, and roof. It includes tasks like excavation, masonry, framing, and roofing, forming the essential framework."
+      ],
+      [
+        "Electric",
+        "Conducting of electric work is not included in grey structure labor. It is charged separately according to Square feet OR Lump Sum."
+      ],
+      [
+        "Sanitary",
+        "Conducting of sanitary work is not included in grey structure labor. It is charged separately according to Square feet OR Lump Sum."
+      ]
     ]
   },
   "Disclaimer": "This cost is for 1 Kanal double story House. All the information in this calculator is published for general information purpose only. All product prices are subject to change according to the market fluctuation and may not be 100% accurate."
