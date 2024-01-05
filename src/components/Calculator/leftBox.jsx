@@ -67,7 +67,7 @@ export function LeftBox(props = {}) {
     <section className="max-w-full flex flex-col items-center justify-center py-8">
       <h3 className="text-4xl lg:text-2xl font-heading text-themeFont text-center">Construction Cost</h3>
       <section className="w-full flex flex-col lg:gap-0 items-center justify-center py-5">
-        <section className="max-h-min lg:w-11/12 py-5">
+        <section className="max-h-min w-full lg:w-11/12 py-5">
           <Chart
             chartType="PieChart"
             width="100%"

@@ -75,7 +75,7 @@ const Navbar = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </label>
           <ul tabIndex={0} onClick={() => setIsDropdownOpen(false)}
-            className={`z-30 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 ${isDropdownOpen ? 'block' : 'hidden'} right-0`}>
+            className={`z-30 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-[80vw] sm:w-[50vw] ${isDropdownOpen ? 'flex flex-col gap-3' : 'hidden'} right-0`}>
             <li className={`${path == '/' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>
               <Link href="/">Home</Link></li>
             {path.includes("/admin")
@@ -93,7 +93,7 @@ const Navbar = () => {
               </> : <>
                 <li >
                   <a className={`${path == '/construction-services' || path == '/material-estimation' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</a>
-                  <ul className="p-2 z-30 min-w-max">
+                  <ul className="p-2 z-30 min-w-max flex flex-col gap-3">
                     <li><Link href="/construction-services" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
                   </ul>
