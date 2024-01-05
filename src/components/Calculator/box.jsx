@@ -191,13 +191,15 @@ const Box = (props = {}) => {
                       <h3 className='font-heading' > {head}</h3>
                       <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
                     </section>
-                    {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
-                      : Object.keys(headings[head]).map((el, j) => {
-                        if (el != 'order') {
-                          return <CenterBoxItems key={j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
-                            setChoice={setChoice}></CenterBoxItems>
-                        }
-                      })}
+                    <section>
+                      {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
+                        : Object.keys(headings[head]).map((el, j) => {
+                          if (el != 'order') {
+                            return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
+                              setChoice={setChoice}></CenterBoxItems>
+                          }
+                        })}
+                    </section>
                   </section>
                 })}
                 <section className="flex flex-col gap-4">
@@ -282,7 +284,7 @@ export default Box;
 
 const RightTopBox = (props = {}) => {
   return (
-    <section className='h-auto p-4 lg:mx-4 sticky top-0 right-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
+    <section className='h-auto p-4 pt-0 lg:pt-4 lg:mx-4 sticky top-0 right-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
       <section className='flex flex-col justify-between gap-4 '>
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Grey Structure Construction Cost</h1>

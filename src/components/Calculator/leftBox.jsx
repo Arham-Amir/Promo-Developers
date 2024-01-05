@@ -64,10 +64,10 @@ export function LeftBox(props = {}) {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center py-8">
+    <section className="max-w-full flex flex-col items-center justify-center py-8">
       <h3 className="text-4xl lg:text-2xl font-heading text-themeFont text-center">Construction Cost</h3>
-      <section className="flex flex-col sm:flex-row sm:gap-5 lg:gap-0 lg:flex-col items-center justify-center py-5">
-        <section className="sm:w-1/2 max-h-max lg:w-11/12 py-5">
+      <section className="w-full flex flex-col lg:gap-0 items-center justify-center py-5">
+        <section className="max-h-min lg:w-11/12 py-5">
           <Chart
             chartType="PieChart"
             width="100%"
@@ -77,7 +77,7 @@ export function LeftBox(props = {}) {
           />
         </section>
         <section className="flex flex-col items-center justify-center gap-10">
-          <section className="flex flex-col text-black p-2">
+          <section className="flex flex-col text-black px-3">
             {data.map((el, i) => {
               if (i == 0) {
                 return;
