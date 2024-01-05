@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 export default function CenterBoxItems(props = {}) {
-  if(props.item == "Plinth Work"){
-    debugger
-  }
   const [category, setCategory] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const quan = Number(props.areas[props.area][props.landsize][props.item]);

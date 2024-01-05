@@ -286,7 +286,7 @@ const RightTopBox = (props = {}) => {
   return (
     <section className='h-auto p-4 sticky top-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
-      <section className='flex flex-col md:flex-row justify-between md:items-center gap-4 md:gap-0'>
+      <section className='flex flex-col justify-between gap-4 '>
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Grey Structure Construction Cost</h1>
         <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.landTextInfo['LastUpdatePrices']}</p>
       </section>
