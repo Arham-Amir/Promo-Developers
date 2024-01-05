@@ -237,7 +237,7 @@ const Box = (props = {}) => {
                 </section>
                 {landTextInfo['Details'][he] && Object.keys(landTextInfo['Details'][he]).map((sub, j) => (
                   <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
-                    <TiTickOutline className='text-themeFont hidden lg:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                    <TiTickOutline className='text-themeFont hidden xl:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
                     <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
                       <p className="font-bold min-w-fit">{landTextInfo['Details'][he][sub][0]}:</p>
                       <p >{landTextInfo['Details'][he][sub][1]}</p>
@@ -253,7 +253,7 @@ const Box = (props = {}) => {
               </section>
               {landTextInfo["Standards"] && Object.keys(landTextInfo['Standards']).map((sub, j) => (
                 <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
-                  <TiTickOutline className='text-themeFont hidden lg:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                  <TiTickOutline className='text-themeFont hidden xl:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
                   <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
                     <p className="font-bold min-w-fit">{landTextInfo['Standards'][sub][0]}:</p>
                     <p >{landTextInfo['Standards'][sub][1]}</p>
