@@ -64,39 +64,39 @@ export function LeftBox(props = {}) {
   };
 
   return (
-    <section className="max-w-full flex flex-col items-center justify-center py-8">
+    <section className="max-w-full flex flex-col items-center justify-between py-8 h-auto lg:h-[88vh]">
       <h3 className="text-4xl lg:text-2xl font-heading text-themeFont text-center">Construction Cost</h3>
-      <section className="w-full flex flex-col lg:gap-0 items-center justify-center py-5">
-        <section className="max-h-min w-full lg:w-11/12 py-5">
-          <Chart
-            chartType="PieChart"
-            width="100%"
-            height="100%"
-            data={[...data]}
-            options={options}
-          />
-        </section>
-        <section className="flex flex-col items-center justify-center gap-10">
-          <section className="flex flex-col text-black px-3">
-            {data.map((el, i) => {
-              if (i == 0) {
-                return;
-              }
-              return <section key={i} className="flex gap-4 items-center justify-between">
-                <section className="flex gap-4 items-center">
-                  <BsFillCircleFill className="!text-xs" fill={colors[i - 1]} />
-                  <p className="text-sm">{el[0]}</p>
-                </section>
-                <p className="font-bold text-sm min-w-fit">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
+      {/* <section className="w-full flex flex-col lg:gap-0 items-center justify-center py-5"> */}
+      <section className="max-h-min w-full lg:w-11/12 py-5">
+        <Chart
+          chartType="PieChart"
+          width="100%"
+          height="100%"
+          data={[...data]}
+          options={options}
+        />
+      </section>
+      <section className="flex flex-col items-center justify-center gap-10">
+        <section className="flex flex-col text-black px-3">
+          {data.map((el, i) => {
+            if (i == 0) {
+              return;
+            }
+            return <section key={i} className="flex gap-4 items-center justify-between">
+              <section className="flex gap-4 items-center">
+                <BsFillCircleFill className="!text-xs" fill={colors[i - 1]} />
+                <p className="text-sm">{el[0]}</p>
               </section>
-            })}
-          </section>
-          <section className="flex flex-row gap-5">
-            <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById(props.id).showModal()}>View Maps</button>
-            <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
-          </section>
+              <p className="font-bold text-sm min-w-fit">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
+            </section>
+          })}
+        </section>
+        <section className="flex flex-row gap-5">
+          <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById(props.id).showModal()}>View Maps</button>
+          <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
         </section>
       </section>
+      {/* </section> */}
 
       <dialog id={props.id} className="modal min-w-screen min-h-screen">
         <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar z-40">
@@ -106,11 +106,11 @@ export function LeftBox(props = {}) {
           {arealoading ? <span className="loading loading-dots loading-lg text-themeFont" />
             : <section className="flex-all-center flex-col gap-5">
               {areas[props.sarea][props.land]["images"] ?
-               areas[props.sarea][props.land]["images"].map((el, i) => (
-                <img className="object-fit" src={el} key={i} alt="map image" />
-              ))
-              :
-              <p>Sorry, Currently, Maps not available.</p>
+                areas[props.sarea][props.land]["images"].map((el, i) => (
+                  <img className="object-fit" src={el} key={i} alt="map image" />
+                ))
+                :
+                <p>Sorry, Currently, Maps not available.</p>
               }
             </section>
           }

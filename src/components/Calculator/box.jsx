@@ -162,7 +162,7 @@ const Box = (props = {}) => {
               <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
             </section>
             <section className="flex-grow px-2 py-4 bg-bg">
-              <section className='flex flex-col-reverse gap-4'>
+              <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
                 <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
                   <p>Additional Masonry Work:</p>
                   <section className='flex items-center gap-1'>
