@@ -113,7 +113,7 @@ const Box = (props = {}) => {
   }
 
   return (
-    <section className=''>
+    <section className='max-w-screen'>
       {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
         <section>
           <button onClick={handleToggleShow}
@@ -153,7 +153,7 @@ const Box = (props = {}) => {
           </section>
         </section>
         <section className='flex flex-row justify-center'>
-          <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0'>
+          <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0 left-0'>
             <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
           </section>
           <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
@@ -281,10 +281,8 @@ const Box = (props = {}) => {
 export default Box;
 
 const RightTopBox = (props = {}) => {
-
-
   return (
-    <section className='h-auto p-4 sticky top-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
+    <section className='h-auto p-4 lg:mx-4 sticky top-0 right-0 w-full bg-bg text-themeFont text-sm z-20 shadow-2xl flex flex-col gap-4'>
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
       <section className='flex flex-col justify-between gap-4 '>
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Grey Structure Construction Cost</h1>

@@ -66,8 +66,8 @@ export function LeftBox(props = {}) {
   return (
     <section className="flex flex-col items-center justify-center py-8">
       <h3 className="text-4xl lg:text-2xl font-heading text-themeFont text-center">Construction Cost</h3>
-      <section className="flex flex-col sm:flex-row lg:flex-col items-center justify-center">
-        <section className="sm:w-1/2 h-[50vh] lg:w-11/12">
+      <section className="flex flex-col sm:flex-row sm:gap-5 lg:gap-0 lg:flex-col items-center justify-center py-5">
+        <section className="sm:w-1/2 max-h-max lg:w-11/12 py-5">
           <Chart
             chartType="PieChart"
             width="100%"
@@ -77,17 +77,17 @@ export function LeftBox(props = {}) {
           />
         </section>
         <section className="flex flex-col items-center justify-center gap-10">
-          <section className="flex flex-col text-black">
+          <section className="flex flex-col text-black p-2">
             {data.map((el, i) => {
               if (i == 0) {
                 return;
               }
               return <section key={i} className="flex gap-4 items-center justify-between">
                 <section className="flex gap-4 items-center">
-                  <BsFillCircleFill size={12} fill={colors[i - 1]} />
+                  <BsFillCircleFill className="min-w-fit max-w-fit" size={12} fill={colors[i - 1]} />
                   <p className="text-sm">{el[0]}</p>
                 </section>
-                <p className="font-bold text-sm">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
+                <p className="font-bold text-sm min-w-fit">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
               </section>
             })}
           </section>
