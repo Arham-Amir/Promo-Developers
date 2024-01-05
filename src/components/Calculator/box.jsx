@@ -236,8 +236,8 @@ const Box = (props = {}) => {
                   <span className="w-1/4 h-[2px] bg-bg-dark"></span>
                 </section>
                 {landTextInfo['Details'][he] && Object.keys(landTextInfo['Details'][he]).map((sub, j) => (
-                  <section className='flex gap-2 w-full justify-start items-start md:hover:scale-110 transition duration-300' key={j}>
-                    <TiTickOutline className='text-themeFont hidden sm:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                  <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
+                    <TiTickOutline className='text-themeFont hidden lg:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
                     <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
                       <p className="font-bold min-w-fit">{landTextInfo['Details'][he][sub][0]}:</p>
                       <p >{landTextInfo['Details'][he][sub][1]}</p>
@@ -252,8 +252,8 @@ const Box = (props = {}) => {
                 <span className="w-1/4 h-[2px] bg-bg-dark"></span>
               </section>
               {landTextInfo["Standards"] && Object.keys(landTextInfo['Standards']).map((sub, j) => (
-                <section className='flex gap-2 w-full justify-start items-start md:hover:scale-110 transition duration-300' key={j}>
-                  <TiTickOutline className='text-themeFont hidden sm:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
+                  <TiTickOutline className='text-themeFont hidden lg:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
                   <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
                     <p className="font-bold min-w-fit">{landTextInfo['Standards'][sub][0]}:</p>
                     <p >{landTextInfo['Standards'][sub][1]}</p>
@@ -267,7 +267,7 @@ const Box = (props = {}) => {
                 <h1 className="pl-1 font-heading min-w-fit">Disclaimer</h1>
                 <span className="w-1/6 h-[2px] bg-bg-dark"></span>
               </section>
-              <section className='w-11/12 sm:w-4/5 flex gap-2 justify-center text-center items-start md:hover:scale-110 transition duration-300'>
+              <section className='w-11/12 sm:w-4/5 flex gap-2 justify-center text-center items-start lg:hover:scale-110 transition duration-300'>
                 <p >{landTextInfo['Disclaimer']}</p>
               </section>
             </section>}
