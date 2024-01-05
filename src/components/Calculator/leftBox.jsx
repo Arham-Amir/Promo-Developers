@@ -84,7 +84,7 @@ export function LeftBox(props = {}) {
               }
               return <section key={i} className="flex gap-4 items-center justify-between">
                 <section className="flex gap-4 items-center">
-                  <BsFillCircleFill className="min-w-fit max-w-fit" size={12} fill={colors[i - 1]} />
+                  <BsFillCircleFill className="!text-xs" fill={colors[i - 1]} />
                   <p className="text-sm">{el[0]}</p>
                 </section>
                 <p className="font-bold text-sm min-w-fit">{props.formatNumberWithCommas(props.cost[el[0]] || 0)}</p>
