@@ -12,6 +12,17 @@ async function checkPathAvailable(path) {
   }
   return true
 }
+export const setDate = createAsyncThunk('setDate',
+  async (date) => {
+    await set(ref(db, 'Development/Date'), date)
+    toast('Date Saved Successfully')
+  })
+export const getDate = createAsyncThunk('getDate',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/Date'))
+    return resp.val()
+  })
 export const addItem = createAsyncThunk('addItem',
   async (action) => {
     const dbRef = child(ref(db), 'Development/Items/' + action['itemHead'] + '/' + action['item']);
@@ -124,6 +135,15 @@ export const fetchAreas = createAsyncThunk('fetchAreasforDisplay',
     const resp = await get(child(dbRef, 'Development/Areas'))
     return await resp.val()
   })
+export const renameCategory = createAsyncThunk('renameCategoryforDisplay',
+  async (action) => {
+    let dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Development/Items/' + action['head']))
+    await set(ref(db, 'Development/Items/' + action['name']), await resp.val())
+    dbRef = ref(db, 'Development/Items/' + action['head']);
+    await remove(dbRef)
+    toast('Category Renamed Successfully')
+  })
 export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
   async ({ area, land, images }) => {
     const downloadURLs = [];
@@ -182,7 +202,9 @@ const itemManagerSlice = createSlice({
     landInfo: {},
     areas: {},
     selectedLand: {},
+    lastPriceUpdateDate: "",
     loading: false,
+    dateloading: true,
     headingloading: true,
     arealoading: false,
     landloading: true,
@@ -201,8 +223,12 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Areas/' + action.payload['area'] + '/' + action.payload['land'] + '/ByLaws/'), action.payload['value'])
       toast("ByLaws Updated SuccessFully");
     },
-    editOrder: (state, action) => {
+    editCategoryOrder: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload['head'] + "/order"), action.payload['order'])
+      toast('Order Edited Into Database');
+    },
+    editItemOrder: (state, action) => {
+      set(ref(db, 'Development/Items/' + action.payload['head'] + "/" + action.payload['item'] + "/order"), action.payload['order'])
       toast('Order Edited Into Database');
     },
     editName: (state, action) => {
@@ -312,6 +338,12 @@ const itemManagerSlice = createSlice({
     }).addCase(uploadMaps.fulfilled, (state, action) => {
       state.imageUploading = false
       toast('Images Added Successfully')
+    }).addCase(getDate.pending, (state) => {
+      state.dateloading = true
+    }).addCase(getDate.fulfilled, (state, action) => {
+      state.lastPriceUpdateDate = action.payload
+      console.log(action.payload)
+      state.dateloading = false
     })
   }
 })

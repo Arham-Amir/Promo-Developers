@@ -50,6 +50,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@api/dbConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import useStorage from "@api/storage";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -57,6 +58,7 @@ const Navbar = () => {
   const [user] = useAuthState(auth);
   const { getItem } = useStorage();
   const userSession = getItem()
+  const router = useRouter()
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -143,6 +145,7 @@ const Navbar = () => {
           <button onClick={() => {
             signOut(auth)
             sessionStorage.removeItem('user')
+            router.push('/admin')
           }} className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Logout</button>
         </div>
         : !path.includes("/admin") &&

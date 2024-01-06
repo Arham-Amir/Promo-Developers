@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import CenterBoxItems from '@components/Calculator/centerBoxItems';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemsHeadings, fetchAreas, fetchLandInfo } from '@redux/itemStore';
+import { fetchItemsHeadings, fetchAreas, fetchLandInfo, getDate } from '@redux/itemStore';
 import { LeftBox } from '@components/Calculator/leftBox'
 import { useImmer } from "use-immer";
 import { BiExpandHorizontal } from 'react-icons/bi'
@@ -30,8 +30,9 @@ const Box = (props = {}) => {
   const [cost, setCost] = useImmer({});
   const [total, setTotal] = useState(0);
   const [selectedItems, setSelectedItems] = useImmer({});
-  const { headings, areas, arealoading } = useSelector(state => state.itemManager)
+  const { headings, areas, arealoading, lastPriceUpdateDate, dateloading } = useSelector(state => state.itemManager)
   const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
+  const [sortedData, setSortedData] = useState({});
   const [landTextInfo, setLandTextInfo] = useState({});
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
@@ -48,6 +49,7 @@ const Box = (props = {}) => {
 
   useEffect(() => {
     dispatch(fetchItemsHeadings())
+    dispatch(getDate())
     dispatch(fetchAreas())
     dispatch(fetchLandInfo(props.landsize))
     getUpdatedPriceDate()
@@ -60,9 +62,21 @@ const Box = (props = {}) => {
         draft[el] = 0
       })
     })
-    setCLoading(false);
+    // setCLoading(false);
     return () => { setCLoading(true); }
   }, [])
+  useEffect(() => {
+    if (headings != {}) {
+      Object.keys(headings).forEach(el => {
+        setSortedData((prevSortedData) => ({
+          ...prevSortedData,
+          [el]: sortItems(el),
+        }));
+      })
+      setCLoading(false);
+    }
+    return () => { setCLoading(true); }
+  }, [headings])
   useEffect(() => {
     let price = 0;
     Object.keys(cost).forEach(el => {
@@ -71,6 +85,16 @@ const Box = (props = {}) => {
     setTotal(price);
   }, [cost]);
 
+  function sortItems(category) {
+    const sortedEntries = Object.entries(headings[category]).sort((a, b) => {
+      const orderA = a[1].order || 0;
+      const orderB = b[1].order || 0;
+      return orderA - orderB;
+    });
+    const sortedNames = sortedEntries.map(([name]) => name);
+    setSortedData(prevData => ({ ...prevData, [category]: sortedNames }));
+    return {};
+  }
   function handleRccButton() {
     if (rcc == 'f') {
       setrcc('t')
@@ -137,7 +161,7 @@ const Box = (props = {}) => {
               </section>
             </section>
             <div className="divider divider-vertical md:divider-horizontal">||</div>
-            <section className={`w-full md:w-1/2 h-full md:custom-scrollbar`}>
+            <section className={`w-full md:w-1/2 pb-10 h-full md:custom-scrollbar`}>
               <section className='flex flex-col gap-5 mx-2'>
                 <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>Client Selected Items</h3>
                 {Object.keys(selectedItems).map((el, i) => {
@@ -157,7 +181,7 @@ const Box = (props = {}) => {
             <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
           </section>
           <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
-            <RightTopBox total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
+            <RightTopBox lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
             <section className='block lg:hidden w-full bg-bg h-fit'>
               <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
             </section>
@@ -193,7 +217,7 @@ const Box = (props = {}) => {
                     </section>
                     <section>
                       {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
-                        : Object.keys(headings[head]).map((el, j) => {
+                        : (typeof sortedData[head] === 'object' && sortedData[head] !== null && sortedData[head].constructor === Array) && sortedData[head].map((el, j) => {
                           if (el != 'order') {
                             return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
                               setChoice={setChoice}></CenterBoxItems>
@@ -288,7 +312,9 @@ const RightTopBox = (props = {}) => {
       {/* <h1 className='text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Construction Cost in {props.area}</h1> */}
       <section className='flex flex-col justify-between gap-4 '>
         <h1 className='text-base sm:text-xl font-bold border-b border-themeFont border-double w-fit'>{props.landsize} Double Story Grey Structure Construction Cost</h1>
-        <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.landTextInfo['LastUpdatePrices']}</p>
+        {props.dateloading ? <span className="loading loading-dots loading-lg text-themeFont" /> :
+          <p className='text-sm sm:text-base text-black font-themeFont pr-5'>Prices last updated on {props.lastPriceUpdateDate}</p>
+        }
       </section>
       <div className="stats shadow text-themeFont w-full overflow-auto">
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
