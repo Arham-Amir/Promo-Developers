@@ -270,6 +270,10 @@ const itemManagerSlice = createSlice({
       remove(dbRef)
       toast('Log Deleted Successfully');
     },
+    deleteOldLogs: (state, action) => {
+      set(ref(db, 'UsersLog/'), action.payload["value"])
+      toast('Old Logs Deleted Successfully');
+    },
     deleteItem: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item']);
       remove(dbRef).then(() => {

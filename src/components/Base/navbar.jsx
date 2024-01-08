@@ -47,6 +47,8 @@ const Navbar = () => {
                   href="/admin/landSize">LandSizes</Link></li>
                 <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/areas">Areas</Link></li>
+                <li className={`${path == '/admin/userLogs' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                  href="/admin/userLogs">UserLogs</Link></li>
                 <li><button onClick={() => {
                   signOut(auth)
                   sessionStorage.removeItem('user')
@@ -82,6 +84,8 @@ const Navbar = () => {
                 href="/admin/landSize">LandSizes</Link></li>
               <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/areas">Areas</Link></li>
+              <li className={`${path == '/admin/userLogs' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                href="/admin/userLogs">UserLogs</Link></li>
             </> : !path.includes("/admin") && <>
               <li tabIndex={0} >
                 <details {...(dropdownOpen == false ? { open: true } : {})}>
