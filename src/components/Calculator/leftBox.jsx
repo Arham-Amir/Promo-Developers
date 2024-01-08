@@ -14,7 +14,7 @@ export function LeftBox(props = {}) {
   ["Commute", 3],
   ["Watch TV", 2]]);
   const sortedHeadings = Object.keys(props.items).sort((a, b) => props.items[a].order - props.items[b].order);
-  const colors = ["#E83A3A", "#39395f", "#FFA900", "#0793EA", "#291334", "#07938E"]
+  const colors = ["#DD2628", "#39395f", "#FFA900", "#0793EA", "#291334", "#07938E"]
   const updateData = () => {
     const newData = [
       ["Task", "Hours per Day"]
@@ -66,7 +66,6 @@ export function LeftBox(props = {}) {
   return (
     <section className="max-w-full flex flex-col items-center justify-between py-8 h-auto lg:h-[88vh]">
       <h3 className="text-4xl lg:text-2xl font-heading text-themeFont text-center">Construction Cost</h3>
-      {/* <section className="w-full flex flex-col lg:gap-0 items-center justify-center py-5"> */}
       <section className="max-h-min w-full lg:w-11/12 py-5">
         <Chart
           chartType="PieChart"
@@ -92,11 +91,10 @@ export function LeftBox(props = {}) {
           })}
         </section>
         <section className="flex flex-row gap-5">
-          <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById(props.id).showModal()}>View Maps</button>
-          <button className="px-4 py-2 rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
+          <button className="rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={() => document.getElementById(props.id).showModal()}>View Maps</button>
+          <button className="rounded-md hover:-translate-y-1 transition-all duration-100 bg-themeFont text-white" onClick={props.setShow}>View Report</button>
         </section>
       </section>
-      {/* </section> */}
 
       <dialog id={props.id} className="modal min-w-screen min-h-screen">
         <div className="modal-box min-h-[80%] min-w-[80%] py-10 custom-scrollbar z-40">

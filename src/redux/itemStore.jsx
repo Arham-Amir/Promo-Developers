@@ -23,6 +23,12 @@ export const getDate = createAsyncThunk('getDate',
     const resp = await get(child(dbRef, 'Development/Date'))
     return resp.val()
   })
+export const getUserLogs = createAsyncThunk('getUserLogs',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'UsersLog'))
+    return await resp.val()
+  })
 export const addItem = createAsyncThunk('addItem',
   async (action) => {
     const dbRef = child(ref(db), 'Development/Items/' + action['itemHead'] + '/' + action['item']);
@@ -82,7 +88,6 @@ export const addCommonLandSize = createAsyncThunk('addCommonLandSize',
   })
 export const addAreaName = createAsyncThunk('addAreaName',
   async ({ area, value }) => {
-    console.log(area)
     const dbRef = child(ref(db), 'Development/Areas/' + area)
     const resp = await checkPathAvailable(dbRef)
     if (resp) {
@@ -180,7 +185,6 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
       await set(landRef, downloadURLs);
     }
     catch (error) {
-      console.error("Error during image upload:", error);
       throw error;
     }
   })
@@ -202,15 +206,21 @@ const itemManagerSlice = createSlice({
     landInfo: {},
     areas: {},
     selectedLand: {},
+    userLogs: {},
     lastPriceUpdateDate: "",
     loading: false,
     dateloading: true,
+    logsloading: true,
     headingloading: true,
     arealoading: false,
     landloading: true,
     imageUploading: false,
   },
   reducers: {
+    addUserForLog: (state, action) => {
+      set(ref(db, 'UsersLog/' + action.payload["id"]), action.payload["data"])
+      toast.success("Thanks for filling the form.")
+    },
     addCategory: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
       toast('Category added into database');
@@ -250,6 +260,15 @@ const itemManagerSlice = createSlice({
     editSqFeet: (state, action) => {
       set(ref(db, 'Development/Areas/' + action.payload.area + '/' + action.payload.land + '/squareFeet'), action.payload.squareFeet)
       toast('Square Feet Edited Into DB');
+    },
+    setLogCheck: (state, action) => {
+      set(ref(db, 'UsersLog/' + action.payload["user"] + "/status"), action.payload["value"])
+      toast('Log Status Updated');
+    },
+    deleteLog: (state, action) => {
+      const dbRef = ref(db, 'UsersLog/' + action.payload["user"]);
+      remove(dbRef)
+      toast('Log Deleted Successfully');
     },
     deleteItem: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item']);
@@ -342,8 +361,12 @@ const itemManagerSlice = createSlice({
       state.dateloading = true
     }).addCase(getDate.fulfilled, (state, action) => {
       state.lastPriceUpdateDate = action.payload
-      console.log(action.payload)
       state.dateloading = false
+    }).addCase(getUserLogs.pending, (state) => {
+      state.logsloading = true
+    }).addCase(getUserLogs.fulfilled, (state, action) => {
+      state.userLogs = action.payload
+      state.logsloading = false
     })
   }
 })

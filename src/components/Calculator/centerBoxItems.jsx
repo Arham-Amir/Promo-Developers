@@ -18,9 +18,17 @@ export default function CenterBoxItems(props = {}) {
     }
   }, [props.choice])
   useEffect(() => {
-    props.setSelectedItems((draft) => {
-      draft[props.item] = (props.detail[category]?.['price'] || 0) * props.areas[props.area][props.landsize][props.item]
-    })
+    if (category != "") {
+      props.setSelectedItems((draft) => {
+        draft[props.item] = {
+          "category": category,
+          "categoryName": props.detail[category]['name'],
+          "pricePerUnit": props.detail[category]['price'],
+          "quantity": quantity,
+          "totalPrice": (props.detail[category]?.['price'] || 0) * props.areas[props.area][props.landsize][props.item]
+        }
+      })
+    }
   }, [category])
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
@@ -51,30 +59,24 @@ export default function CenterBoxItems(props = {}) {
   useEffect(() => {
     if (Object.keys(landInfo).length != 0) {
       if (props.plinth && firstPlinth == 0) {
-        console.log('0')
         firstPlinth = 1;
       }
       if (landInfo[props.landsize]["PlinthADD"] && props.item in landInfo[props.landsize]["PlinthADD"] && firstPlinth) {
         if (props.plinth == "t") {
-          console.log('1')
           updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
         else if (quantity != 0) {
-          console.log('2')
           updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
       }
       if (landInfo[props.landsize]["PlinthSUB"] && props.item in landInfo[props.landsize]["PlinthSUB"] && firstPlinth) {
         if (props.plinth == "t") {
-          console.log('3')
           updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
         else if (quantity != 0) {
-          console.log('4')
           updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
       }
-      console.log('5')
     }
   }, [props.plinth]);
   function updatePrice(cat) {

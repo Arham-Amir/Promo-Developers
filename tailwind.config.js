@@ -20,7 +20,9 @@ module.exports = {
         '1/8': '8%',
         '7/8': '92%',
       },
-
+      width:{
+        '1/8': "12.5%"
+      },
       fontFamily: {
         sans: ['var(--font-roboto)'],
         'themeFont': ['var(--font-myFont)'],

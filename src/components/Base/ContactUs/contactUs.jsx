@@ -3,7 +3,6 @@
 import { MdLocationPin } from 'react-icons/md'
 import { FaPhoneAlt } from 'react-icons/fa'
 import { SiMinutemailer } from 'react-icons/si'
-import { BiWorld } from 'react-icons/bi'
 import ContactLeft from "@components/Base/ContactUs/contactLeft";
 import ContactRight from "@components/Base/ContactUs/contactRight";
 import ContactInfo from "@components/Base/ContactUs/contactInfo";
@@ -23,10 +22,6 @@ const ContactUs = () => {
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Address: <span className='font-normal'>60-J Block, DHA EME Sector, Multan Road, Lahore, Pakistan</span></p>
         </ContactInfo>
         <ContactInfo>
-          <SiMinutemailer size={54} className='bg-themeFont text-white rounded-full p-3' />
-          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Email: <span className='font-normal'>promoestateanddeveloper@gmail.com</span></p>
-        </ContactInfo>
-        <ContactInfo>
           <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Telephone: <span className='font-normal'>+92 42 37512219</span></p>
         </ContactInfo>
@@ -34,7 +29,10 @@ const ContactUs = () => {
           <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Whatsapp: <span className='font-normal'>+92 300 4439445</span></p>
         </ContactInfo>
-
+        <ContactInfo>
+          <SiMinutemailer size={54} className='bg-themeFont text-white rounded-full p-3' />
+          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Email: <span className='font-normal'>info@promodevelopers.com</span><span className='font-normal'>promoestateanddeveloper@gmail.com</span></p>
+        </ContactInfo>
       </section>
     </section>
   );

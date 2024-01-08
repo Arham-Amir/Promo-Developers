@@ -1,16 +1,20 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import LazyImage from '@components/Base/lazyImage';
 import CenterBoxItems from '@components/Calculator/centerBoxItems';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemsHeadings, fetchAreas, fetchLandInfo, getDate } from '@redux/itemStore';
 import { LeftBox } from '@components/Calculator/leftBox'
+import ContactInfo from "@components/Base/ContactUs/contactInfo";
 import { useImmer } from "use-immer";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItemsHeadings, fetchAreas, fetchLandInfo, getDate, ItemManagerActions } from '@redux/itemStore';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { BiExpandHorizontal } from 'react-icons/bi'
 import { SiBlockchaindotcom } from 'react-icons/si'
 import { CgOptions } from "react-icons/cg";
 import { TiTickOutline, TiTick } from 'react-icons/ti';
 import { ImCross } from "react-icons/im";
-import LazyImage from '@components/Base/lazyImage';
+import { toast } from 'react-toastify';
 
 function formatNumberWithCommas(number) {
   if (number >= 100000) {
@@ -37,6 +41,11 @@ const Box = (props = {}) => {
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
   const [radday, setradday] = useState(4);
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phonenumber, setPhoneNumber] = useState('');
+  const printRef = useRef(null);
   const dispatch = useDispatch();
 
   const handleOptionChange = (event) => {
@@ -136,9 +145,55 @@ const Box = (props = {}) => {
     }
   }
 
-  return (
+  function printDocument() {
+    if (username == '' || phonenumber == '') {
+      toast.error('Please Complete All Form Fields First.');
+    }
+    else {
+      const currentDateAndTime = new Date();
+      const dateWithoutGMT = currentDateAndTime.toISOString().split(' GMT')[0];
+      const compactUniqueId = currentDateAndTime.toISOString().replace(/[-:T.]/g, '');
+
+      dispatch(ItemManagerActions.addUserForLog(
+        {
+          'id': compactUniqueId,
+          'data': {
+            "UserName": username,
+            "UserNumber": phonenumber,
+            "UserEmail": email,
+            "UserDate": dateWithoutGMT,
+            "Land": props.landsize,
+            "Area": props.area
+          }
+        }
+      ))
+
+      const element = printRef.current;
+      if (element) {
+        const divHeight = element.clientHeight;
+
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'px',
+          format: [794, divHeight],
+        });
+
+        html2canvas(element).then((canvas) => {
+          const imgData = canvas.toDataURL('image/jpeg');
+          pdf.addImage(imgData, 'JPEG', 0, 0, 794, divHeight);
+          pdf.save('document.pdf');
+        });
+      }
+      setEmail("")
+      setUsername("")
+      setPhoneNumber("")
+      document.getElementById("reportPrint").close()
+    }
+  }
+
+  return (<>
     <section className='max-w-screen'>
-      {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-themeFont" /> : <>
+      {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-black" /> : <>
         <section>
           <button onClick={handleToggleShow}
             className={`z-50 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
@@ -165,12 +220,46 @@ const Box = (props = {}) => {
               <section className='flex flex-col gap-5 mx-2'>
                 <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>Client Selected Items</h3>
                 {Object.keys(selectedItems).map((el, i) => {
-                  return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el] || 0)}</p></section>
+                  return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el]["totalPrice"] || 0)}</p></section>
                 })}
-                {/* <button className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button> */}
                 <section className='flex justify-end items-center gap-2 p-2 w-full border-b border-gray-300'>
                   <h3>Total Amount:</h3>
                   <h3>{formatNumberWithCommas(total)}</h3>
+                </section>
+                <section className='flex justify-end  w-full'>
+                  <button onClick={() => document.getElementById("reportPrint").showModal()} className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
+                  <dialog id={`reportPrint`} className="m-auto modal w-fit h-fit">
+                    <div className="modal-box flex flex-col gap-5 items-center w-full h-full">
+                      <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black">✕</button>
+                      </form>
+                      <div className="modal-box w-full h-fit bg-bgLight flex flex-col gap-3 bg-bg-1">
+                        <p className='text-xs ms:px-5 text-center uppercase'>Please fill below fields to get report.</p>
+                        <section className='flex flex-col gap-1'>
+                          <p className="text-base ms:text-2xl font-heading font-bold">Name: <span className='text-red-700'>*</span></p>
+                          <input value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className='rounded-lg text-base mx-4 px-4 py-1' type="text" name="Name" id="username" />
+                        </section>
+
+                        <section className='flex flex-col gap-1'>
+                          <p className="text-base ms:text-2xl font-heading font-bold">Phone Number: <span className='text-red-700'>*</span></p>
+                          <input value={phonenumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            className='rounded-lg text-base mx-4 px-4 py-1' type="tel" name="Number" id="phonenumber" />
+                        </section>
+                        <section className='flex flex-col gap-1'>
+                          <p className="text-base ms:text-2xl font-heading font-bold">Email:</p>
+                          <input value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className='rounded-lg text-base mx-4 px-4 py-1' type="email" name="Email" id="email" />
+                        </section>
+                        <section className='flex flex-row justify-around gap-1'>
+                          <button onClick={printDocument} className='btn-sm md:btn-md btn border-0 bg-themeColor hover:bg-themeFont hover:text-white'>Submit</button>
+                        </section>
+                      </div>
+                    </div>
+                  </dialog>
                 </section>
               </section>
             </section>
@@ -229,7 +318,7 @@ const Box = (props = {}) => {
                 <section className="flex flex-col gap-4">
                   <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                     <section className='flex items-center gap-1'>
-                      <h1><CgOptions className='text-themeFont text-2xl' /></h1>
+                      <h1><CgOptions className='text-black text-2xl' /></h1>
                       <h3 className='' >Plinth Beam</h3>
                     </section>
                     <input type="checkbox" className="toggle"
@@ -246,12 +335,16 @@ const Box = (props = {}) => {
                       onChange={() => handleRccButton()} />
                   </section>
                 </section>
+                <section className='mt-4 w-full flex justify-end'>
+                  <button onClick={() => document.getElementById("reportPrint").showModal()}
+                    className='bg-themeFont text-white text-base'>Print Report</button>
+                </section >
+
               </section>
             </section>
           </article>
         </section >
       </>}
-
       <section className="flex flex-col items-center gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:my-16">
         {landTextInfo == {} ? <span className="mx-auto loading loading-dots loading-lg text-themeFont" />
           : (<>
@@ -301,6 +394,16 @@ const Box = (props = {}) => {
         }
       </section>
     </section >
+
+    {!(arealoading || cLoading) &&
+      <section ref={printRef} className='fixed bottom-full p-2 bg-white w-[595px] h-auto mx-auto'>
+        <section className='gap-6 flex items-center justify-center flex-col p-1 border-2 border-black'>
+          <PrintScreen selectedItems={selectedItems} lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize}
+          />
+        </section>
+      </section>
+    }
+  </>
   );
 };
 
@@ -451,4 +554,243 @@ function ByLawsData({ available, areas, area, landsize }) {
       </section>
     </section>
 
+}
+
+function PrintScreen({ lastPriceUpdateDate, dateloading, total, landTextInfo, areas, cost, area, landsize, selectedItems }) {
+  return <>
+    <LazyImage className="w-[120px] pt-6 object-contain" src="/logos/promodevelopers.gif" />
+    <PrintTotalDetailBox lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={area} landsize={landsize} />
+    <section className={`w-4/5 mx-auto flex flex-col gap-5 items-center text-black`}>
+      <h3 className='mx-auto p-2 border border-b-4 border-black'>{landsize} By Laws</h3>
+      <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
+      {areas[area][landsize]["ByLaws"] ?
+        <PrintByLawsData available="true" areas={areas} area={area} landsize={landsize} />
+        :
+        <PrintByLawsData available="false" areas={areas} area={area} landsize={landsize} />
+      }
+      <section className='flex flex-col items-center gap-1 w-full'>
+        <div className="h-[2px] w-3/5 bg-black"></div>
+        <div className="h-[2px] w-3/5 bg-black"></div>
+      </section>
+    </section>
+    <PrintCategoryPrices cost={cost} />
+    <PrintSelectedDetails selectedItems={selectedItems} total={total} />
+    <PrintAbout />
+  </>
+}
+
+const PrintTotalDetailBox = (props = {}) => {
+  return (
+    <section className='h-auto p-4 pt-0 max-w-full text-black z-20 flex flex-col gap-4'>
+      <section className='flex flex-col justify-between gap-4 '>
+        <h1 className='text-lg font-bold underline underline-offset-4 w-fit'>{props.landsize} Double Story Grey Structure Construction Cost</h1>
+        {props.dateloading ? <span className="loading loading-dots loading-lg" /> :
+          <p className='text-sm pr-5'>Prices last updated on: {props.lastPriceUpdateDate}</p>
+        }
+      </section>
+      <div className="stats w-full overflow-auto bg-slate-200 text-black pb-1">
+        <div className="stat p-3 place-items-center gap-1 border-black">
+          <div className="stat-title text-sm text-black">Covered Area /Sq Ft</div>
+          <div className="stat-value text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
+        </div>
+        <div className="stat p-3 place-items-center gap-1 border-black">
+          <div className="stat-title text-sm text-black">Price Per Sq Ft</div>
+          <div className="stat-value text-2xl">{Math.round(props.total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
+        </div>
+        <div className="stat p-3 place-items-center gap-1 border-black">
+          <div className="stat-title text-sm text-black">Total Cost</div>
+          <div className="stat-value text-2xl">{formatNumberWithCommas(props.total)}</div>
+        </div>
+      </div>
+    </section>
+  );
+};
+function PrintByLawsData({ available, areas, area, landsize }) {
+  return available == "true" ?
+    <section className='flex flex-col w-full gap-5 text-black'>
+      <section className='flex items-center justify-between w-full border-y border-black' >
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Front Side"} :</p>
+        {
+          areas[area][landsize]["ByLaws"]["Front Side"] == "null" ?
+            <section className='h-full flex-1 p-3 flex-all-center'>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+              <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            </section> :
+            <section className='h-full flex-1 p-3 flex-all-center'>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+              <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            </section>
+        }
+        {
+          areas[area][landsize]["ByLaws"]["Front Side"] != "null" ?
+            <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{areas[area][landsize]["ByLaws"]["Front Side"]}</p>
+            : <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>
+        }
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Rear Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Rear Side"] == "null" ?
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Rear Side"] != "null" ?
+          <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{areas[area][landsize]["ByLaws"]["Rear Side"]}</p>
+          : <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>}
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Left Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Left Side"] == "null" ?
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Left Side"] != "null" ?
+          <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{areas[area][landsize]["ByLaws"]["Left Side"]}</p>
+          : <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>}
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Right Side"} :</p>
+        {areas[area][landsize]["ByLaws"]["Right Side"] == "null" ?
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+            <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          </section> :
+          <section className='h-full flex-1 p-3 flex-all-center'>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+            <p><TiTick className='text-xl text-green-600 w-5' /></p>
+          </section>}
+        {areas[area][landsize]["ByLaws"]["Right Side"] != "null" ?
+          <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{areas[area][landsize]["ByLaws"]["Right Side"]}</p>
+          : <p className='border-x min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>}
+      </section>
+    </section >
+    : <section className='flex flex-col w-full gap-5 text-black'>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Front Side"} :</p>
+        <section className='border-r h-full flex-1 border-black p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Rear Side"} :</p>
+
+        <section className='border-r h-full flex-1 border-black p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Left Side"} :</p>
+
+        <section className='border-r h-full flex-1 border-black p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>
+      </section>
+      <section className='flex items-center justify-between w-full border-y border-black'>
+        <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>{"Right Side"} :</p>
+        <section className='border-r h-full flex-1 border-black p-3 flex-all-center'>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+          <p><ImCross className='text-sm text-red-700 w-5' /></p>
+        </section>
+        <p className='border-r min-w-fit flex-1 text-center border-black p-3'>{"0"}</p>
+      </section>
+    </section>
+
+}
+function PrintCategoryPrices({ cost }) {
+  return <section className='flex flex-col gap-5 w-4/5 text-black'>
+    <h3 className='mx-auto p-2 border border-b-4 border-black'>Summary</h3>
+    <section className='flex items-center justify-between w-full border-y border-black bg-slate-400' >
+      <p className='font-bold min-w-fit flex-1 border-x border-black flex-all-center p-3'>Categories</p>
+      <p className='font-bold min-w-fit flex-1 border-r border-black flex-all-center p-3'>Total Price</p>
+    </section>
+    {Object.keys(cost).map((el, i) => (
+      <section key={i} className={`${i % 2 != 0 && 'bg-slate-200'} flex items-center justify-between w-full border-b border-black`} >
+        <p className='text-sm min-w-fit flex-1 border-x border-black flex-all-center p-3'>{el}</p>
+        <p className='text-sm min-w-fit flex-1 border-r border-black flex-all-center p-3'>{formatNumberWithCommas(cost[el] || 0)}</p>
+      </section>
+    ))}
+  </section>
+}
+function PrintSelectedDetails({ selectedItems, total }) {
+  return <section className={`w-11/12 mx-auto h-auto text-black`}>
+    <section className='flex flex-col gap-5 mx-2 w-full'>
+      <h3 className='mx-auto p-2 border border-b-4 border-black'>BOQ</h3>
+      <table className='w-full border-t border-l border-black'>
+        <thead>
+          <tr className='flex border-b border-black bg-slate-400'>
+            <th className='py-2 w-6 text-ceneter text-[10px] border-r border-black'>Id</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>Item</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>Category</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>CategoryName</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>PricePerUnit</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>Quantity</th>
+            <th className='py-2 flex-1 text-ceneter text-[10px] border-r border-black'>TotalPrice</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(selectedItems).map((el, i) => {
+            return <tr key={i} className={`${i % 2 != 0 && 'bg-slate-200'} flex border-b border-black`}>
+              <td className='py-1 w-6 text-start text-[10px] border-r border-black'>{i + 1}.</td>
+              <td className='py-1 flex-1 text-start text-[10px] border-r border-black'>{el}</td>
+              {Object.keys(selectedItems[el]).map((data, j) => {
+                return <td key={j} className='py-1 flex-1 text-start text-[10px] border-r border-black'>{selectedItems[el][data]}</td>
+              })}
+            </tr>
+          })}
+        </tbody>
+      </table>
+      <section className='flex justify-end items-center gap-2 p-2 w-full'>
+        <p className='font-bold'>Total Amount:</p>
+        <p className='font-bold'>{formatNumberWithCommas(total)}</p>
+      </section>
+    </section>
+  </section>
+}
+function PrintAbout() {
+  return <section className='w-full flex flex-col'>
+    <section className="grid w-5/6 h-auto mx-auto grid-cols-2 gap-6 pb-6">
+      <ContactInfo>
+        <p className='text-xs w-fit text-center font-bold flex flex-col'>Telephone: <span className='font-normal'>+92 42 37512219</span></p>
+      </ContactInfo>
+      <ContactInfo>
+        <p className='text-xs w-fit text-center font-bold flex flex-col'>Whatsapp: <span className='font-normal'>+92 300 4439445</span></p>
+      </ContactInfo>
+      <ContactInfo>
+        <p className='text-xs w-fit text-center font-bold flex flex-col'>Email: <span className='font-normal'>info@promodevelopers.com</span><span className='font-normal'>promoestateanddeveloper@gmail.com</span></p>
+      </ContactInfo>
+      <ContactInfo>
+        <p className='text-xs w-fit text-center font-bold flex flex-col'>Address: <span className='font-normal'>60-J Block, DHA EME Sector, Multan Road, Lahore, Pakistan</span></p>
+      </ContactInfo>
+    </section>
+    <section className='w-full bg-black py-1 pb-2 text-white flex-all-center'>
+      <p className='md:text-sm text-center'>www.promodevelopers.com</p>
+    </section>
+  </section>
 }
