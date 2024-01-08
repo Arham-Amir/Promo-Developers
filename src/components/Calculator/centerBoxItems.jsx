@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 
 export default function CenterBoxItems(props = {}) {
   const [category, setCategory] = useState('');
+  const [sortedData, setsortedData] = useState([]);
+  const [cloading, setcloading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const quan = Number(props.areas[props.area][props.landsize][props.item]);
   const { landInfo } = useSelector(state => state.itemManager)
@@ -11,6 +13,22 @@ export default function CenterBoxItems(props = {}) {
   const [raddayquantity, setraddayquantity] = useState(0);
   let firstRcc = 0;
   let firstPlinth = 0;
+
+  useEffect(() => {
+    const customOrder = ["A+", "A", "B+", "B", "C+", "C", "D+", "D"];
+
+    const sortedKeys = Object.keys(props.detail).sort((a, b) => {
+      const indexA = customOrder.indexOf(a);
+      const indexB = customOrder.indexOf(b);
+
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+
+      return indexA - indexB;
+    });
+    setsortedData(sortedKeys)
+    setcloading(false)
+  }, [])
   useEffect(() => {
     if (props.choice === 'Recomended') {
       updatePrice(props.detail['recomended'])
@@ -116,7 +134,7 @@ export default function CenterBoxItems(props = {}) {
     <section className='shadow-lg border border-gray-300'>
       <div className={`transition-all !duration-500 collapse collapse-arrow bg-bg rounded-none border-b border-b-gray-400`}>
         <input type="radio"
-          name={`my-accordion-${props.index}`}
+          name={`my-accordion-${props.item}-${props.index}`}
           checked={isOpen}
           onChange={() => { }}
           onClick={() => setIsOpen(!isOpen)}
@@ -131,14 +149,14 @@ export default function CenterBoxItems(props = {}) {
             <p>{quantity}</p>
           </section>
           {props.detail == "null" ? <p>No Category Available</p>
-            : <>
+            : !cloading && <>
               <section className='flex font-bold'>
                 <p className='flex-1 py-[1px]'>Category</p>
                 <p className='flex-1 py-[1px]'>Name</p>
                 <p className='flex-1 py-[1px]'>Price</p>
               </section>
               <div className="divider my-1 before:bg-gray-400 after:bg-gray-400"></div>
-              {Object.keys(props.detail).map((el, i) => {
+              {sortedData.map((el, i) => {
                 if (el != 'recomended' && el != 'itemUnit' && el != 'order') {
                   return (
                     <button key={i} onClick={() => handleCategoryChange(el)}

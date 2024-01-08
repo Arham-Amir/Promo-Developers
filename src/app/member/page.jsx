@@ -40,20 +40,17 @@ const Page = () => {
   const handleOfficeAddressChange = (event) => {
     setOfficeAddress(event.target.value);
   };
-  const handleBusinessCardImagesChange = (event) => {
-    setBusinessCardImages(event.target.files);
-  };
+
 
   function handleFormSubmit(event) {
     event.preventDefault();
     if (
-      userType === '' ||
+      userType === '' || userType === 'default' ||
       (userType === 'Other' && otherProfession === '') ||
       name === '' ||
       email === '' ||
       phoneNumber === '' ||
-      officeAddress === '' ||
-      (businessCardImages && businessCardImages.length === 0)
+      officeAddress === ''
     ) {
       toast.error('Please Complete All Form Fields First.');
       return;
@@ -63,23 +60,24 @@ const Page = () => {
       name,
       email,
       phone_number: phoneNumber,
-      office_address: officeAddress,
-      other_profession: otherProfession,
+      officeAddress,
+      otherProfession,
       message,
       web,
     };
+    let dict = {}
     for (const key in templateParams) {
-      forlgata[key] = templateParams[key];
+      dict[key] = templateParams[key];
     }
     emailjs.send(
-      "service_qx54ocn",
-      "template_vf0abcq",
-      forlgata,
-      "3uBa2MTILF_j_PX_3"
+      "service_795z05c",
+      "template_ysgqgqx",
+      dict,
+      "_-54h6-fJGYFNR1E8"
     ).then(function (response) {
       toast.success('Your Response has been sent successfully!');
     }, function (error) {
-      toast.error('Sending your response failed. Please try again later.');
+      toast.error('Response sending failed. Please try again later.');
     });
   }
 
@@ -90,37 +88,37 @@ const Page = () => {
           <h1 className="text-3xl font-themeFont font-bold text-themeFont">Tell me about yourelf</h1>
           <section className="flex justify-center items-center flex-col gap-4 min-w-max font-sans">
             <section className="flex gap-2 items-center justify-between w-full">
-              <p className="w-fit">I am/ We Are :</p>
-              <select className="select select-bordered w-fit" value={userType} onChange={handleUserTypeChange}>
-                <option disabled selected>Who You Are</option>
-                <option>Architect</option>
-                <option>Society Developer</option>
-                <option>Builder</option>
-                <option>State Agent</option>
-                <option>Material Provider</option>
-                <option>Other</option>
+              <p className="w-fit">I am/ We Are<span className='text-red-700'>*</span> :</p>
+              <select className="select select-bordered w-fit" onChange={handleUserTypeChange}>
+                <option value="default">Who You Are</option>
+                <option value="Architect">Architect</option>
+                <option value="Society Developer">Society Developer</option>
+                <option value="Builder">Builder</option>
+                <option value="State Agent">State Agent</option>
+                <option value="Material Provider">Material Provider</option>
+                <option value="Other">Other</option>
               </select>
             </section>
             {showOtherProfessionInput && (
               <section className="flex gap-2 items-center justify-between w-full">
-                <p className="w-fit">Other Profession :</p>
+                <p className="w-fit">Other Profession<span className='text-red-700'>*</span> :</p>
                 <input type="text" placeholder="Your profession" className="input input-bordered w-fit font-bold" value={otherProfession} onChange={handleOtherProfessionChange} />
               </section>
             )}
             <section className="flex gap-2 items-center justify-between w-full">
-              <p className="w-fit">Name :</p>
+              <p className="w-fit">Name<span className='text-red-700'>*</span> :</p>
               <input type="text" placeholder="xyz" className="input input-bordered w-fit font-bold" value={name} onChange={handleNameChange} />
             </section>
             <section className="flex gap-2 items-center justify-between w-full">
-              <p className="w-fit">Email :</p>
+              <p className="w-fit">Email<span className='text-red-700'>*</span> :</p>
               <input type="email" placeholder="xyz@xyz.com" className="input input-bordered w-fit font-bold" value={email} onChange={handleEmailChange} />
             </section>
             <section className="flex gap-2 items-center justify-between w-full">
-              <p className="w-fit">Phone Number :</p>
+              <p className="w-fit">Phone Number<span className='text-red-700'>*</span> :</p>
               <input type="tel" placeholder="03xx-xxxxxxx" className="input input-bordered w-fit font-bold" value={phoneNumber} onChange={handlePhoneNumberChange} />
             </section>
             <section className="flex gap-2 items-center justify-between w-full">
-              <p className="w-fit">Office Address :</p>
+              <p className="w-fit">Office Address<span className='text-red-700'>*</span> :</p>
               <input type="text" placeholder="xyz" className="input input-bordered w-fit font-bold" value={officeAddress} onChange={handleOfficeAddressChange} />
             </section>
             <section className="flex gap-2 items-center justify-between w-full">
@@ -128,7 +126,7 @@ const Page = () => {
               <input type="text" placeholder="xyz" className="input input-bordered w-fit font-bold" value={web} onChange={handleWebChange} />
             </section>
             <section className="flex flex-col gap-4 items-center justify-between w-full">
-              <p className="min-w-full text-start">Message:</p>
+              <p className="min-w-full text-start">Message :</p>
               <textarea
                 placeholder="Your message"
                 className="textarea textarea-bordered w-full max-w-xs"
