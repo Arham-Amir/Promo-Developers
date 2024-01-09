@@ -287,7 +287,7 @@ const Box = (props = {}) => {
                     <p>feets</p>
                   </section>
                 </section>
-                <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
+                <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center flex-col sm:flex-row gap-7">
                   <section className='flex gap-2 items-center'>
                     <input type="radio" value={"Recomended"} checked={choice != "Custom"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
                     <select value={choice} className='min-w-max border-themeFont p-1 bg-transparent bg-bg-1' onChange={handleOptionChange}>
