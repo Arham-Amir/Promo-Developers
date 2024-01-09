@@ -18,6 +18,7 @@
     @apply bg-themeFont/30 hover:-z-10 transition-all duration-100 ease-in-out;
     z-index: 3;
   }
+
   /* Intro Section Start */
   .glow-section:hover {
 
@@ -100,16 +101,23 @@
   }
 
   @keyframes shake {
-    0%, 20%, 100% {
+
+    0%,
+    20%,
+    100% {
       transform: translateX(0);
     }
-    5%, 11% {
+
+    5%,
+    11% {
       transform: translateX(-7px);
     }
+
     8% {
       transform: translateX(7px);
     }
   }
+
   .btn-self {
     @apply w-fit px-4 py-2 rounded-md
   }

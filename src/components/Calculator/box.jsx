@@ -151,7 +151,7 @@ const Box = (props = {}) => {
     }
     else {
       const currentDateAndTime = new Date();
-      const dateWithoutGMT = currentDateAndTime.toISOString().split(' GMT')[0];
+      const dateWithoutGMT = String(currentDateAndTime).split(' GMT')[0];
       const compactUniqueId = currentDateAndTime.toISOString().replace(/[-:T.]/g, '');
 
       dispatch(ItemManagerActions.addUserForLog(
@@ -281,14 +281,20 @@ const Box = (props = {}) => {
                   <section className='flex items-center gap-1'>
                     <input type="number" name="range" id="range" min="0" max="10"
                       className='p-1 w-14 bg-bg rounded-md border border-themeFont'
-                      value={radday} onChange={handleRaddayButton} />
+                      value={radday} onChange={handleRaddayButton}
+                      onWheel={(e) => e.preventDefault()}
+                      onKeyDown={(e) => e.preventDefault()} />
                     <p>feets</p>
                   </section>
                 </section>
                 <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-7">
                   <section className='flex gap-2 items-center'>
-                    <input type="radio" value={"Recomended"} checked={choice === "Recomended"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
-                    <label htmlFor="r1">Recomended</label>
+                    <input type="radio" value={"Recomended"} checked={choice != "Custom"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
+                    <select value={choice} className='min-w-max border-themeFont p-1 bg-transparent bg-bg-1' onChange={handleOptionChange}>
+                      <option className='text-base' value="Recomended">Recomended</option>
+                      <option className='text-base' value="minimum">Minimum Price</option>
+                      <option className='text-base' value="maximum">Maximum Price</option>
+                    </select>
                   </section>
                   <section className='flex gap-2 items-center'>
                     <input type="radio" value={"Custom"} checked={choice === "Custom"} onChange={handleOptionChange} name="radio-0" id='r2' className={`radio border-themeFont ${choice == 'Custom' && '!bg-themeFont'}`} />

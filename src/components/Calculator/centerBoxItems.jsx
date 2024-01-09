@@ -32,7 +32,35 @@ export default function CenterBoxItems(props = {}) {
   useEffect(() => {
     if (props.choice === 'Recomended') {
       updatePrice(props.detail['recomended'])
-      setCategory(props.detail['recomended']);
+      setCategory(props.detail['recomended'])
+    }
+    else if (props.choice === "minimum") {
+      const categories = Object.keys(props.detail)
+        .filter(el => el !== 'recomended' && el !== 'itemUnit' && el !== 'order')
+        .map(category => ({
+          category,
+          price: Number(props.detail[category]["price"])
+        }));
+
+      const lowestPriceCategory = categories.reduce((minCategory, currentCategory) => {
+        return currentCategory.price < minCategory.price ? currentCategory : minCategory;
+      }, categories[0]);
+      updatePrice(lowestPriceCategory["category"])
+      setCategory(lowestPriceCategory["category"])
+    }
+    else if (props.choice === "maximum") {
+      const categories = Object.keys(props.detail)
+        .filter(el => el !== 'recomended' && el !== 'itemUnit' && el !== 'order')
+        .map(category => ({
+          category,
+          price: Number(props.detail[category]["price"])
+        }));
+
+      const highestPriceCategory = categories.reduce((maxCategory, currentCategory) => {
+        return currentCategory.price > maxCategory.price ? currentCategory : maxCategory;
+      }, categories[0]);
+      updatePrice(highestPriceCategory["category"])
+      setCategory(highestPriceCategory["category"])
     }
   }, [props.choice])
   useEffect(() => {
@@ -114,7 +142,7 @@ export default function CenterBoxItems(props = {}) {
     })
   }
   function handleCategoryChange(cat) {
-    if (props.choice === 'Recomended') {
+    if (props.choice != 'Custom') {
       props.setChoice('Custom');
     }
     updatePrice(cat);
