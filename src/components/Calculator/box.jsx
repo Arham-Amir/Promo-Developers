@@ -31,8 +31,6 @@ const Box = (props = {}) => {
   const [show, setShow] = useState(false)
   const [choice, setChoice] = useState('Recomended');
   const [cLoading, setCLoading] = useState(true);
-  const [showArea, setshowArea] = useState(false);
-  const [showDepth, setshowDepth] = useState(false);
   const [cost, setCost] = useImmer({});
   const [total, setTotal] = useState(0);
   const [selectedItems, setSelectedItems] = useImmer({});

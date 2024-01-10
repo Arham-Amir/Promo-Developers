@@ -6,17 +6,17 @@ import LazyImage from "./lazyImage";
 const UpComingEvent = () => {
   return (
     <section className='relative'>
-      <Draggable
+      {/* <Draggable
         defaultPosition={{ x: 0, y: 0 }}
-      >
+      > */}
         <button onClick={() => document.getElementById("palestine").showModal()}
-          className="p-0 fixed bottom-28 left-4 z-40 w-20 h-56">
+          className="p-0 fixed bottom-28 left-4 z-40 w-16 h-44">
           <LazyImage
             className="w-full h-full object-fill"
             src={"/image/event.jpg"}
           />
         </button>
-      </Draggable>
+      {/* </Draggable> */}
       <button onClick={() => document.getElementById("upComingEvent").showModal()}
         className="p-0 shaky-component fixed bottom-10 border-4 left-4 z-40 bg-bg-dark border-themeFont w-fit rounded-full">
         <LazyImage
