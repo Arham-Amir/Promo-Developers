@@ -26,14 +26,8 @@ export const getDate = createAsyncThunk('getDate',
 export const getUserLogs = createAsyncThunk('getUserLogs',
   async () => {
     const dbRef = ref(db)
-    const resp = await checkPathAvailable(dbRef)
-    if (resp) {
-      const resp = await get(child(dbRef, 'UsersLog'))
-      return await resp.val()
-    }
-    else {
-      return null
-    }
+    const resp = await get(child(dbRef, 'UsersLog'))
+    return await resp.val()
   })
 export const addItem = createAsyncThunk('addItem',
   async (action) => {
@@ -111,6 +105,12 @@ export const shiftItems = createAsyncThunk('shiftItemsDisplay',
     update(ref(db, 'Development/Items/' + head), { [item]: resp.val() })
     return true
   })
+export const fetchMembers = createAsyncThunk('fetchMembersforDisplay',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, 'Members'))
+    return await resp.val()
+  })
 export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay',
   async () => {
     const dbRef = ref(db)
@@ -159,7 +159,7 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
   async ({ area, land, images }) => {
     const downloadURLs = [];
     try {
-      await deleteFolder(area + '/' + land);
+      await deleteFolder("Maps/" + area + '/' + land);
       const uploadPromises = Object.keys(images).map(async (imgKey) => {
         const imageFile = images[imgKey];
         const storageref = sref(storage, "Maps/" + area + "/" + land + "/" + imageFile.name);
@@ -194,8 +194,47 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
       throw error;
     }
   })
+export const uploadMemberLogo = createAsyncThunk('uploadMemberLogoforDisplay',
+  async ({ name, images }) => {
+    const downloadURLs = [];
+    try {
+      const uploadPromises = Object.keys(images).map(async (imgKey) => {
+        const imageFile = images[imgKey];
+        const storageref = sref(storage, "Members/" + name + "/" + imageFile.name);
+        const uploadTask = uploadBytesResumable(storageref, imageFile);
+
+        return new Promise(async (resolve, reject) => {
+          uploadTask.on('state_changed',
+            (snapshot) => { },
+            (error) => {
+              reject(error);
+            },
+            async () => {
+              try {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                downloadURLs.push(downloadURL);
+                resolve();
+              } catch (err) {
+                reject(err);
+              }
+            }
+          );
+          await uploadTask;
+        });
+      });
+
+      await Promise.all(uploadPromises);
+      const dbRef = ref(db);
+      const landRef = child(dbRef, 'Members/' + name);
+      await set(landRef, downloadURLs);
+      toast.success("Member Added Successfully")
+    }
+    catch (error) {
+      throw error;
+    }
+  })
 async function deleteFolder(land) {
-  const desertRef = sref(storage, "Maps/" + land);
+  const desertRef = sref(storage, land);
   const res = await listAll(desertRef);
   for (const itemRef of res.items) {
     await deleteObject(itemRef);
@@ -213,6 +252,7 @@ const itemManagerSlice = createSlice({
     areas: {},
     selectedLand: {},
     userLogs: {},
+    members: {},
     lastPriceUpdateDate: "",
     loading: false,
     dateloading: true,
@@ -220,6 +260,7 @@ const itemManagerSlice = createSlice({
     headingloading: true,
     arealoading: false,
     landloading: true,
+    membersloading: true,
     imageUploading: false,
   },
   reducers: {
@@ -270,6 +311,12 @@ const itemManagerSlice = createSlice({
     setLogCheck: (state, action) => {
       set(ref(db, 'UsersLog/' + action.payload["user"] + "/status"), action.payload["value"])
       toast('Log Status Updated');
+    },
+    deleteMember: (state, action) => {
+      const dbRef = ref(db, 'Members/' + action.payload["member"]);
+      remove(dbRef)
+      deleteFolder("Members/" + action.payload["member"]);
+      toast.success('Member Deleted Successfully');
     },
     deleteLog: (state, action) => {
       const dbRef = ref(db, 'UsersLog/' + action.payload["user"]);
@@ -377,6 +424,11 @@ const itemManagerSlice = createSlice({
     }).addCase(getUserLogs.fulfilled, (state, action) => {
       state.userLogs = action.payload
       state.logsloading = false
+    }).addCase(fetchMembers.pending, (state) => {
+      state.membersloading = true
+    }).addCase(fetchMembers.fulfilled, (state, action) => {
+      state.members = action.payload
+      state.membersloading = false
     })
   }
 })

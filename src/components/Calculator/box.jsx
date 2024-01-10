@@ -31,6 +31,8 @@ const Box = (props = {}) => {
   const [show, setShow] = useState(false)
   const [choice, setChoice] = useState('Recomended');
   const [cLoading, setCLoading] = useState(true);
+  const [showArea, setshowArea] = useState(false);
+  const [showDepth, setshowDepth] = useState(false);
   const [cost, setCost] = useImmer({});
   const [total, setTotal] = useState(0);
   const [selectedItems, setSelectedItems] = useImmer({});
@@ -202,7 +204,7 @@ const Box = (props = {}) => {
 
   return (<>
     <section className='max-w-screen'>
-      {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-black" /> : <>
+      {arealoading || cLoading ? <span className="loading loading-dots loading-lg text-black mx-auto" /> : <>
         <section>
           <button onClick={handleToggleShow}
             className={`z-50 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
@@ -274,6 +276,7 @@ const Box = (props = {}) => {
             </section>
           </section>
         </section>
+
         <section className='flex flex-row justify-center'>
           <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0 left-0'>
             <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
@@ -285,8 +288,8 @@ const Box = (props = {}) => {
             </section>
             <section className="flex-grow px-2 py-4 bg-bg">
               <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
-                <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
-                  <p>Additional Masonry Work:</p>
+                <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
+                  <p title='From Road level to NSL level'>Plot Depth:</p>
                   <section className='flex items-center gap-1'>
                     <input type="number" name="range" id="range" min="0" max="10"
                       className='p-1 w-14 bg-bg rounded-md border border-themeFont'
@@ -297,6 +300,9 @@ const Box = (props = {}) => {
                         e.key === 'Backspace' && setradday(0)
                       }} />
                     <p>feets</p>
+                    <div className="z-30 tooltip tooltip-close" data-tip="From road level to NSL level">
+                      <button className="font-bold px-2 py-1">?</button>
+                    </div>
                   </section>
                 </section>
                 <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center flex-col sm:flex-row gap-7">
@@ -317,7 +323,7 @@ const Box = (props = {}) => {
               <section className="text-black text-sm px-4 pb-4">
                 {sortedHeadings.map((head, i) => {
                   return <section key={i} className='my-4'>
-                    <section className='p-5 bg-heading border-b border-white text-heading-txt flex items-center justify-between'>
+                    <section className='p-5 gap-2 bg-heading border-b border-white text-heading-txt flex items-center justify-between'>
                       <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
                       <h3 className='font-heading' > {head}</h3>
                       <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
@@ -439,7 +445,11 @@ const RightTopBox = (props = {}) => {
       </section>
       <div className="stats shadow text-themeFont w-full overflow-auto">
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-xs sm:text-sm">Covered Area /Sq Ft</div>
+          <div className="stat-title text-black text-xs sm:text-sm">Area ( Sq Ft )
+            <div className="z-30 tooltip tooltip-close tooltip-bottom" data-tip="Covered Area + (Open Area / 2)">
+              <button className="font-bold px-2 py-1">?</button>
+            </div>
+          </div>
           <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">

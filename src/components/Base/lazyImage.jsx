@@ -2,15 +2,15 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const LazyImage = ({ src, className }) => {
+const LazyImage = ({ src, className, alt = "image not found" }) => {
   const [isLoading, setLoading] = useState(true)
   return (
     <>
       <Image
-        alt=""
+        alt={alt}
         src={src}
-        width={1000}
-        height={1000}
+        width={500}
+        height={500}
         className={`
           duration-700 ease-in-out
           ${className}

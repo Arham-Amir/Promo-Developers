@@ -10,7 +10,7 @@ import ContactInfo from "@components/Base/ContactUs/contactInfo";
 const ContactUs = () => {
   return (
     <section id='contactus' className='h-auto py-10 bg-bg text-themeFont'>
-      <h1 className='text-5xl font-bold text-themeFont flex-all-center mb-4 font-heading'>Contact Us</h1>
+      <h1 className='text-themeFont flex-all-center mb-4 font-heading'>Contact Us</h1>
       <section className='w-5/6 mx-auto py-5
       flex md:flex-row flex-col gap-x-4 md:gap-0'>
         <ContactLeft className='md:basis-3/5' />
@@ -23,11 +23,11 @@ const ContactUs = () => {
         </ContactInfo>
         <ContactInfo>
           <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />
-          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Telephone: <span className='font-normal'>+92 42 37512219</span></p>
+          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Office: <span className='font-normal'>+92 42 37512219</span><span className='font-normal'>+92 303 5589836</span></p>
         </ContactInfo>
         <ContactInfo>
           <FaPhoneAlt size={54} className='bg-themeFont text-white rounded-full p-3' />
-          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Whatsapp: <span className='font-normal'>+92 300 4439445</span></p>
+          <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Customer Service: <span className='font-normal'>+92 300 4439445</span></p>
         </ContactInfo>
         <ContactInfo>
           <SiMinutemailer size={54} className='bg-themeFont text-white rounded-full p-3' />

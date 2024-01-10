@@ -1,9 +1,9 @@
-import ChildComp from '@components/Member/childComp';
+import ChildComp from '@components/Admin/Members/childComp';
 import React from 'react';
 
 const Page = () => {
   return (
-    <ChildComp />
+      <ChildComp />
   );
 }
 
