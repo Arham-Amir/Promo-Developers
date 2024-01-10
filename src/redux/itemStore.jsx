@@ -26,8 +26,14 @@ export const getDate = createAsyncThunk('getDate',
 export const getUserLogs = createAsyncThunk('getUserLogs',
   async () => {
     const dbRef = ref(db)
-    const resp = await get(child(dbRef, 'UsersLog'))
-    return await resp.val()
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      const resp = await get(child(dbRef, 'UsersLog'))
+      return await resp.val()
+    }
+    else {
+      return null
+    }
   })
 export const addItem = createAsyncThunk('addItem',
   async (action) => {

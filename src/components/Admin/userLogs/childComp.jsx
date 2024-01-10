@@ -1,7 +1,8 @@
 'use client'
 
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { ItemManagerActions, getUserLogs } from '@redux/itemStore';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiDeleteBin5Line } from 'react-icons/ri'
 import { toast } from 'react-toastify';
@@ -10,15 +11,16 @@ const ChildComp = () => {
   const { logsloading, userLogs } = useSelector(state => state.itemManager)
   const [cloading, setcloading] = useState(true);
   const [filter, setfilter] = useState([]);
+  const tableRef = useRef(null);
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getUserLogs())
   }, []);
   useEffect(() => {
-    if (userLogs != {}) {
+    if (userLogs != {} && userLogs) {
       filterNewest()
-      setcloading(false)
     }
+    setcloading(false)
   }, [userLogs]);
 
   function filterNewest() {
@@ -41,6 +43,14 @@ const ChildComp = () => {
     const sortedKeys = sortedArray.map(([key]) => key);
     setfilter(sortedKeys)
   }
+  function filterChecked() {
+    const resultKeys = Object.keys(userLogs).filter(key => userLogs[key].status === true);
+    setfilter(resultKeys)
+  }
+  function filterUnChecked() {
+    const resultKeys = Object.keys(userLogs).filter(key => !("status" in userLogs[key]) || userLogs[key].status === false);
+    setfilter(resultKeys);
+  }
 
   function handleChangeOption(e) {
     setcloading(true)
@@ -50,6 +60,12 @@ const ChildComp = () => {
     }
     else if (val == "Land") {
       filterLand()
+    }
+    else if (val == "Checked") {
+      filterChecked()
+    }
+    else if (val == "UnChecked") {
+      filterUnChecked()
     }
     setcloading(false)
   }
@@ -71,8 +87,27 @@ const ChildComp = () => {
     else {
       const confirmed = window.confirm("Are you sure you want to delete?");
       if (confirmed) {
+        setcloading(true)
         let temp = {}
         sortedAndFilteredKeys.map((el) => {
+          temp[el] = userLogs[el]
+        })
+        dispatch(ItemManagerActions.deleteOldLogs({ 'value': temp }));
+        dispatch(getUserLogs());
+      }
+    }
+  }
+  function handleDeleteChecked() {
+    const checkedKeys = Object.keys(userLogs).filter(key => !("status" in userLogs[key]) || userLogs[key].status === false);
+    if (checkedKeys.length == Object.keys(userLogs).length) {
+      toast.warning("Logs Already Contained Unchecked Data.")
+    }
+    else {
+      const confirmed = window.confirm("Are you sure you want to delete?");
+      if (confirmed) {
+        setcloading(true)
+        let temp = {}
+        checkedKeys.map((el) => {
           temp[el] = userLogs[el]
         })
         dispatch(ItemManagerActions.deleteOldLogs({ 'value': temp }));
@@ -83,36 +118,50 @@ const ChildComp = () => {
   return (
     <section className='w-11/12 py-5 mx-auto flex-all-center'>
       {logsloading || cloading ? <span className="loading loading-dots loading-lg text-themborder-themeFont" />
-        :
-        <section className='w-full flex flex-col gap-5'>
-          <section className='flex justify-between w-full'>
-            <button onClick={() => handleDelete7DaysOlder()} className='bg-themeFont text-white'>Delete 7 Days Older Logs</button>
-            <select onChange={(e) => handleChangeOption(e)} className='text-themeFont bg-bg-1 rounded-md p-1 min-w-max'>
-              <option value="Newest">Sort: Newest</option>
-              <option value="Land">Sort: LandSize</option>
-            </select>
-          </section>
+        : userLogs && Object.keys(userLogs).length != 0 ?
+          <section className='w-full flex flex-col gap-5'>
+            <section className='flex justify-between w-full'>
+              <section className='flex gap-2'>
+                <button onClick={() => handleDelete7DaysOlder()} className='bg-themeFont text-white'>Delete 7 Days Older Logs</button>
+                <button onClick={() => handleDeleteChecked()} className='bg-themeFont text-white'>Delete Checked Logs</button>
+                <DownloadTableExcel
+                  filename="User Logs"
+                  sheet="logs"
+                  currentTableRef={tableRef.current}
+                >
+                  <button className='bg-themeFont text-white'>Export Logs </button>
+                </DownloadTableExcel>
+              </section>
+              <select onChange={(e) => handleChangeOption(e)} className='text-themeFont bg-bg-1 rounded-md p-1 min-w-max'>
+                <option value="Newest">Sort: Newest</option>
+                <option value="Land">Sort: LandSize</option>
+                <option value="Checked">Sort: Checked</option>
+                <option value="UnChecked">Sort: UnChecked</option>
+              </select>
+            </section>
 
-          <table className='w-full border-t border-l border-themeFont'>
-            <thead className='w-full'>
-              <tr className='w-full flex border-b border-themeFont bg-bg-1'>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Id</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>UserName</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Number</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Email</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Date</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Land</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Area</th>
-                <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filter && filter.map((el, i) => {
-                return <Record setcloading={setcloading} key={i} el={el} i={i} />
-              })}
-            </tbody>
-          </table>
-        </section>
+            <table ref={tableRef} className='w-full border-t border-l border-themeFont'>
+              <thead className='w-full'>
+                <tr className='w-full flex border-b border-themeFont bg-bg-1'>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Id</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>UserName</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Number</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Email</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Date</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Land</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Area</th>
+                  <th className='py-2 !w-1/8 text-ceneter border-r border-themeFont'>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filter && filter.map((el, i) => {
+                  return <Record setcloading={setcloading} key={i} el={el} i={i} />
+                })}
+              </tbody>
+            </table>
+          </section>
+          :
+          <p>No User Logs</p>
       }
     </section>
   );
