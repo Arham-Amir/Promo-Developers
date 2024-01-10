@@ -120,9 +120,6 @@ const Box = (props = {}) => {
       setplinth('f')
     }
   }
-  function handleRaddayButton(e) {
-    setradday(e.target.value)
-  }
   async function getLocalData() {
     const path = props.landsize.split(' ').join('')
     try {
@@ -144,7 +141,19 @@ const Box = (props = {}) => {
     } catch (error) {
     }
   }
+  const handleRaddayButton = (e) => {
+    let newValue = parseInt(e.target.value, 10);
 
+    if (newValue < 0) {
+      setradday(0)
+    }
+    else if (newValue > 10) {
+      setradday(10)
+    }
+    else if (newValue >= 0 && newValue <= 10) {
+      setradday(newValue)
+    }
+  };
   function printDocument() {
     if (username == '' || phonenumber == '') {
       toast.error('Please Complete All Form Fields First.');
@@ -283,7 +292,10 @@ const Box = (props = {}) => {
                       className='p-1 w-14 bg-bg rounded-md border border-themeFont'
                       value={radday} onChange={handleRaddayButton}
                       onWheel={(e) => e.preventDefault()}
-                      onKeyDown={(e) => (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault()} />
+                      onKeyDown={(e) => {
+                        (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault();
+                        e.key === 'Backspace' && setradday(0)
+                      }} />
                     <p>feets</p>
                   </section>
                 </section>
