@@ -14,9 +14,9 @@ const ContactUs = () => {
       <section className='w-5/6 mx-auto py-5
       flex md:flex-row flex-col gap-x-4 md:gap-0'>
         <ContactLeft className='md:basis-3/5' />
-        <ContactRight className='xs:h-[250px] md:h-auto md:basis-2/5' />
+        <ContactRight className='h-[250px] md:h-auto md:basis-2/5' />
       </section>
-      <section className="mt-6 grid w-5/6 h-full mx-auto lg:grid-cols-4 sm:grid-cols-2 xs:grid-cols-1 xs:gap-6">
+      <section className="mt-6 grid w-5/6 h-full mx-auto grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
         <ContactInfo>
           <MdLocationPin size={54} className='bg-themeFont text-white rounded-full p-3' />
           <p className='text-sm w-fit text-center font-semibold  flex flex-col'>Address: <span className='font-normal'>60-J Block, DHA EME Sector, Multan Road, Lahore, Pakistan</span></p>
