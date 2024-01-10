@@ -283,7 +283,7 @@ const Box = (props = {}) => {
                       className='p-1 w-14 bg-bg rounded-md border border-themeFont'
                       value={radday} onChange={handleRaddayButton}
                       onWheel={(e) => e.preventDefault()}
-                      onKeyDown={(e) => e.preventDefault()} />
+                      onKeyDown={(e) => e.key === 'upkey' || e.key === 'downkey' && e.preventDefault()} />
                     <p>feets</p>
                   </section>
                 </section>
