@@ -37,17 +37,17 @@ const Navbar = () => {
           </label>
           <ul tabIndex={0} onClick={() => setIsDropdownOpen(false)}
             className={`z-30 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-[80vw] sm:w-[50vw] ${isDropdownOpen ? 'flex flex-col gap-3' : 'hidden'} right-0`}>
-            <li className={`${path == '/' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>
+            <li className={`${path == '/' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>
               <Link href="/">Home</Link></li>
             {path.includes("/admin")
               ? <>
-                <li className={`${path == '/admin/items' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                <li className={`${path == '/admin/items' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/items">Items-Pricing</Link></li>
-                <li className={`${path == '/admin/landSize' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                <li className={`${path == '/admin/landSize' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/landSize">LandSizes</Link></li>
-                <li className={`${path == '/admin/areas' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                <li className={`${path == '/admin/areas' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/areas">Areas</Link></li>
-                <li className={`${path == '/admin/userLogs' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                <li className={`${path == '/admin/userLogs' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/userLogs">UserLogs</Link></li>
                 <li><button onClick={() => {
                   signOut(auth)
@@ -55,14 +55,14 @@ const Navbar = () => {
                 }} className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Logout</button></li>
               </> : <>
                 <li >
-                  <a className={`${path == '/construction-services' || path == '/material-estimation' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</a>
+                  <a className={`${path == '/construction-services' || path == '/material-estimation' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</a>
                   <ul className="p-2 z-30 min-w-max flex flex-col gap-3">
                     <li><Link href="/construction-services" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
                   </ul>
                 </li>
-                <li className={`${path == '/gallery' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/gallery">Gallery</Link></li>
-                <li className={`${path == '/member' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/member">Become a member<AiFillStar className="text-yellow-400" /></Link></li>
+                <li className={`${path == '/gallery' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/gallery">Gallery</Link></li>
+                <li className={`${path == '/member' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/member">Become a member<AiFillStar className="text-yellow-400" /></Link></li>
                 <li className={`cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Lin to="contactus" spy={true} smooth={true} duration={500} >Contact Us</Lin></li>
                 <li><a href="https://wa.me/+923004439445" target="blank" className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Whatsapp</a></li>
               </>}
