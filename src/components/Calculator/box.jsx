@@ -239,12 +239,12 @@ const Box = (props = {}) => {
                 </section>
                 <section className='flex justify-end  w-full'>
                   <button onClick={() => document.getElementById("reportPrint").showModal()} className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
-                  <dialog id={`reportPrint`} className="m-auto modal w-fit h-fit">
-                    <div className="modal-box flex flex-col gap-5 items-center w-full h-full">
+                  <dialog id={`reportPrint`} className="m-auto modal w-fit h-auto">
+                    <div className="modal-box flex flex-col gap-5 items-center w-full h-auto">
                       <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black">✕</button>
                       </form>
-                      <div className="modal-box w-full h-fit bg-bgLight flex flex-col gap-3 bg-bg-1">
+                      <div className="modal-box w-full min-h-[80vh] h-fit bg-bgLight flex flex-col gap-3 bg-bg-1">
                         <p className='text-xs ms:px-5 text-center uppercase'>Please fill below fields to get report.</p>
                         <section className='flex flex-col gap-1'>
                           <p className="text-base ms:text-2xl font-heading font-bold">Name: <span className='text-red-700'>*</span></p>
