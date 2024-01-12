@@ -291,7 +291,12 @@ const Box = (props = {}) => {
               <section className="flex-grow px-2 py-4 bg-bg">
                 <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
                   <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
-                    <p title='From Road level to NSL level'>Plot Depth:</p>
+                    <p title='From Road level to NSL level'>Plot Depth:
+                      <div className="z-20 tooltip tooltip-close" data-tip="From road level to NSL level">
+                        <button className="font-bold px-2 py-1 text-xl text-red-600">*</button>
+                      </div>
+                    </p>
+
                     <section className='flex items-center gap-1'>
                       <input type="number" name="range" id="range" min="0" max="10"
                         className='p-1 w-14 bg-bg rounded-md border border-themeFont'
@@ -302,9 +307,6 @@ const Box = (props = {}) => {
                           e.key === 'Backspace' && setradday(0)
                         }} />
                       <p>feets</p>
-                      <div className="z-30 tooltip tooltip-close" data-tip="From road level to NSL level">
-                        <button className="font-bold px-2 py-1">?</button>
-                      </div>
                     </section>
                   </section>
                   <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center flex-col sm:flex-row gap-7">
@@ -448,8 +450,8 @@ const RightTopBox = (props = {}) => {
       <div className="stats shadow text-themeFont w-full overflow-auto">
         <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
           <div className="stat-title text-black text-xs sm:text-sm">Area ( Sq Ft )
-            <div className="z-30 tooltip tooltip-close tooltip-bottom" data-tip="Covered Area + (Open Area / 2)">
-              <button className="font-bold px-2 py-1">?</button>
+            <div className="z-20 tooltip tooltip-close tooltip-right" data-tip="Covered Area + (Open Area / 2)">
+              <button className="font-bold px-2 py-1 text-xl text-red-600">*</button>
             </div>
           </div>
           <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>

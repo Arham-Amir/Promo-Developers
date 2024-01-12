@@ -49,6 +49,10 @@ const Navbar = () => {
                   href="/admin/areas">Areas</Link></li>
                 <li className={`${path == '/admin/userLogs' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                   href="/admin/userLogs">UserLogs</Link></li>
+                <li className={`${path == '/admin/members' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                  href="/admin/members">AddMembers</Link></li>
+                <li className={`${path == '/admin/finishing-items' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                  href="/admin/finishing-items">FinishingItems</Link></li>
                 <li><button onClick={() => {
                   signOut(auth)
                   sessionStorage.removeItem('user')
@@ -86,6 +90,10 @@ const Navbar = () => {
                 href="/admin/areas">Areas</Link></li>
               <li className={`${path == '/admin/userLogs' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
                 href="/admin/userLogs">UserLogs</Link></li>
+              <li className={`${path == '/admin/members' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                href="/admin/members">AddMembers</Link></li>
+              <li className={`${path == '/admin/finishing-items' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link
+                href="/admin/finishing-items">FinishingItems</Link></li>
             </> : !path.includes("/admin") && <>
               <li tabIndex={0} >
                 <details {...(dropdownOpen == false ? { open: true } : {})}>

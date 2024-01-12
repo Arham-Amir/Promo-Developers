@@ -50,7 +50,7 @@ const ItemInfo = (props = {}) => {
         <section className='p-2 border border-themeFont flex justify-center items-center gap-1'>
           {editprice == false ?
             <section className="flex items-center gap-2 w-fit">
-              <p>{finishingItems[props.head][props.children]['price'] || 0}</p>
+              <p>Price: {finishingItems[props.head][props.children]['price'] || 0}</p>
               <button className='p-0' onClick={(e) => { e.stopPropagation(); seteditprice(prev => !prev) }} ><FiEdit size={20}></FiEdit></button>
             </section>
             :
@@ -68,7 +68,7 @@ const ItemInfo = (props = {}) => {
         <section className='p-2 border border-themeFont flex justify-center items-center gap-1'>
           {editorder == false ?
             <section className="flex items-center gap-2 w-fit">
-              <p>{finishingItems[props.head][props.children]['order'] || 0}</p>
+              <p>Order: {finishingItems[props.head][props.children]['order'] || 0}</p>
               <button className='p-0' onClick={(e) => { e.stopPropagation(); seteditorder(prev => !prev) }} ><FiEdit size={20}></FiEdit></button>
             </section>
             :
