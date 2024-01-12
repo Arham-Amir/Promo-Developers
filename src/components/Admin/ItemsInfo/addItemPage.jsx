@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ItemManagerActions, addItem, fetchItemsHeadings } from "@redux/itemStore";
+import { addItem, fetchItemsHeadings } from "@redux/itemStore";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
@@ -10,7 +10,6 @@ const AddItemPage = () => {
   const { headings } = useSelector(state => state.itemManager)
   const [item, setItem] = useState('')
   const [itemHead, setItemHead] = useState('Category')
-  const router = useRouter()
 
   function handleAddItem() {
     if (item !== '' && itemHead !== 'Category') {

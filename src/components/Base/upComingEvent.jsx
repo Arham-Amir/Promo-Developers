@@ -12,7 +12,7 @@ const UpComingEvent = () => {
         <button onClick={() => document.getElementById("palestine").showModal()}
           className="p-0 fixed bottom-28 left-4 z-40 w-16 h-44">
           <LazyImage
-            className="w-full h-full object-fill"
+            className="w-full h-full object-cover border border-themeFont object-left-top"
             src={"/image/event.jpg"}
           />
         </button>

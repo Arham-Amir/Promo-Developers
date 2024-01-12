@@ -111,6 +111,12 @@ export const fetchMembers = createAsyncThunk('fetchMembersforDisplay',
     const resp = await get(child(dbRef, 'Members'))
     return await resp.val()
   })
+export const fetchFinishingItems = createAsyncThunk('fetchFinishingItemsforDisplay',
+  async () => {
+    const dbRef = ref(db)
+    const resp = await get(child(dbRef, '/Finishing'))
+    return await resp.val()
+  })
 export const fetchItemsHeadings = createAsyncThunk('fetchItemsHeadingsforDisplay',
   async () => {
     const dbRef = ref(db)
@@ -253,6 +259,7 @@ const itemManagerSlice = createSlice({
     selectedLand: {},
     userLogs: {},
     members: {},
+    finishingItems: {},
     lastPriceUpdateDate: "",
     loading: false,
     dateloading: true,
@@ -261,12 +268,20 @@ const itemManagerSlice = createSlice({
     arealoading: false,
     landloading: true,
     membersloading: true,
+    finishingItemsloading: true,
     imageUploading: false,
   },
   reducers: {
     addUserForLog: (state, action) => {
       set(ref(db, 'UsersLog/' + action.payload["id"]), action.payload["data"])
       toast.success("Thanks for filling the form.")
+    },
+    addFinishingItem: (state, action) => {
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map((key) => {
+        set(ref(db, 'Finishing/' + key + "/" + action.payload["item"]), "null")
+      })
+      toast.success("Item Added into Finishing.")
     },
     addCategory: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload.head + '/' + action.payload.item + '/' + action.payload.category), { ...action.payload.data })
@@ -282,6 +297,21 @@ const itemManagerSlice = createSlice({
     },
     editCategoryOrder: (state, action) => {
       set(ref(db, 'Development/Items/' + action.payload['head'] + "/order"), action.payload['order'])
+      toast('Order Edited Into Database');
+    },
+    editFinishingCategoryOrder: (state, action) => {
+      set(ref(db, 'Finishing/' + action.payload['head'] + "/order"), action.payload['order'])
+      toast('Order Edited Into Database');
+    },
+    editFinishingItemPrice: (state, action) => {
+      set(ref(db, 'Finishing/' + action.payload['head'] + "/" + action.payload['item'] + "/price"), action.payload['price'])
+      toast('Price Edited Into Database');
+    },
+    editFinishingItemOrder: (state, action) => {
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map((key) => {
+        set(ref(db, 'Finishing/' + key + "/" + action.payload['item'] + "/order"), action.payload['order'])
+      })
       toast('Order Edited Into Database');
     },
     editItemOrder: (state, action) => {
@@ -326,6 +356,13 @@ const itemManagerSlice = createSlice({
     deleteOldLogs: (state, action) => {
       set(ref(db, 'UsersLog/'), action.payload["value"])
       toast('Old Logs Deleted Successfully');
+    },
+    deleteFiishingItem: (state, action) => {
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map((key) => {
+        remove(ref(db, 'Finishing/' + key + "/" + action.payload["item"]))
+      })
+      toast.success("Item deleted from Finishing categories.")
     },
     deleteItem: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item']);
@@ -429,6 +466,11 @@ const itemManagerSlice = createSlice({
     }).addCase(fetchMembers.fulfilled, (state, action) => {
       state.members = action.payload
       state.membersloading = false
+    }).addCase(fetchFinishingItems.pending, (state) => {
+      state.finishingItemsloading = true
+    }).addCase(fetchFinishingItems.fulfilled, (state, action) => {
+      state.finishingItems = action.payload
+      state.finishingItemsloading = false
     })
   }
 })
