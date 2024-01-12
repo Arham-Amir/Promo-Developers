@@ -291,11 +291,11 @@ const Box = (props = {}) => {
               <section className="flex-grow px-2 py-4 bg-bg">
                 <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
                   <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
-                    <p title='From Road level to NSL level'>Plot Depth:
+                    <div className='text-xs md:text-sm lg:text-base'>Plot Depth:
                       <div className="z-20 tooltip tooltip-close" data-tip="From road level to NSL level">
                         <button className="font-bold px-2 py-1 text-xl text-red-600">*</button>
                       </div>
-                    </p>
+                    </div>
 
                     <section className='flex items-center gap-1'>
                       <input type="number" name="range" id="range" min="0" max="10"

@@ -12,6 +12,7 @@ import { auth } from "@api/dbConfig";
 import { signOut } from "firebase/auth";
 import useStorage from '@api/storage';
 import { useEffect, useState } from "react";
+import PalestinePoster from "@components/Base/palestinePoster";
 
 const Provider = ({ children }) => {
   const router = useRouter()
@@ -48,6 +49,7 @@ const Provider = ({ children }) => {
           <Fotter />
         </>
       }
+      {path == '/' && <PalestinePoster />}
     </Prov>
   );
 }
