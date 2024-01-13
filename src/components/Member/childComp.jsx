@@ -155,11 +155,11 @@ const ChildComp = () => {
         :
         <section className="flex flex-row flex-wrap justify-center gap-8 items-center">
           {members && Object.keys(members).map((el, index) => (
-            <section key={index} className='flex flex-col items-center justify-between gap-2 basis-1/3 md:basis-1/4 xl:basis-1/5'>
+            <section key={index} className='flex flex-col items-center justify-between gap-2 basis-1/3 md:basis-1/4 xl:basis-1/5' >
               <LazyImage
                 src={members[el][0]}
                 alt={`Existing Image ${index + 1}`}
-                className='w-full h-44 m-auto object-fill'
+                className='w-full aspect-[3/2] m-auto object-fill'
               />
               <p className='font-heading font-bold'>{el}</p>
             </section>
