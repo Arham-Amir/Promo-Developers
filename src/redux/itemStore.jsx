@@ -405,12 +405,20 @@ const itemManagerSlice = createSlice({
     deleteItem: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item']);
       remove(dbRef).then(() => {
-        get(child(ref(db), 'Development/Areas')).then(
+        get(child(ref(db), 'Development')).then(
           (resp) => {
             const data = resp.val()
-            Object.keys(data).forEach(area => {
-              Object.keys(data[area]).forEach(land => {
+            Object.keys(data["Areas"]).forEach(area => {
+              Object.keys(data["Areas"][area]).forEach(land => {
                 remove(ref(db, 'Development/Areas/' + area + '/' + land + '/' + action.payload['item']))
+              });
+            });
+            Object.keys(data["LandSize"]).forEach(land => {
+              Object.keys(data["LandSize"][land]).forEach(el => {
+                try {
+                  remove(ref(db, 'Development/LandSize/' + land + '/' + el + '/' + action.payload['item']))
+                } catch (error) {
+                }
               });
             });
             toast('Item Removed From DB');
@@ -433,6 +441,12 @@ const itemManagerSlice = createSlice({
     deleteCategory: (state, action) => {
       const dbRef = ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/' + action.payload['category'] + '/');
       remove(dbRef).then(() => {
+        get(child(ref(db), 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/recomended')).then(
+          (resp) => {
+            if (resp && resp.val() == action.payload['category']) {
+              remove(ref(db, 'Development/Items/' + action.payload['head'] + '/' + action.payload['item'] + '/recomended'))
+            }
+          })
         toast('Category Removed From DB');
       })
         .catch((error) => {

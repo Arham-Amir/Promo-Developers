@@ -31,8 +31,8 @@ export default function CenterBoxItems(props = {}) {
   }, [])
   useEffect(() => {
     if (props.choice === 'Recomended') {
-      updatePrice(props.detail['recomended'])
-      setCategory(props.detail['recomended'])
+      props.detail['recomended'] && updatePrice(props.detail['recomended'])
+      setCategory(props.detail['recomended'] || "")
     }
     else if (props.choice === "minimum") {
       const categories = Object.keys(props.detail)
