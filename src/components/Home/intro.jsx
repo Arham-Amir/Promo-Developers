@@ -93,7 +93,7 @@ export default Intro;
 
 const Card = ({ land, link }) => {
   return (<>
-    <section className="sm:basis-1/4 lg:basis-1/5 m-3 glow-section font-themeFont border border-bg-1 shadow-sm shadow-black p-5 rounded-2xl flex flex-col items-center justify-center gap-3">
+    <section className="w-full sm:basis-1/4 lg:basis-1/5 m-3 glow-section font-themeFont border border-bg-1 shadow-sm shadow-black p-5 rounded-2xl flex flex-col items-center justify-center gap-3">
       <h1 className="text-xl font-bold">{land}</h1>
       <hr />
       <section className="flex flex-col gap-3">
@@ -107,7 +107,7 @@ const Card = ({ land, link }) => {
 }
 const Card1 = ({ service, link }) => {
   return (<>
-    <section className="sm:basis-1/4 lg:basis-1/5 m-3 glow-section font-themeFont border border-bg-1 shadow-sm shadow-black p-5 rounded-2xl flex flex-col items-center justify-center gap-3">
+    <section className="w-full sm:basis-1/4 m-3 glow-section font-themeFont border border-bg-1 shadow-sm shadow-black p-5 rounded-2xl flex flex-col items-center justify-center gap-3">
       <h1 className="text-xl font-bold">{service}</h1>
       <hr />
       <section className="flex flex-col gap-3">
