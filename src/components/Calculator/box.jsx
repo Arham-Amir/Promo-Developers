@@ -293,7 +293,7 @@ const Box = (props = {}) => {
                   <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
                     <div className='text-xs md:text-sm lg:text-base'>Plot Depth:
                       <div className="z-20 tooltip tooltip-close" data-tip="From road level to NSL level">
-                        <button className="font-bold px-2 py-1 text-xl text-red-600">*</button>
+                        <button className="font-bold p-0 text-xl text-red-600">*</button>
                       </div>
                     </div>
 
@@ -448,20 +448,20 @@ const RightTopBox = (props = {}) => {
         }
       </section>
       <div className="stats shadow text-themeFont w-full overflow-auto">
-        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-xs sm:text-sm">Area ( Sq Ft )
+        <div className="flex-all-center flex-col py-3 px-3 sm:py-4 sm:px-6 gap-1 bg-bg-1 border-bg-light">
+          <div className="stat-title h-1/2 text-black text-xs sm:text-sm">Area ( Sq Ft )
             <div className="z-20 tooltip tooltip-close tooltip-right" data-tip="Covered Area + (Open Area / 2)">
-              <button className="font-bold px-2 py-1 text-xl text-red-600">*</button>
+              <button className="font-bold p-0 text-xl text-red-600">*</button>
             </div>
           </div>
-          <div className="stat-value text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
+          <div className="stat-value h-1/2 text-base sm:text-2xl">{props.areas[props.area][props.landsize]['squareFeet'] ? props.areas[props.area][props.landsize]['squareFeet'] : 0}</div>
         </div>
-        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-xs sm:text-sm">Price Per Sq Ft</div>
+        <div className="flex-all-center flex-col py-3 px-3 sm:py-4 sm:px-6 gap-1 bg-bg-1 border-bg-light">
+          <div className="stat-title text-black text-xs sm:text-sm pt-1">Price Per Sq Ft</div>
           <div className="stat-value text-base sm:text-2xl">{Math.round(props.total / props.areas[props.area][props.landsize]['squareFeet']) || 1}</div>
         </div>
-        <div className="stat py-3 px-3 sm:py-4 sm:px-6 place-items-center gap-1 bg-bg-1 border-bg-light">
-          <div className="stat-title text-black text-xs sm:text-sm">Total Cost</div>
+        <div className="flex-all-center flex-col py-3 px-3 sm:py-4 sm:px-6 gap-1 bg-bg-1 border-bg-light">
+          <div className="stat-title text-black text-xs sm:text-sm pt-1">Total Cost</div>
           <div className="stat-value text-base sm:text-2xl">{formatNumberWithCommas(props.total)}</div>
         </div>
       </div>
