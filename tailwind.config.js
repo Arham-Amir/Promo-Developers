@@ -20,7 +20,7 @@ module.exports = {
         '1/8': '8%',
         '7/8': '92%',
       },
-      width:{
+      width: {
         '1/8': "12.5%"
       },
       fontFamily: {
@@ -30,17 +30,13 @@ module.exports = {
       },
       colors: {
         'bg-dark': '#333C4B',
-        // 'themeFont': '#f85606',
-        // 'themeFont': '#FFA900',
         'themeFont': '#291334',
         'bg-light': '#4A4C5C',
         'lightFont': '#FFFFFF',
-        // 'bg': '#F4F4F4',
         'bg': '#FAF7F5',
         'bg-1': '#E7E2DF',
         'bg-card': '#E7E2DF',
         'bg-card-light': '#E7E2DF',
-        // 'body': '#DBC99A',
         'body': 'white',
         'heading': '#291334',
         'heading-txt': 'white',

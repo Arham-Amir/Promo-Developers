@@ -75,7 +75,7 @@ export default ChildComp;
 
 function Card({ pack, finishingItems, sortedCategories, sorteditems }) {
 
-  return <section className='basis-2/3 bg-bg-1 sm:basis-2/5 lg:basis-2/7 p-4 flex-all-center flex-col gap-5 border-bg-dark border rounded-md shadow-md glow-section shadow-themeFont hover:scale-110 transition-all duration-200 text-themeFont'>
+  return <section className='basis-2/3 bg-gradient-to-r from-bg to-bg-1 sm:basis-2/5 lg:basis-2/7 p-4 flex-all-center flex-col gap-5 border-bg-dark border rounded-md shadow-md glow-section shadow-themeFont hover:scale-110 transition-all duration-200 text-themeFont'>
     <section className='flex-all-center'>
       <h2 className='font-heading'>{pack}</h2>
     </section>
@@ -83,7 +83,7 @@ function Card({ pack, finishingItems, sortedCategories, sorteditems }) {
     <section className='flex flex-col gap-3 w-full p-2'>
       {sortedCategories.map((el, i) => {
         return el != "order" && <section key={i} className='flex flex-col gap-5'>
-          <h4 className='border border-themeFont rounded-md p-2'>{el}</h4>
+          <p className='font-bold border border-themeFont rounded-md p-2'>{el}</p>
           {sorteditems[el].map((it, j) => {
             return it != 'order' && <section key={j} className='flex gap-3 items-center pl-2'>
               {finishingItems[pack][el][it]["price"] ? <p><TiTick className='text-xl text-green-600 w-5' /></p> : <p><ImCross className='text-xs text-red-700 w-5' /></p>}
