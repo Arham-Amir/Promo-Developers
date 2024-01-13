@@ -103,7 +103,6 @@ function ShowItems({ finishingItems, category, pack, id }) {
   }
   function handleOrderSaveBtn() {
     dispatch(ItemManagerActions.editFinishingCategoryOrder({
-      'package': pack,
       'category': category,
       order
     }))

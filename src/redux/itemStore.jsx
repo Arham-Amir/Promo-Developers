@@ -180,12 +180,12 @@ export const renameFinishingCategory = createAsyncThunk('renameFinishingCategory
   async (action) => {
     let dbRef = ref(db)
     const keys = ["Standard", "Premium", "Luxury"]
-    keys.map(async (key) => {
-      const resp = await get(child(dbRef, 'Finishing/' + key + "/" + action['category']))
-      await set(ref(db, 'Finishing/' + key + "/" + action['name']), await resp.val())
+    await Promise.all(keys.map(async (key) => {
+      const resp = await get(child(dbRef, 'Finishing/' + key + "/" + action['category']));
+      await set(ref(db, 'Finishing/' + key + "/" + action['name']), await resp.val());
       dbRef = ref(db, 'Finishing/' + key + "/" + action['category']);
-      await remove(dbRef)
-    })
+      await remove(dbRef);
+    }));
     toast('Category Renamed Successfully')
   })
 export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
@@ -331,7 +331,10 @@ const itemManagerSlice = createSlice({
       toast('Order Edited Into Database');
     },
     editFinishingCategoryOrder: (state, action) => {
-      set(ref(db, 'Finishing/' + action.payload['package'] + "/" + action.payload['category'] + "/order"), action.payload['order'])
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map((key) => {
+        set(ref(db, 'Finishing/' + key + "/" + action.payload['category'] + "/order"), action.payload['order'])
+      })
       toast('Order Edited Into Database');
     },
     editFinishingItemPrice: (state, action) => {

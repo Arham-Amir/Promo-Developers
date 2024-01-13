@@ -7,8 +7,9 @@ import { ImCross } from "react-icons/im";
 
 const ChildComp = () => {
   const { finishingItems, finishingItemsLoading } = useSelector(state => state.itemManager)
+  const [sortedPackages, setsortedPackages] = useState([]);
   const [sortedCategories, setsortedCategories] = useState([]);
-  const [sortedItems, setsortedItems] = useState([]);
+  const [sorteditems, setsorteditems] = useState({});
 
   const [cLoading, setcloading] = useState(true);
 
@@ -22,11 +23,10 @@ const ChildComp = () => {
 
   useEffect(() => {
     if (Object.keys(finishingItems).length != 0) {
-      const sortedCategories = Object.keys(finishingItems).sort((a, b) => finishingItems[a].order - finishingItems[b].order);
-      setsortedCategories(sortedCategories)
+      const sortedPackages = Object.keys(finishingItems).sort((a, b) => finishingItems[a].order - finishingItems[b].order);
+      setsortedPackages(sortedPackages)
 
       const obj = finishingItems["Standard"]
-      console.log(finishingItems)
       const keys = Object.keys(obj);
       keys.sort((a, b) => {
         const orderA = obj[a]?.order || Number.MAX_SAFE_INTEGER;
@@ -34,8 +34,23 @@ const ChildComp = () => {
 
         return orderA - orderB;
       });
-      setsortedItems(keys)
+      setsortedCategories(keys)
 
+      Object.keys(obj).forEach(key => {
+        if (key != 'order') {
+          const subKeys = Object.keys(obj[key]).sort((a, b) => {
+            if (a != 'order' || b != 'order') {
+              const orderA = obj[key][a]?.order || Number.POSITIVE_INFINITY;
+              const orderB = obj[key][b]?.order || Number.POSITIVE_INFINITY;
+
+              return orderA - orderB;
+            }
+          });
+          setsorteditems(prevState => {
+            return { ...prevState, [key]: subKeys };
+          });
+        }
+      });
       setcloading(false)
     }
   }, [finishingItems]);
@@ -47,8 +62,8 @@ const ChildComp = () => {
       {finishingItemsLoading || cLoading ? <span className="loading loading-dots loading-lg text-black" />
         :
         <section className='w-full flex-all-center flex-row gap-x-8 gap-y-10 flex-wrap'>
-          {finishingItems && sortedCategories.map((el, i) => {
-            return <Card key={i} finishingItems={finishingItems} category={el} sortedItems={sortedItems} />
+          {finishingItems && sortedPackages.map((el, i) => {
+            return <Card key={i} finishingItems={finishingItems} pack={el} sorteditems={sorteditems} sortedCategories={sortedCategories} />
           })}
         </section>
       }
@@ -58,19 +73,24 @@ const ChildComp = () => {
 
 export default ChildComp;
 
-function Card({ category, finishingItems, sortedItems }) {
+function Card({ pack, finishingItems, sortedCategories, sorteditems }) {
 
-  return <section className='basis-2/3 sm:basis-2/5 lg:basis-2/7 p-4 flex-all-center flex-col gap-5 border-bg-dark border rounded-md shadow-md glow-section shadow-themeFont hover:scale-110 transition-all duration-200'>
+  return <section className='basis-2/3 bg-bg-1 sm:basis-2/5 lg:basis-2/7 p-4 flex-all-center flex-col gap-5 border-bg-dark border rounded-md shadow-md glow-section shadow-themeFont hover:scale-110 transition-all duration-200 text-themeFont'>
     <section className='flex-all-center'>
-      <h2 className='font-heading'>{category}</h2>
+      <h2 className='font-heading'>{pack}</h2>
     </section>
     <hr className='w-full border-themeFont' />
     <section className='flex flex-col gap-3 w-full p-2'>
-      {sortedItems.map((el, i) => {
-        return el != "order" && <section key={i} className='flex gap-3 items-center'>
-          {finishingItems[category][el]["price"] ? <p><TiTick className='text-xl text-green-600 w-5' /></p> : <p><ImCross className='text-xs text-red-700 w-5' /></p>}
-          <p className='font-bold' key={i}>{el}</p>
-          {finishingItems[category][el]["price"] && <p>{finishingItems[category][el]["price"]}</p>}
+      {sortedCategories.map((el, i) => {
+        return el != "order" && <section key={i} className='flex flex-col gap-5'>
+          <h4 className='border border-themeFont rounded-md p-2'>{el}</h4>
+          {sorteditems[el].map((it, j) => {
+            return it != 'order' && <section key={j} className='flex gap-3 items-center pl-2'>
+              {finishingItems[pack][el][it]["price"] ? <p><TiTick className='text-xl text-green-600 w-5' /></p> : <p><ImCross className='text-xs text-red-700 w-5' /></p>}
+              <p className='font-bold' >{it}</p>
+              {finishingItems[pack][el][it]["price"] && <p>{finishingItems[pack][el][it]["price"]}</p>}
+            </section>
+          })}
         </section>
       })}
     </section>
