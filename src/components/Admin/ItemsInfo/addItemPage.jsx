@@ -1,8 +1,7 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, fetchItemsHeadings } from "@redux/itemStore";
-import { useRouter } from "next/navigation";
 import { toast } from 'react-toastify';
 
 const AddItemPage = () => {

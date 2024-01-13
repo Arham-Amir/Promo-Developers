@@ -62,6 +62,21 @@ export const addItemsHeading = createAsyncThunk('addItemHeading',
       toast('Add Items Category')
     }
   })
+export const addFinishingItemsHeading = createAsyncThunk('addFinishingItemsHeading',
+  async (action) => {
+    const dbRef = child(ref(db), 'Finishing/' + action);
+    const resp = await checkPathAvailable(dbRef)
+    if (resp) {
+      toast('Heading Already Available')
+    }
+    else {
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map(async (key) => {
+        await set(ref(db, 'Finishing/' + key + "/" + action), 'null')
+      })
+      toast('Add Finishing Items Category')
+    }
+  })
 export const addLandSize = createAsyncThunk('addLandSize',
   async ({ area, land, value }) => {
     const dbRef = child(ref(db), 'Development/Areas/' + area + '/' + land);
@@ -159,6 +174,18 @@ export const renameCategory = createAsyncThunk('renameCategoryforDisplay',
     await set(ref(db, 'Development/Items/' + action['name']), await resp.val())
     dbRef = ref(db, 'Development/Items/' + action['head']);
     await remove(dbRef)
+    toast('Category Renamed Successfully')
+  })
+export const renameFinishingCategory = createAsyncThunk('renameFinishingCategory',
+  async (action) => {
+    let dbRef = ref(db)
+    const keys = ["Standard", "Premium", "Luxury"]
+    keys.map(async (key) => {
+      const resp = await get(child(dbRef, 'Finishing/' + key + "/" + action['category']))
+      await set(ref(db, 'Finishing/' + key + "/" + action['name']), await resp.val())
+      dbRef = ref(db, 'Finishing/' + key + "/" + action['category']);
+      await remove(dbRef)
+    })
     toast('Category Renamed Successfully')
   })
 export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
@@ -279,7 +306,7 @@ const itemManagerSlice = createSlice({
     addFinishingItem: (state, action) => {
       const keys = ["Standard", "Premium", "Luxury"]
       keys.map((key) => {
-        set(ref(db, 'Finishing/' + key + "/" + action.payload["item"]), "null")
+        set(ref(db, 'Finishing/' + key + "/" + action.payload["itemHead"] + "/" + action.payload["item"]), "null")
       })
       toast.success("Item Added into Finishing.")
     },
@@ -299,18 +326,22 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'Development/Items/' + action.payload['head'] + "/order"), action.payload['order'])
       toast('Order Edited Into Database');
     },
-    editFinishingCategoryOrder: (state, action) => {
+    editFinishingPakcageOrder: (state, action) => {
       set(ref(db, 'Finishing/' + action.payload['head'] + "/order"), action.payload['order'])
       toast('Order Edited Into Database');
     },
+    editFinishingCategoryOrder: (state, action) => {
+      set(ref(db, 'Finishing/' + action.payload['package'] + "/" + action.payload['category'] + "/order"), action.payload['order'])
+      toast('Order Edited Into Database');
+    },
     editFinishingItemPrice: (state, action) => {
-      set(ref(db, 'Finishing/' + action.payload['head'] + "/" + action.payload['item'] + "/price"), action.payload['price'])
+      set(ref(db, 'Finishing/' + action.payload['package'] + "/" + action.payload['category'] + "/" + action.payload['item'] + "/price"), action.payload['price'])
       toast('Price Edited Into Database');
     },
     editFinishingItemOrder: (state, action) => {
       const keys = ["Standard", "Premium", "Luxury"]
       keys.map((key) => {
-        set(ref(db, 'Finishing/' + key + "/" + action.payload['item'] + "/order"), action.payload['order'])
+        set(ref(db, 'Finishing/' + key + "/" + action.payload['category'] + "/" + action.payload['item'] + "/order"), action.payload['order'])
       })
       toast('Order Edited Into Database');
     },
@@ -357,10 +388,17 @@ const itemManagerSlice = createSlice({
       set(ref(db, 'UsersLog/'), action.payload["value"])
       toast('Old Logs Deleted Successfully');
     },
-    deleteFiishingItem: (state, action) => {
+    deleteFinishingCategory: (state, action) => {
       const keys = ["Standard", "Premium", "Luxury"]
       keys.map((key) => {
-        remove(ref(db, 'Finishing/' + key + "/" + action.payload["item"]))
+        remove(ref(db, 'Finishing/' + key + "/" + action.payload['category']))
+      })
+      toast.success("Item deleted from Finishing categories.")
+    },
+    deleteFinishingItem: (state, action) => {
+      const keys = ["Standard", "Premium", "Luxury"]
+      keys.map((key) => {
+        remove(ref(db, 'Finishing/' + key + "/" + action.payload['category'] + "/" + action.payload["item"]))
       })
       toast.success("Item deleted from Finishing categories.")
     },
@@ -471,6 +509,8 @@ const itemManagerSlice = createSlice({
     }).addCase(fetchFinishingItems.fulfilled, (state, action) => {
       state.finishingItems = action.payload
       state.finishingItemsloading = false
+    }).addCase(renameFinishingCategory.pending, (state) => {
+      state.finishingItemsloading = true
     })
   }
 })
