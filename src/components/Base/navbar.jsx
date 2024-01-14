@@ -31,12 +31,12 @@ const Navbar = () => {
   return (
     <div className="navbar bg-bg h-[12vh] z-30 text-black items-center">
       <div className="navbar-start flex-row-reverse xl:flex-row justify-between xl:justify-start w-full xl:w-1/2">
-        <div className="dropdown z-30">
+        <div className="dropdown z-40">
           <label tabIndex={0} className="btn btn-ghost xl:hidden" onClick={toggleDropdown}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
           </label>
           <ul tabIndex={0} onClick={() => setIsDropdownOpen(false)}
-            className={`z-30 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-[80vw] sm:w-[50vw] ${isDropdownOpen ? 'flex flex-col gap-3' : 'hidden'} right-0`}>
+            className={`z-50 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-[80vw] sm:w-[50vw] ${isDropdownOpen ? 'flex flex-col gap-3' : 'hidden'} right-0`}>
             <li className={`${path == '/' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>
               <Link href="/">Home</Link></li>
             {path.includes("/admin")
@@ -59,10 +59,12 @@ const Navbar = () => {
                 }} className="py-3 bg-themeFont text-white flex items-center justify-center h-fit bg-themeColor rounded-3xl">Logout</button></li>
               </> : <>
                 <li >
-                  <a className={`${path == '/construction-services' || path == '/material-estimation' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</a>
-                  <ul className="p-2 z-30 min-w-max flex flex-col gap-3">
+                  <a className={`${path == '/construction-services' || path == '/material-estimation' || path == '/ethical-costruction-and-sharia-compliance' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`} >Services</a>
+                  <ul className="p-2 z-30 min-w-min flex flex-col gap-3">
                     <li><Link href="/construction-services" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
+                    <li><Link href="/ethical-costruction-and-sharia-compliance"
+                      className="cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Ethical Costruction & Sharia Compliance</Link></li>
                   </ul>
                 </li>
                 <li className={`${path == '/gallery' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}><Link href="/gallery">Gallery</Link></li>
@@ -101,6 +103,7 @@ const Navbar = () => {
                   {dropdownOpen && (<ul className="p-2 z-30 min-w-max">
                     <li><Link href="/construction-services" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
+                    <li><Link href="/ethical-costruction-and-sharia-compliance" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Ethical Costruction & Sharia Compliance</Link></li>
                   </ul>)}
                 </details>
               </li>

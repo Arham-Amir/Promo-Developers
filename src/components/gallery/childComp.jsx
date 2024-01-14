@@ -28,7 +28,7 @@ const ChildComp = () => {
   return (
     <section >
       <section className='mb-10 flex flex-col gap-10'>
-        <Video />
+        <Video src={"https://www.youtube.com/embed/H2yM0VKFze8?si=ablgoRsRvDMTtv7e"} />
         <section className='w-full flex flex-col items-center gap-10'>
           <h1 className='w-4/5 border text-center mt-5 p-5 mx-auto font-heading'>Elevation Designs</h1>
           <section className='w-11/12 px-5'>

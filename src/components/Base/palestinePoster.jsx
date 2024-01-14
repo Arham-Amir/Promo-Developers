@@ -10,7 +10,7 @@ const PalestinePoster = () => {
         defaultPosition={{ x: 0, y: 0 }}
       > */}
       <button onClick={() => document.getElementById("palestine").showModal()}
-        className="p-0 fixed bottom-28 left-4 z-40 w-16 h-44 side-right">
+        className="p-0 fixed bottom-28 left-4 z-30 w-16 h-44 side-right">
         <LazyImage
           className="w-full h-full object-cover border border-themeFont object-left-top"
           src={"/image/event.jpg"}

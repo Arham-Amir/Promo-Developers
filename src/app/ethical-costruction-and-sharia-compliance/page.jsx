@@ -1,4 +1,4 @@
-import ChildComp from '@components/finishing-services/childComp';
+import ChildComp from '@components/EthicalAndSharia/childComp';
 
 const Page = () => {
   return (
