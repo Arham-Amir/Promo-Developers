@@ -44,7 +44,7 @@ export default ChildComp;
 
 function Card({ head, detail }) {
   return <section className='flex gap-2 items-start md:hover:scale-110 transition duration-300'>
-    <TiTickOutline className='text-themeFont text-xl' />
+    <TiTickOutline className='text-themeFont !text-lg w-10' />
     <section className="flex gap-1 items-start justify-start flex-col">
       <p className="font-bold min-w-fit">{head}:</p>
       <p >{detail}</p>
