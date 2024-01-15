@@ -26,7 +26,7 @@ const UpComingEvent = () => {
             <section className="h-max w-full flex flex-col md:flex-row justify-between items-center absolute bottom-0 left-0 bg-white/50 backdrop-blur-sm">
               <LazyImage
                 className="w-[80px] md:w-[100px] m-5  object-contain "
-                src={"/logos/promodevelopers.gif"}
+                src={"/logos/promodev.png"}
               />
               <section className="p-2 flex flex-col gap-1">
                 <section className="flex mb-2 items-center justify-center flex-col">
