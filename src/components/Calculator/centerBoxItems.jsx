@@ -10,7 +10,7 @@ export default function CenterBoxItems(props = {}) {
   const quan = Number(props.areas[props.area][props.landsize][props.item]);
   const { landInfo } = useSelector(state => state.itemManager)
   const [quantity, setquantity] = useState(quan);
-  const [raddayquantity, setraddayquantity] = useState(0);
+  const [raddayquantity, setraddayquantity] = useState(4);
   let firstRcc = 0;
   let firstPlinth = 0;
 
