@@ -10,11 +10,14 @@ export default function CenterBoxItems(props = {}) {
   const quan = Number(props.areas[props.area][props.landsize][props.item]);
   const { landInfo } = useSelector(state => state.itemManager)
   const [quantity, setquantity] = useState(quan);
-  const [raddayquantity, setraddayquantity] = useState(4);
+  const [raddayquantity, setraddayquantity] = useState(0);
   let firstRcc = 0;
   let firstPlinth = 0;
 
   useEffect(() => {
+    if(props.head== 'Bore'){
+      debugger
+    }
     const customOrder = ["A+", "A", "B+", "B", "C+", "C", "D+", "D"];
 
     const sortedKeys = Object.keys(props.detail).sort((a, b) => {

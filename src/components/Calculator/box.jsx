@@ -40,13 +40,13 @@ const Box = (props = {}) => {
   const [landTextInfo, setLandTextInfo] = useState({});
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
-  const [radday, setradday] = useState();
+  const [radday, setradday] = useState(4);
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phonenumber, setPhoneNumber] = useState('');
   const printRef = useRef(null);
-  const dispatch = useDispatch(0);
+  const dispatch = useDispatch();
 
   const handleOptionChange = (event) => {
     setChoice(event.target.value);
@@ -72,7 +72,6 @@ const Box = (props = {}) => {
       })
     })
     // setCLoading(false);
-    setradday(4)
     return () => { setCLoading(true); }
   }, [])
   useEffect(() => {
@@ -84,6 +83,7 @@ const Box = (props = {}) => {
         }));
       })
       setCLoading(false);
+      setradday(4)
     }
     return () => { setCLoading(true); }
   }, [headings])
