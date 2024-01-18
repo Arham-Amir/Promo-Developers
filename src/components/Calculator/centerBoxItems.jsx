@@ -15,9 +15,6 @@ export default function CenterBoxItems(props = {}) {
   let firstPlinth = 0;
 
   useEffect(() => {
-    if(props.head== 'Bore'){
-      debugger
-    }
     const customOrder = ["A+", "A", "B+", "B", "C+", "C", "D+", "D"];
 
     const sortedKeys = Object.keys(props.detail).sort((a, b) => {
@@ -31,6 +28,7 @@ export default function CenterBoxItems(props = {}) {
     });
     setsortedData(sortedKeys)
     setcloading(false)
+    props.setradday(4)
   }, [])
   useEffect(() => {
     if (props.choice === 'Recomended') {

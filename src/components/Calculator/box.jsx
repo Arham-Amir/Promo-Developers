@@ -40,7 +40,7 @@ const Box = (props = {}) => {
   const [landTextInfo, setLandTextInfo] = useState({});
   const [rcc, setrcc] = useState('f');
   const [plinth, setplinth] = useState('f');
-  const [radday, setradday] = useState(4);
+  const [radday, setradday] = useState(0);
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -83,7 +83,6 @@ const Box = (props = {}) => {
         }));
       })
       setCLoading(false);
-      setradday(4)
     }
     return () => { setCLoading(true); }
   }, [headings])
@@ -337,7 +336,7 @@ const Box = (props = {}) => {
                         {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
                           : (typeof sortedData[head] === 'object' && sortedData[head] !== null && sortedData[head].constructor === Array) && sortedData[head].map((el, j) => {
                             if (el != 'order') {
-                              return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize}
+                              return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize} setradday = {setradday}
                                 setChoice={setChoice}></CenterBoxItems>
                             }
                           })}
