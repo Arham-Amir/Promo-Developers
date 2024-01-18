@@ -298,14 +298,16 @@ const Box = (props = {}) => {
                     </div>
 
                     <section className='flex items-center gap-1'>
-                      <input type="number" name="range" id="range" min="0" max="10"
+                      <input type="text" name="range" id="range" min="0" max="10"
                         className='p-1 w-14 bg-bg rounded-md border border-themeFont'
-                        value={radday} onChange={handleRaddayButton}
                         onWheel={(e) => e.preventDefault()}
+                        onMouseWheel={(e) => e.preventDefault()}
                         onKeyDown={(e) => {
                           (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault();
                           e.key === 'Backspace' && setradday(0)
-                        }} />
+                        }}
+                        value={radday} onChange={handleRaddayButton}
+                      />
                       <p>feets</p>
                     </section>
                   </section>
@@ -336,7 +338,7 @@ const Box = (props = {}) => {
                         {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
                           : (typeof sortedData[head] === 'object' && sortedData[head] !== null && sortedData[head].constructor === Array) && sortedData[head].map((el, j) => {
                             if (el != 'order') {
-                              return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize} setradday = {setradday}
+                              return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize} setradday={setradday}
                                 setChoice={setChoice}></CenterBoxItems>
                             }
                           })}
