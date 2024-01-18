@@ -216,7 +216,7 @@ const Box = (props = {}) => {
             <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
         !h-screen custom-scrollbar w-[92%] bg-bg-1 flex flex-col md:flex-row p-8`}>
               <section className={`w-full md:w-1/2 flex flex-col gap-5 items-center`}>
-                <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodevelopers.gif" />
+                <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodev.png" />
                 <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
                 <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
                 {areas[props.area][props.landsize]["ByLaws"] ?
@@ -591,7 +591,7 @@ function ByLawsData({ available, areas, area, landsize }) {
 
 function PrintScreen({ lastPriceUpdateDate, dateloading, total, landTextInfo, areas, cost, area, landsize, selectedItems }) {
   return <>
-    <LazyImage className="w-[120px] pt-6 object-contain" src="/logos/promodevelopers.gif" />
+    <LazyImage className="w-[120px] pt-6 object-contain" src="/logos/promodev.png" />
     <PrintTotalDetailBox lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={area} landsize={landsize} />
     <section className={`w-4/5 mx-auto flex flex-col gap-5 items-center text-black`}>
       <h3 className='mx-auto p-2 border border-b-4 border-black'>{landsize} By Laws</h3>
