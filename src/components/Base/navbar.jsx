@@ -29,7 +29,7 @@ const Navbar = () => {
   }, [path])
 
   return (
-    <div className="navbar bg-bg h-[12vh] z-30 text-black items-center">
+    <div className="navbar bg-bg h-[12vh] z-50 text-black items-center">
       <div className="navbar-start flex-row-reverse xl:flex-row justify-between xl:justify-start w-full xl:w-1/2">
         <div className="dropdown z-40">
           <label tabIndex={0} className="btn btn-ghost xl:hidden" onClick={toggleDropdown}>
