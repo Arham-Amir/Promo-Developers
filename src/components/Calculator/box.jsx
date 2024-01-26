@@ -358,7 +358,7 @@ const Box = (props = {}) => {
                     <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                       <section className='flex items-center gap-1'>
                         <h1><CgOptions className='text-themeFont text-2xl' /></h1>
-                        <h3 className='' >RCC</h3>
+                        <h3 className='' >RCC Bed</h3>
                       </section>
                       <input type="checkbox" className="toggle"
                         checked={rcc === 't'}
