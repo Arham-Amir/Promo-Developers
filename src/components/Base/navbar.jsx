@@ -60,7 +60,7 @@ const Navbar = () => {
               </> : <>
                 <li >
                   <a className={`${path == '/construction-services' || path == '/material-estimation' || path == '/ethical-costruction-and-sharia-compliance' ? 'font-bold text-themeFont' : 'font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`} >Services</a>
-                  <ul className="p-2 z-30 min-w-min flex flex-col gap-3">
+                  <ul className="p-2 z-50 min-w-min flex flex-col gap-3">
                     <li><Link href="/construction-services" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
                     <li><Link href="/ethical-costruction-and-sharia-compliance"
@@ -100,7 +100,7 @@ const Navbar = () => {
               <li tabIndex={0} >
                 <details {...(dropdownOpen == false ? { open: true } : {})}>
                   <summary onClick={() => setDropdownOpen(!dropdownOpen)} className={`${path == '/construction-services' || path == '/material-estimation' || path == '/ethical-costruction-and-sharia-compliance' ? 'scale-110 font-bold text-themeFont' : 'scale-100 font-normal'} cursor-pointer hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold`}>Services</summary>
-                  {dropdownOpen && (<ul className="p-2 z-30 min-w-max">
+                  {dropdownOpen && (<ul className="p-2 z-50 min-w-max">
                     <li><Link href="/construction-services" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Construction Services</Link></li>
                     <li><Link href="/material-estimation" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Material Estimation</Link></li>
                     <li><Link href="/ethical-costruction-and-sharia-compliance" onClick={() => setDropdownOpen(false)} className="cursor-pointer min-w-fit hover:scale-110 transition duration-100 hover:text-themeFont hover:font-bold">Ethical Costruction & Sharia Compliance</Link></li>
