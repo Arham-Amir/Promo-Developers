@@ -105,7 +105,7 @@ export function LeftBox(props = {}) {
             : <section className="flex-all-center flex-col gap-5">
               {areas[props.sarea][props.land]["images"] ?
                 areas[props.sarea][props.land]["images"].map((el, i) => (
-                  <img className="object-fit" src={el} key={i} alt="map image" />
+                  <img className="object-contain h-screen border-2 border-bg-1" src={el} key={i} alt="map image" />
                 ))
                 :
                 <p>Sorry, Currently, Maps not available.</p>
