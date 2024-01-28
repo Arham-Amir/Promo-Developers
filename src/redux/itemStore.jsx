@@ -195,8 +195,7 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
       await deleteFolder("Maps/" + area + '/' + land);
     }
     catch (error) {
-      console.log(error)
-      return
+      console.error(error)
     }
     try {
       const uploadPromises = Object.keys(images).map(async (imgKey) => {
@@ -277,11 +276,14 @@ export const uploadMemberLogo = createAsyncThunk('uploadMemberLogoforDisplay',
 async function deleteFolder(land) {
   try {
     const desertRef = sref(storage, land);
-    const res = await listAll(desertRef);
-    for (const itemRef of res.items) {
-      await deleteObject(itemRef);
-    }
-  } catch (error) {
+    const res = await listAll(desertRef)
+    console.log(res)
+    // for (const itemRef of res.items) {
+    //   await deleteObject(itemRef);
+    // }
+  }
+  catch (error) {
+    console.error(error)
   }
 }
 

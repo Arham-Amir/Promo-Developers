@@ -85,12 +85,12 @@ function Card({ pack, finishingItems, sortedCategories, sorteditems }) {
         return el != "order" && <section key={i} className='flex flex-col gap-5'>
           <p className='font-bold border border-themeFont rounded-md p-2'>{el}</p>
           {sorteditems[el].map((it, j) => {
-            return it != 'order' && <section key={j} className='flex gap-2 items-center justify-between pl-2'>
-              <section className='flex gap-3 items-center'>
+            return it != 'order' && <section key={j} className='flex gap-4 items-start justify-between pl-2'>
+              <section className='flex flex-1 gap-3 items-start'>
                 {finishingItems[pack][el][it]["price"] ? <p><TiTick className='text-xl text-green-600 w-5' /></p> : <p><ImCross className='text-xs text-red-700 w-5' /></p>}
                 <p className='font-bold' >{it}</p>
               </section>
-              {finishingItems[pack][el][it]["price"] ? <p>{finishingItems[pack][el][it]["price"]}</p> : <p> </p>}
+              {finishingItems[pack][el][it]["price"] ? <p className='flex-1 text-end'>{finishingItems[pack][el][it]["price"]}</p> : <p  className='flex-1'> </p>}
             </section>
           })}
         </section>
