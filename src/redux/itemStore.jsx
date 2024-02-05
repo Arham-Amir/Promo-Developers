@@ -278,10 +278,9 @@ async function deleteFolder(land) {
   try {
     const desertRef = sref(storage, land);
     const res = await listAll(desertRef)
-    console.log(res)
-    // for (const itemRef of res.items) {
-    //   await deleteObject(itemRef);
-    // }
+    for (const itemRef of res.items) {
+      await deleteObject(itemRef);
+    }
   }
   catch (error) {
     console.error(error)
