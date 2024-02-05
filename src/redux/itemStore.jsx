@@ -226,6 +226,7 @@ export const uploadMaps = createAsyncThunk('uploadMapsforDisplay',
       await Promise.all(uploadPromises);
       const dbRef = ref(db);
       const landRef = child(dbRef, 'Development/Areas/' + area + '/' + land + "/images");
+      downloadURLs.sort()
       await set(landRef, downloadURLs);
     }
     catch (error) {
