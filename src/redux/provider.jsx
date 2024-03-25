@@ -42,9 +42,9 @@ const Provider = ({ children }) => {
         : children}
       {!path.includes("/admin")
         && <>
-          <ShowEvent />
+          {/* <ShowEvent /> */}
           <ContactPopUpBtn />
-          <UpComingEvent />
+          {/* <UpComingEvent /> */}
           <ContactUs />
           <Fotter />
         </>
