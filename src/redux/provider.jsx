@@ -49,7 +49,7 @@ const Provider = ({ children }) => {
           <Fotter />
         </>
       }
-      {path == '/' && <PalestinePoster />}
+      {/* {path == '/' && <PalestinePoster />} */}
     </Prov>
   );
 }
