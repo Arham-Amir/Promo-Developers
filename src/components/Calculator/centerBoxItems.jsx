@@ -28,7 +28,6 @@ export default function CenterBoxItems(props = {}) {
     });
     setsortedData(sortedKeys)
     setcloading(false)
-    props.setradday(4)
   }, [])
   useEffect(() => {
     if (props.choice === 'Recomended') {
@@ -66,15 +65,7 @@ export default function CenterBoxItems(props = {}) {
   }, [props.choice])
   useEffect(() => {
     if (category != "") {
-      props.setSelectedItems((draft) => {
-        draft[props.item] = {
-          "category": category,
-          "categoryName": props.detail[category]['name'],
-          "pricePerUnit": props.detail[category]['price'],
-          "quantity": quantity,
-          "totalPrice": (props.detail[category]?.['price'] || 0) * props.areas[props.area][props.landsize][props.item]
-        }
-      })
+      updateSelectedItems()
     }
   }, [category])
   useEffect(() => {
@@ -126,6 +117,22 @@ export default function CenterBoxItems(props = {}) {
       }
     }
   }, [props.plinth]);
+  useEffect(() => {
+    if (category != "") {
+      updateSelectedItems()
+    }
+  }, [quantity]);
+  function updateSelectedItems(){
+    props.setSelectedItems((draft) => {
+      draft[props.item] = {
+        "category": category,
+        "categoryName": props.detail[category]['name'],
+        "pricePerUnit": props.detail[category]['price'],
+        "quantity": quantity,
+        "totalPrice": (props.detail[category]?.['price'] || 0) * quantity
+      }
+    })
+  }
   function updatePrice(cat) {
     props.setCost((draft) => {
       if (category) {
@@ -157,7 +164,6 @@ export default function CenterBoxItems(props = {}) {
       }
     })
     setquantity(newQuantity);
-
   }
   return (
     <section className='shadow-lg border border-gray-300'>

@@ -59,8 +59,8 @@ const Box = (props = {}) => {
   useEffect(() => {
     dispatch(fetchItemsHeadings())
     dispatch(getDate())
-    dispatch(fetchAreas())
     dispatch(fetchLandInfo(props.landsize))
+    dispatch(fetchAreas())
     getUpdatedPriceDate()
     getLocalData()
     return () => { setCLoading(true); }
@@ -83,6 +83,7 @@ const Box = (props = {}) => {
         }));
       })
       setCLoading(false);
+      setradday(4);
     }
     return () => { setCLoading(true); }
   }, [headings])
@@ -202,7 +203,8 @@ const Box = (props = {}) => {
 
   return (<>
     <section className='max-w-screen'>
-      {arealoading || cLoading ?
+      {
+      arealoading || cLoading ?
         <section className='w-screen flex justify-center'>
           <span className="loading loading-dots loading-lg text-black" />
         </section>
@@ -301,7 +303,6 @@ const Box = (props = {}) => {
                       <input type="text" name="range" id="range" min="0" max="10"
                         className='p-1 w-14 bg-bg rounded-md border border-themeFont'
                         onWheel={(e) => e.preventDefault()}
-                        onMouseWheel={(e) => e.preventDefault()}
                         onKeyDown={(e) => {
                           (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault();
                           e.key === 'Backspace' && setradday(0)
@@ -374,10 +375,26 @@ const Box = (props = {}) => {
               </section>
             </article>
           </section >
-        </>}
+        </>
+      }
       <section className="flex flex-col items-center gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:my-16">
         {landTextInfo == {} ? <span className="mx-auto loading loading-dots loading-lg text-themeFont" />
           : (<>
+           <section className='flex flex-col gap-10'>
+              <section className="flex gap-5 items-center">
+                <h1 className="pl-1 font-heading min-w-fit">Standard's</h1>
+                <span className="w-1/4 h-[2px] bg-bg-dark"></span>
+              </section>
+              {landTextInfo["Standards"] && Object.keys(landTextInfo['Standards']).map((sub, j) => (
+                <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
+                  <TiTickOutline className='text-themeFont hidden xl:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
+                  <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
+                    <p className="font-bold min-w-fit">{landTextInfo['Standards'][sub][0]}:</p>
+                    <p >{landTextInfo['Standards'][sub][1]}</p>
+                  </section>
+                </section>
+              ))}
+            </section>
             {landTextInfo['Details'] && Object.keys(landTextInfo['Details']).map((he, i) => {
               return <section key={i} className='flex flex-col gap-10'>
                 <section className="flex gap-5 items-center">
@@ -395,21 +412,6 @@ const Box = (props = {}) => {
                 ))}
               </section>
             })}
-            <section className='flex flex-col gap-10'>
-              <section className="flex gap-5 items-center">
-                <h1 className="pl-1 font-heading min-w-fit">Standard's</h1>
-                <span className="w-1/4 h-[2px] bg-bg-dark"></span>
-              </section>
-              {landTextInfo["Standards"] && Object.keys(landTextInfo['Standards']).map((sub, j) => (
-                <section className='flex gap-2 w-full justify-start items-start lg:hover:scale-110 transition duration-300' key={j}>
-                  <TiTickOutline className='text-themeFont hidden xl:block !text-xl min-w-fit max-w-[12%] flex-shrink-0' />
-                  <section className="flex gap-1 items-start justify-start flex-col min-w-[88%]">
-                    <p className="font-bold min-w-fit">{landTextInfo['Standards'][sub][0]}:</p>
-                    <p >{landTextInfo['Standards'][sub][1]}</p>
-                  </section>
-                </section>
-              ))}
-            </section>
             {landTextInfo["Disclaimer"] && <section className='flex flex-col gap-6 items-center'>
               <section className="flex gap-5 items-center justify-center w-full">
                 <span className="w-1/6 h-[2px] bg-bg-dark"></span>

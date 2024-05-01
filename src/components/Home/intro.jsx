@@ -49,7 +49,7 @@ const Intro = () => {
     <section id="services" className="my-8 py-8 bg-bg w-screen flex-all-center flex-col text-themeFont">
       <section className="p-5 w-[90%] flex flex-col gap-10">
         <section className="flex gap-5 items-center">
-          <h1 className="pl-1 font-heading">Browse Properties</h1>
+          <h1 className="pl-1 font-heading">Gray Structure Calculator</h1>
           <span className="w-1/4 h-[2px] bg-bg-dark"></span>
         </section>
         <section className="relative">
@@ -72,7 +72,7 @@ const Intro = () => {
       </section>
       <section className="p-5 w-[90%] flex flex-col gap-10">
         <section className="flex gap-5 items-center">
-          <h1 className="pl-1 font-heading">Finishing</h1>
+          <h1 className="pl-1 font-heading">Finishing Packages</h1>
           <span className="w-1/4 h-[2px] bg-bg-dark"></span>
         </section>
         <section className="relative">
@@ -99,7 +99,7 @@ const Card = ({ land, link }) => {
       <section className="flex flex-col gap-3">
         {/* <p className="border text-lg p-3">Al Kabir Town</p>
         <p className="border text-lg p-3">Bahria</p> */}
-        <Link href={link} className="border border-bg-1 p-3 text-lg hover:bg-bg-1 font-bold rounded-md">View Construction Cost</Link>
+        <Link href={link} className="border border-bg-1 p-3 text-lg hover:bg-bg-1 font-bold rounded-md">View Calculator</Link>
       </section>
     </section>
   </>
