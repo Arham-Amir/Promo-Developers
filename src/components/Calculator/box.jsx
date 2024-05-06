@@ -191,7 +191,7 @@ const Box = (props = {}) => {
         html2canvas(element).then((canvas) => {
           const imgData = canvas.toDataURL('image/jpeg');
           pdf.addImage(imgData, 'JPEG', 0, 0, 794, divHeight);
-          pdf.save('document.pdf');
+          pdf.save('Promo Developers.pdf');
         });
       }
       setEmail("")
@@ -816,7 +816,7 @@ function PrintAbout() {
         <p className='text-xs w-fit text-center font-bold flex flex-col'>Telephone: <span className='font-normal'>+92 42 37512219</span></p>
       </ContactInfo>
       <ContactInfo>
-        <p className='text-xs w-fit text-center font-bold flex flex-col'>Whatsapp: <span className='font-normal'>+92 300 4439445</span></p>
+        <p className='text-xs w-fit text-center font-bold flex flex-col'>Whatsapp: <span className='font-normal'>+92 328 4480831 </span></p>
       </ContactInfo>
       <ContactInfo>
         <p className='text-xs w-fit text-center font-bold flex flex-col'>Email: <span className='font-normal'>info@promodevelopers.com</span><span className='font-normal'>promoestateanddeveloper@gmail.com</span></p>
