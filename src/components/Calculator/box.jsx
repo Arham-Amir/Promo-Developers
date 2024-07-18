@@ -38,8 +38,8 @@ const Box = (props = {}) => {
   const sortedHeadings = Object.keys(headings).sort((a, b) => headings[a].order - headings[b].order);
   const [sortedData, setSortedData] = useState({});
   const [landTextInfo, setLandTextInfo] = useState({});
-  const [rcc, setrcc] = useState('f');
-  const [plinth, setplinth] = useState('f');
+  const [rcc, setrcc] = useState('n');
+  const [plinth, setplinth] = useState('n');
   const [radday, setradday] = useState(0);
 
   const [username, setUsername] = useState('');
@@ -114,7 +114,7 @@ const Box = (props = {}) => {
     }
   }
   function handlePlinthButton() {
-    if (plinth == 'f') {
+    if (plinth == 'f' || plinth == 'n') {
       setplinth('t')
     }
     else {
