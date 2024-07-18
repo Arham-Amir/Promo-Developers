@@ -83,7 +83,7 @@ const Box = (props = {}) => {
         }));
       })
       setCLoading(false);
-      setradday(4);
+      setradday(3);
     }
     return () => { setCLoading(true); }
   }, [headings])
