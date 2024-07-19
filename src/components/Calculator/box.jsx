@@ -106,7 +106,7 @@ const Box = (props = {}) => {
     return {};
   }
   function handleRccButton() {
-    if (rcc == 'f') {
+    if (rcc == 'f' || rcc == 'n') {
       setrcc('t')
     }
     else {
@@ -204,183 +204,183 @@ const Box = (props = {}) => {
   return (<>
     <section className='max-w-screen'>
       {
-      arealoading || cLoading ?
-        <section className='w-screen flex justify-center'>
-          <span className="loading loading-dots loading-lg text-black" />
-        </section>
-        : <>
-          <section>
-            <button onClick={handleToggleShow}
-              className={`z-50 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
-              <BiExpandHorizontal size={25} fill='white' />
-            </button>
-            <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
+        arealoading || cLoading ?
+          <section className='w-screen flex justify-center'>
+            <span className="loading loading-dots loading-lg text-black" />
+          </section>
+          : <>
+            <section>
+              <button onClick={handleToggleShow}
+                className={`z-50 fixed top-1/2 -translate-y-1/2 flex items-center h-24 pr-1 pl-2 bg-bg-dark [#0694c6] rounded-l-lg transition-all duration-500 ${show ? 'right-[92%]' : 'right-0'}`}>
+                <BiExpandHorizontal size={25} fill='white' />
+              </button>
+              <section className={`fixed top-0 z-50 transition-all duration-500 ${show ? 'right-0' : 'right-[-100%]'}
         !h-screen custom-scrollbar w-[92%] bg-bg-1 flex flex-col md:flex-row p-8`}>
-              <section className={`w-full md:w-1/2 flex flex-col gap-5 items-center`}>
-                <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodev.png" />
-                <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
-                <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
-                {areas[props.area][props.landsize]["ByLaws"] ?
-                  <ByLawsData available="true" areas={areas} area={props.area} landsize={props.landsize} />
-                  :
-                  <ByLawsData available="false" areas={areas} area={props.area} landsize={props.landsize} />
-                }
-                <section className='hidden md:flex flex-col items-center gap-1 w-full'>
-                  <div className="h-[2px] w-3/5 bg-themeFont"></div>
-                  <div className="h-[2px] w-3/5 bg-themeFont"></div>
+                <section className={`w-full md:w-1/2 flex flex-col gap-5 items-center`}>
+                  <LazyImage className="h-[80px] md:h-[90px] 2xl:h-[120px] w-full object-contain" src="/logos/promodev.png" />
+                  <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>{props.landsize} By Laws</h3>
+                  <p className='px-2'>Person shall have to leave the following minimum clear spaces including boundary walls.</p>
+                  {areas[props.area][props.landsize]["ByLaws"] ?
+                    <ByLawsData available="true" areas={areas} area={props.area} landsize={props.landsize} />
+                    :
+                    <ByLawsData available="false" areas={areas} area={props.area} landsize={props.landsize} />
+                  }
+                  <section className='hidden md:flex flex-col items-center gap-1 w-full'>
+                    <div className="h-[2px] w-3/5 bg-themeFont"></div>
+                    <div className="h-[2px] w-3/5 bg-themeFont"></div>
+                  </section>
+                </section>
+                <div className="divider divider-vertical md:divider-horizontal">||</div>
+                <section className={`w-full md:w-1/2 pb-10 h-full md:custom-scrollbar`}>
+                  <section className='flex flex-col gap-5 mx-2'>
+                    <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>Client Selected Items</h3>
+                    {Object.keys(selectedItems).map((el, i) => {
+                      return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el]["totalPrice"] || 0)}</p></section>
+                    })}
+                    <section className='flex justify-end items-center gap-2 p-2 w-full border-b border-gray-300'>
+                      <h3>Total Amount:</h3>
+                      <h3>{formatNumberWithCommas(total)}</h3>
+                    </section>
+                    <section className='flex justify-end  w-full'>
+                      <button onClick={() => document.getElementById("reportPrint").showModal()} className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
+                      <dialog id={`reportPrint`} className="m-auto modal w-fit h-auto">
+                        <div className="modal-box flex flex-col gap-5 items-center w-full h-auto">
+                          <form method="dialog">
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black">✕</button>
+                          </form>
+                          <div className="modal-box w-full min-h-[80vh] h-fit bg-bgLight flex flex-col gap-3 bg-bg-1">
+                            <p className='text-xs ms:px-5 text-center uppercase'>Please fill below fields to get report.</p>
+                            <section className='flex flex-col gap-1'>
+                              <p className="text-base ms:text-2xl font-heading font-bold">Name: <span className='text-red-700'>*</span></p>
+                              <input value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className='rounded-lg text-base mx-4 px-4 py-1' type="text" name="Name" id="username" />
+                            </section>
+
+                            <section className='flex flex-col gap-1'>
+                              <p className="text-base ms:text-2xl font-heading font-bold">Phone Number: <span className='text-red-700'>*</span></p>
+                              <input value={phonenumber}
+                                onChange={(e) => setPhoneNumber(e.target.value)}
+                                className='rounded-lg text-base mx-4 px-4 py-1' type="tel" name="Number" id="phonenumber" />
+                            </section>
+                            <section className='flex flex-col gap-1'>
+                              <p className="text-base ms:text-2xl font-heading font-bold">Email:</p>
+                              <input value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className='rounded-lg text-base mx-4 px-4 py-1' type="email" name="Email" id="email" />
+                            </section>
+                            <section className='flex flex-row justify-around gap-1'>
+                              <button onClick={printDocument} className='btn-sm md:btn-md btn border-0 bg-themeColor hover:bg-themeFont hover:text-white'>Submit</button>
+                            </section>
+                          </div>
+                        </div>
+                      </dialog>
+                    </section>
+                  </section>
                 </section>
               </section>
-              <div className="divider divider-vertical md:divider-horizontal">||</div>
-              <section className={`w-full md:w-1/2 pb-10 h-full md:custom-scrollbar`}>
-                <section className='flex flex-col gap-5 mx-2'>
-                  <h3 className='mx-auto pb-2 pt-1 px-2 border border-b-4 border-themeFont'>Client Selected Items</h3>
-                  {Object.keys(selectedItems).map((el, i) => {
-                    return <section key={i} className='flex justify-between w-full border-b border-gray-300'><p>{el}</p> <p>{formatNumberWithCommas(selectedItems[el]["totalPrice"] || 0)}</p></section>
-                  })}
-                  <section className='flex justify-end items-center gap-2 p-2 w-full border-b border-gray-300'>
-                    <h3>Total Amount:</h3>
-                    <h3>{formatNumberWithCommas(total)}</h3>
-                  </section>
-                  <section className='flex justify-end  w-full'>
-                    <button onClick={() => document.getElementById("reportPrint").showModal()} className='my-2 bg-themeFont text-white py-2 px-5'>Print Report</button>
-                    <dialog id={`reportPrint`} className="m-auto modal w-fit h-auto">
-                      <div className="modal-box flex flex-col gap-5 items-center w-full h-auto">
-                        <form method="dialog">
-                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black">✕</button>
-                        </form>
-                        <div className="modal-box w-full min-h-[80vh] h-fit bg-bgLight flex flex-col gap-3 bg-bg-1">
-                          <p className='text-xs ms:px-5 text-center uppercase'>Please fill below fields to get report.</p>
-                          <section className='flex flex-col gap-1'>
-                            <p className="text-base ms:text-2xl font-heading font-bold">Name: <span className='text-red-700'>*</span></p>
-                            <input value={username}
-                              onChange={(e) => setUsername(e.target.value)}
-                              className='rounded-lg text-base mx-4 px-4 py-1' type="text" name="Name" id="username" />
-                          </section>
+            </section>
 
-                          <section className='flex flex-col gap-1'>
-                            <p className="text-base ms:text-2xl font-heading font-bold">Phone Number: <span className='text-red-700'>*</span></p>
-                            <input value={phonenumber}
-                              onChange={(e) => setPhoneNumber(e.target.value)}
-                              className='rounded-lg text-base mx-4 px-4 py-1' type="tel" name="Number" id="phonenumber" />
-                          </section>
-                          <section className='flex flex-col gap-1'>
-                            <p className="text-base ms:text-2xl font-heading font-bold">Email:</p>
-                            <input value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              className='rounded-lg text-base mx-4 px-4 py-1' type="email" name="Email" id="email" />
-                          </section>
-                          <section className='flex flex-row justify-around gap-1'>
-                            <button onClick={printDocument} className='btn-sm md:btn-md btn border-0 bg-themeColor hover:bg-themeFont hover:text-white'>Submit</button>
-                          </section>
+            <section className='flex flex-row justify-center'>
+              <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0 left-0'>
+                <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
+              </section>
+              <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
+                <RightTopBox lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
+                <section className='block lg:hidden w-full bg-bg h-fit'>
+                  <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
+                </section>
+                <section className="flex-grow px-2 py-4 bg-bg">
+                  <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
+                    <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
+                      <div className='text-xs md:text-sm lg:text-base'>Plot Depth:
+                        <div className="z-20 tooltip tooltip-close" data-tip="From road level to NSL level">
+                          <button className="font-bold p-0 text-xl text-red-600">*</button>
                         </div>
                       </div>
-                    </dialog>
-                  </section>
-                </section>
-              </section>
-            </section>
-          </section>
 
-          <section className='flex flex-row justify-center'>
-            <section className='hidden lg:block w-[25%] bg-bg max-h-screen sticky top-0 left-0'>
-              <LeftBox id="my_modal_3" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
-            </section>
-            <article className={`${props.class} w-full lg:w-[75%] flex flex-col bg-bg`}>
-              <RightTopBox lastPriceUpdateDate={lastPriceUpdateDate} dateloading={dateloading} total={total} landTextInfo={landTextInfo} areas={areas} cost={cost} area={props.area} landsize={props.landsize} />
-              <section className='block lg:hidden w-full bg-bg h-fit'>
-                <LeftBox id="my_modal_4" formatNumberWithCommas={formatNumberWithCommas} setShow={() => setShow(!show)} items={headings} cost={cost} sarea={props.area} land={props.landsize} />
-              </section>
-              <section className="flex-grow px-2 py-4 bg-bg">
-                <section className='flex flex-col-reverse gap-4 pb-8 lg:pb-0'>
-                  <section className="relative bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center gap-3">
-                    <div className='text-xs md:text-sm lg:text-base'>Plot Depth:
-                      <div className="z-20 tooltip tooltip-close" data-tip="From road level to NSL level">
-                        <button className="font-bold p-0 text-xl text-red-600">*</button>
-                      </div>
-                    </div>
-
-                    <section className='flex items-center gap-1'>
-                      <input type="text" name="range" id="range" min="0" max="10"
-                        className='p-1 w-14 bg-bg rounded-md border border-themeFont'
-                        onWheel={(e) => e.preventDefault()}
-                        onKeyDown={(e) => {
-                          (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault();
-                          e.key === 'Backspace' && setradday(0)
-                        }}
-                        value={radday} onChange={handleRaddayButton}
-                      />
-                      <p>feets</p>
-                    </section>
-                  </section>
-                  <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center flex-col sm:flex-row gap-7">
-                    <section className='flex gap-2 items-center'>
-                      <input type="radio" value={"Recomended"} checked={choice != "Custom"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
-                      <select value={choice} className='min-w-max border-themeFont p-1 bg-transparent bg-bg-1 text-themeFont before:text-themeFont after:text-themeFont' onChange={handleOptionChange}>
-                        <option className='text-base' value="Recomended">Recomended</option>
-                        <option className='text-base' value="minimum">Minimum Price</option>
-                        <option className='text-base' value="maximum">Maximum Price</option>
-                      </select>
-                    </section>
-                    <section className='flex gap-2 items-center'>
-                      <input type="radio" value={"Custom"} checked={choice === "Custom"} onChange={handleOptionChange} name="radio-0" id='r2' className={`radio border-themeFont ${choice == 'Custom' && '!bg-themeFont'}`} />
-                      <label htmlFor="r2">Build Your Own House</label>
-                    </section>
-                  </section>
-                </section>
-                <section className="text-black text-sm px-4 pb-4">
-                  {sortedHeadings.map((head, i) => {
-                    return <section key={i} className='my-4'>
-                      <section className='p-5 gap-2 bg-heading border-b border-white text-heading-txt flex items-center justify-between'>
-                        <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
-                        <h3 className='font-heading' > {head}</h3>
-                        <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
-                      </section>
-                      <section>
-                        {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
-                          : (typeof sortedData[head] === 'object' && sortedData[head] !== null && sortedData[head].constructor === Array) && sortedData[head].map((el, j) => {
-                            if (el != 'order') {
-                              return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize} setradday={setradday}
-                                setChoice={setChoice}></CenterBoxItems>
-                            }
-                          })}
-                      </section>
-                    </section>
-                  })}
-                  <section className="flex flex-col gap-4">
-                    <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
                       <section className='flex items-center gap-1'>
-                        <h1><CgOptions className='text-black text-2xl' /></h1>
-                        <h3 className='' >Plinth Beam</h3>
+                        <input type="text" name="range" id="range" min="0" max="10"
+                          className='p-1 w-14 bg-bg rounded-md border border-themeFont'
+                          onWheel={(e) => e.preventDefault()}
+                          onKeyDown={(e) => {
+                            (e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.preventDefault();
+                            e.key === 'Backspace' && setradday(0)
+                          }}
+                          value={radday} onChange={handleRaddayButton}
+                        />
+                        <p>feets</p>
                       </section>
-                      <input type="checkbox" className="toggle"
-                        checked={plinth === 't'}
-                        onChange={() => handlePlinthButton()} />
                     </section>
-                    <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
-                      <section className='flex items-center gap-1'>
-                        <h1><CgOptions className='text-themeFont text-2xl' /></h1>
-                        <h3 className='' >RCC Bed</h3>
+                    <section className="bg-bg-1 w-fit mx-auto rounded-2xl text-black text-sm p-4 flex-all-center flex-col sm:flex-row gap-7">
+                      <section className='flex gap-2 items-center'>
+                        <input type="radio" value={"Recomended"} checked={choice != "Custom"} onChange={handleOptionChange} name="radio-0" id='r1' className={`radio border-themeFont ${choice == 'Recomended' && '!bg-themeFont'}`} />
+                        <select value={choice} className='min-w-max border-themeFont p-1 bg-transparent bg-bg-1 text-themeFont before:text-themeFont after:text-themeFont' onChange={handleOptionChange}>
+                          <option className='text-base' value="Recomended">Recomended</option>
+                          <option className='text-base' value="minimum">Minimum Price</option>
+                          <option className='text-base' value="maximum">Maximum Price</option>
+                        </select>
                       </section>
-                      <input type="checkbox" className="toggle"
-                        checked={rcc === 't'}
-                        onChange={() => handleRccButton()} />
+                      <section className='flex gap-2 items-center'>
+                        <input type="radio" value={"Custom"} checked={choice === "Custom"} onChange={handleOptionChange} name="radio-0" id='r2' className={`radio border-themeFont ${choice == 'Custom' && '!bg-themeFont'}`} />
+                        <label htmlFor="r2">Build Your Own House</label>
+                      </section>
                     </section>
                   </section>
-                  <section className='mt-4 w-full flex justify-end'>
-                    <button onClick={() => document.getElementById("reportPrint").showModal()}
-                      className='bg-themeFont text-white text-base'>Print Report</button>
-                  </section >
+                  <section className="text-black text-sm px-4 pb-4">
+                    {sortedHeadings.map((head, i) => {
+                      return <section key={i} className='my-4'>
+                        <section className='p-5 gap-2 bg-heading border-b border-white text-heading-txt flex items-center justify-between'>
+                          <h1><SiBlockchaindotcom className='text-white text-3xl' /></h1>
+                          <h3 className='font-heading' > {head}</h3>
+                          <h3 className='font-themeFont' > {formatNumberWithCommas(cost[head])}</h3>
+                        </section>
+                        <section>
+                          {headings[head] == "null" ? <p className='p-5'>No Item in this Heading</p>
+                            : (typeof sortedData[head] === 'object' && sortedData[head] !== null && sortedData[head].constructor === Array) && sortedData[head].map((el, j) => {
+                              if (el != 'order') {
+                                return <CenterBoxItems key={(i + 1) * j} radday={radday} rcc={rcc} plinth={plinth} setSelectedItems={setSelectedItems} formatNumberWithCommas={(num) => formatNumberWithCommas(num)} setCost={setCost} head={head} index={j} item={el} detail={headings[head][el]} choice={choice} areas={areas} area={props.area} landsize={props.landsize} setradday={setradday}
+                                  setChoice={setChoice}></CenterBoxItems>
+                              }
+                            })}
+                        </section>
+                      </section>
+                    })}
+                    <section className="flex flex-col gap-4">
+                      <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
+                        <section className='flex items-center gap-1'>
+                          <h1><CgOptions className='text-black text-2xl' /></h1>
+                          <h3 className='' >Plinth Beam</h3>
+                        </section>
+                        <input type="checkbox" className="toggle"
+                          checked={plinth === 't'}
+                          onChange={() => handlePlinthButton()} />
+                      </section>
+                      <section className="p-3 flex items-center justify-between text-lg font-bold bg-bg-card shadow-lg border border-gray-300">
+                        <section className='flex items-center gap-1'>
+                          <h1><CgOptions className='text-themeFont text-2xl' /></h1>
+                          <h3 className='' >RCC Bed</h3>
+                        </section>
+                        <input type="checkbox" className="toggle"
+                          checked={rcc === 't'}
+                          onChange={() => handleRccButton()} />
+                      </section>
+                    </section>
+                    <section className='mt-4 w-full flex justify-end'>
+                      <button onClick={() => document.getElementById("reportPrint").showModal()}
+                        className='bg-themeFont text-white text-base'>Print Report</button>
+                    </section >
 
+                  </section>
                 </section>
-              </section>
-            </article>
-          </section >
-        </>
+              </article>
+            </section >
+          </>
       }
       <section className="flex flex-col items-center gap-12 w-11/12 md:w-4/5 mx-auto text-themeFont md:my-16">
         {landTextInfo == {} ? <span className="mx-auto loading loading-dots loading-lg text-themeFont" />
           : (<>
-           <section className='flex flex-col gap-10'>
+            <section className='flex flex-col gap-10'>
               <section className="flex gap-5 items-center">
                 <h1 className="pl-1 font-heading min-w-fit">Standard's</h1>
                 <span className="w-1/4 h-[2px] bg-bg-dark"></span>
