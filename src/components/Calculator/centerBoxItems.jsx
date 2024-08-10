@@ -88,7 +88,7 @@ export default function CenterBoxItems(props = {}) {
         if (props.rcc == "t") {
           updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["RCC"][props.item]))
         }
-        else if (quantity != 0) {
+        else if (quantity != 0 && props.rcc == "f") {
           updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["RCC"][props.item]))
         }
       }
@@ -103,7 +103,7 @@ export default function CenterBoxItems(props = {}) {
         if (props.plinth == "t") {
           updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
-        else if (quantity != 0) {
+        else if (quantity != 0 && props.plinth == "f") {
           updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthADD"][props.item]))
         }
       }
@@ -111,7 +111,7 @@ export default function CenterBoxItems(props = {}) {
         if (props.plinth == "t") {
           updateTotalPriceAndQuantity(quantity - Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
-        else if (quantity != 0) {
+        else if (quantity != 0  && props.plinth == "f") {
           updateTotalPriceAndQuantity(quantity + Number(landInfo[props.landsize]["PlinthSUB"][props.item]))
         }
       }
