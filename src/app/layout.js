@@ -37,7 +37,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className='bg-bg'>
+    <html lang="en" data-theme="light" className='bg-bg'>
       <body className={`${inter.variable} ${myFont.variable} ${heading.variable} custom-scrollbar font-sans w-screen overflow-x-hidden`}>
         <Provider>
           <Navbar />
